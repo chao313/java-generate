@@ -27,7 +27,7 @@ import java.nio.charset.Charset;
 
 @SpringBootApplication
 @MapperScan(value = "demo.spring.boot.demospringboot.mybatis.dao")//mybatis
-public class Application {
+public class Application{
 
     private static Logger logger = LoggerFactory.getLogger(Application.class);
 
