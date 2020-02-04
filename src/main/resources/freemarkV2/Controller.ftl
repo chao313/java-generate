@@ -55,7 +55,7 @@ public class ${ftlVo.className} {
 
     @PostMapping(value = "/deleteByPrimaryKey")
     public boolean deleteByPrimaryKey(<#list ftlVo.primaryKeyJavaFields as field>${field.type} ${field.name}<#if field_has_next>, </#if></#list>) {
-       return service.deleteByPrimaryKey(<#list ftlVo.primaryKeyJavaFields as field>${field.name}<#if field_has_next>, </#if></#list>) > 0 ? true : false;
+       return service.deleteByPrimaryKey(<#list ftlVo.primaryKeyJavaFields as field>${field.name}<#if field_has_next>, </#if></#list>);
     }
 </#if>
 }

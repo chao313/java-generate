@@ -1,9 +1,5 @@
 package demo.spring.boot.demospringboot;
 
-import org.apache.catalina.Context;
-import org.apache.catalina.connector.Connector;
-import org.apache.tomcat.util.descriptor.web.SecurityCollection;
-import org.apache.tomcat.util.descriptor.web.SecurityConstraint;
 import org.mybatis.spring.annotation.MapperScan;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,16 +7,13 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.websocket.WebSocketAutoConfiguration;
-import org.springframework.boot.context.embedded.EmbeddedServletContainerFactory;
-import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.converter.StringHttpMessageConverter;
 
 import java.nio.charset.Charset;
 
 @SpringBootApplication
-@MapperScan(value = "demo.spring.boot.demospringboot.mybatis.dao")//mybatis
+@MapperScan(value = {"demo.spring.boot.demospringboot.mybatis.dao", "demo.spring.boot.demospringboot.demo2.dao"})//mybatis
 public class Application implements ApplicationRunner {
 
     private static Logger logger = LoggerFactory.getLogger(Application.class);

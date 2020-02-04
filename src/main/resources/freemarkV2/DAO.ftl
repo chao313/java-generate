@@ -1,4 +1,4 @@
-package ${ftlVo.basePackage};
+package ${ftlVo.packageName};
 
 
 import java.util.List;
@@ -41,7 +41,7 @@ public interface ${ftlVo.className} {
     /**
      * update base (exclude value is null or "")
      */
-    int updateBase(@Param(value = "source") ${allFtl.voFtl.className} source, @Param(value = "target") ${jallFtl.voFtl.className} target);
+    int updateBase(@Param(value = "source") ${allFtl.voFtl.className} source, @Param(value = "target") ${allFtl.voFtl.className} target);
 
 
     /**

@@ -19,6 +19,22 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 public class Swagger2Configuration {
     @Bean
+    public Docket demoApi() {
+        return new Docket(DocumentationType.SWAGGER_2)
+                .select()
+                .apis(RequestHandlerSelectors
+                        .basePackage("demo.spring.boot.demospringboot.demo2.controller"))
+                .paths(PathSelectors.any())
+                .build()
+                .genericModelSubstitutes(DeferredResult.class)//异步http请求
+                .forCodeGeneration(true)
+                .pathMapping("/")
+                .apiInfo(apiInfo())
+                .useDefaultResponseMessages(false)
+                .groupName("demo")
+                ;
+    }
+    @Bean
     public Docket actuateApi() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()

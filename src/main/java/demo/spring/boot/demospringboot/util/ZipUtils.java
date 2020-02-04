@@ -232,7 +232,7 @@ public class ZipUtils {
         /**
          * 打包压缩
          */
-        File file = new File(tmpPath);
+        File file = new File(tmpPath + zipFileName);
         OutputStream outputStream = new FileOutputStream(file);
         ZipUtils.toZip(tmpPath, outputStream, true);
         outputStream.flush();
@@ -241,8 +241,8 @@ public class ZipUtils {
         InputStream inputStream = new FileInputStream(tmpPath + zipFileName);
 
 
-       // FileUtils.deleteDirectory(tmpPath);
-        file.delete();
+        // FileUtils.deleteDirectory(tmpPath);
+//        file.delete();
 
         return inputStream;
     }
