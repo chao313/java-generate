@@ -1,6 +1,7 @@
 package demo.spring.boot.demospringboot.parse.mysql.parse.vo.mysql.ftl;
 
-import demo.spring.boot.demospringboot.parse.mysql.parse.vo.MysqlField;
+import demo.spring.boot.demospringboot.parse.mysql.parse.vo.mysql.JavaField;
+import demo.spring.boot.demospringboot.parse.mysql.parse.vo.mysql.MysqlField;
 import demo.spring.boot.demospringboot.parse.mysql.parse.vo.mysql.Table;
 
 import java.util.List;
@@ -30,10 +31,15 @@ public interface FtlInterface {
     void setFreeMarkStr(String freeMarkStr);
 
 
-    List<MysqlField> getPrimaryKeyFields();
+    List<MysqlField> getPrimaryKeyMysqlFields();
 
 
-    List<MysqlField> getFields();
+    List<MysqlField> getMysqlFields();
+
+    List<JavaField> getPrimaryKeyJavaFields();
+
+
+    List<JavaField> getJavaFields();
 
     Table getTable();
 

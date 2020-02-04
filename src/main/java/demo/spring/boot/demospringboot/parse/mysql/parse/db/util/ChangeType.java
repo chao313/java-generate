@@ -14,7 +14,7 @@ package demo.spring.boot.demospringboot.parse.mysql.parse.db.util;
  */
 
 
-import demo.spring.boot.demospringboot.parse.mysql.parse.vo.JavaField;
+import demo.spring.boot.demospringboot.parse.mysql.parse.vo.mysql.JavaField;
 
 import java.sql.Time;
 import java.sql.Timestamp;

@@ -1,13 +1,11 @@
 package demo.spring.boot.demospringboot.parse.mysql.parse.vo;
 
-import demo.spring.boot.demospringboot.parse.mysql.parse.db.util.ChangeType;
-import demo.spring.boot.demospringboot.parse.mysql.parse.util.CamelUtils;
+import demo.spring.boot.demospringboot.parse.mysql.parse.vo.mysql.MysqlAndJavaField;
 import lombok.Data;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

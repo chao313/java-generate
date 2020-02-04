@@ -1,10 +1,12 @@
 package demo.spring.boot.demospringboot.parse.mysql.parse.vo.mysql.ftl;
 
-import demo.spring.boot.demospringboot.parse.mysql.parse.vo.MysqlField;
+import demo.spring.boot.demospringboot.parse.mysql.parse.vo.mysql.JavaField;
+import demo.spring.boot.demospringboot.parse.mysql.parse.vo.mysql.MysqlField;
 import demo.spring.boot.demospringboot.parse.mysql.parse.vo.mysql.Table;
 import lombok.Data;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * 准备和FTL绑定的
@@ -17,8 +19,11 @@ public class ControllerFtl implements FtlInterface {
     private String fileName;//file名称
     private String freeMarkFtlPath = "Controller.ftl";//生成FreeMark的ftlPath
     private String freeMarkStr;//生成FreeMark的str
-    private List<MysqlField> primaryKeyFields;//主键字段
-    private List<MysqlField> fields;//全部主键字段
+    private List<MysqlField> primaryKeyMysqlFields;//主键字段(mysql)
+    private List<MysqlField> mysqlFields;//全部字段(mysql)
+    private List<JavaField> primaryKeyJavaFields;//主键字段(java的)
+    private List<JavaField> javaFields;//全部字段(java的)
+    private Set<String> javaFieldTypes;//全部不重复的字段Type(java的)
     /**
      * 包含:表名称,表类型,引擎,表的字符集,表的注释
      */

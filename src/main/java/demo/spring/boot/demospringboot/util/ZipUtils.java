@@ -2,9 +2,12 @@ package demo.spring.boot.demospringboot.util;
 
 import demo.spring.boot.demospringboot.parse.mysql.parse.vo.AssociationJavaTable;
 import demo.spring.boot.demospringboot.parse.mysql.parse.vo.JavaTable;
+import demo.spring.boot.demospringboot.parse.mysql.parse.vo.mysql.ftl.AllFtl;
+import demo.spring.boot.demospringboot.parse.mysql.parse.vo.mysql.ftl.FtlInterface;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -195,6 +198,55 @@ public class ZipUtils {
 
         return inputStream;
     }
+
+    public static InputStream createFilesAndZipV2(AllFtl allFtl, String zipFileName) throws IOException {
+
+        /**
+         * 所有的文件统一处理
+         */
+        List<FtlInterface> ftlInterfaces = new ArrayList<>();
+        ftlInterfaces.add(allFtl.getControllerFtl());
+        ftlInterfaces.add(allFtl.getServiceImplFtl());
+        ftlInterfaces.add(allFtl.getServiceFtl());
+        ftlInterfaces.add(allFtl.getDaoFtl());
+        ftlInterfaces.add(allFtl.getVoFtl());
+        ftlInterfaces.add(allFtl.getMapperFtl());
+
+        /**
+         * 创建文件并写入数据
+         */
+        for (FtlInterface ftlInterface : ftlInterfaces) {
+            BufferedOutputStream outputStream = null;
+            String dir = (tmpPath + ftlInterface.getPackageName()).replace(".", "/");
+            //创建文件夹
+            new File(dir).mkdirs();
+            File voFile = new File(dir + "/" + ftlInterface.getFileName());
+            voFile.createNewFile();
+            outputStream = new BufferedOutputStream(new FileOutputStream(voFile));
+            outputStream.write(ftlInterface.getFreeMarkStr().getBytes());
+            outputStream.flush();
+            outputStream.close();
+
+        }
+
+        /**
+         * 打包压缩
+         */
+        File file = new File(tmpPath);
+        OutputStream outputStream = new FileOutputStream(file);
+        ZipUtils.toZip(tmpPath, outputStream, true);
+        outputStream.flush();
+        outputStream.close();
+
+        InputStream inputStream = new FileInputStream(tmpPath + zipFileName);
+
+
+       // FileUtils.deleteDirectory(tmpPath);
+        file.delete();
+
+        return inputStream;
+    }
+
 
     public static InputStream createFilesAndZip(List<AssociationJavaTable> associationJavaTables, String zipFileName, String dirPath) throws IOException {
         BufferedOutputStream voOutputStream = null;

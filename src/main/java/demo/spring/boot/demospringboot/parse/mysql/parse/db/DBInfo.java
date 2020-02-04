@@ -1,7 +1,7 @@
 package demo.spring.boot.demospringboot.parse.mysql.parse.db;
 
 import demo.spring.boot.demospringboot.parse.mysql.parse.db.util.MysqlBD;
-import demo.spring.boot.demospringboot.parse.mysql.parse.vo.MysqlField;
+import demo.spring.boot.demospringboot.parse.mysql.parse.vo.mysql.MysqlField;
 import demo.spring.boot.demospringboot.parse.mysql.parse.vo.MysqlTable;
 import lombok.extern.slf4j.Slf4j;
 

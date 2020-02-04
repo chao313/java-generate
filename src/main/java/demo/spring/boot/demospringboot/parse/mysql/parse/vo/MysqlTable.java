@@ -1,5 +1,6 @@
 package demo.spring.boot.demospringboot.parse.mysql.parse.vo;
 
+import demo.spring.boot.demospringboot.parse.mysql.parse.vo.mysql.MysqlField;
 import lombok.Data;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;

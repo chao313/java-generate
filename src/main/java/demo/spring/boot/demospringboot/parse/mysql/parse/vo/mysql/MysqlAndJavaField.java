@@ -1,4 +1,4 @@
-package demo.spring.boot.demospringboot.parse.mysql.parse.vo;
+package demo.spring.boot.demospringboot.parse.mysql.parse.vo.mysql;
 
 import lombok.Data;
 import lombok.ToString;
