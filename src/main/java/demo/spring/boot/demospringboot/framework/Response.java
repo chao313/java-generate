@@ -30,7 +30,6 @@ public class Response<T> {
     }
 
 
-
     public String getCode() {
         return code;
     }
@@ -69,5 +68,9 @@ public class Response<T> {
 
     public void setContent(T content) {
         this.content = content;
+    }
+
+    public static Response OK() {
+        return new Response(Code.System.OK, "", true);
     }
 }

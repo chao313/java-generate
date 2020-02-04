@@ -1,23 +1,15 @@
 package demo.spring.boot.demospringboot.service;
 
-import com.alibaba.fastjson.JSONObject;
-import demo.spring.boot.demospringboot.config.PropertiesUtils;
-import demo.spring.boot.demospringboot.util.HttpClientUtils;
-import kafka.api.LeaderAndIsr;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.core.io.Resource;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.util.ResourceUtils;
-import org.springframework.web.client.RestTemplate;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -117,6 +109,40 @@ public class WebDriverCookieService {
             result.add(line);
         });
         return result;
+
+    }
+
+    private static WebDriver driver;
+
+    static {
+        File file = null;
+        try {
+            file = ResourceUtils.getFile("classpath:chromedriver");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        // 设置系统属性
+        System.setProperty("webdriver.chrome.driver", file.getAbsolutePath());
+        // 实例化ChromeDriver
+
+    }
+
+    public static String download() throws IOException {
+        StringBuffer stringBuffer = new StringBuffer();
+        driver = new ChromeDriver();
+        // 启动浏览器 打开百度
+        driver.navigate().to("http://www.xianqihaotianmi.com/read/9078_5391023.html");
+        WebElement element = driver.findElement(By.xpath("//a[text()='下一篇']"));
+        String text = driver.findElement(By.xpath("/html/body/div/div[1]/div/div[2]/div[3]")).getText();
+        stringBuffer.append(text);
+        while (null != element) {
+            LOGGER.info(":{}", stringBuffer.toString());
+            element.click();
+            element = driver.findElement(By.xpath("//a[text()='下一篇']"));
+            String text2 = driver.findElement(By.xpath("/html/body/div/div[1]/div/div[2]/div[3]")).getText();
+            stringBuffer.append(text2);
+        }
+        return stringBuffer.toString();
 
     }
 

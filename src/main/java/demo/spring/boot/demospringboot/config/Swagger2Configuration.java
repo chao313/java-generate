@@ -19,10 +19,27 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 public class Swagger2Configuration {
     @Bean
+    public Docket actuateApi() {
+        return new Docket(DocumentationType.SWAGGER_2)
+                .select()
+                .apis(RequestHandlerSelectors
+                        .basePackage("org.springframework.boot.actuate"))
+                .paths(PathSelectors.any())
+                .build()
+                .genericModelSubstitutes(DeferredResult.class)//异步http请求
+                .forCodeGeneration(true)
+                .pathMapping("/")
+                .apiInfo(apiInfo())
+                .useDefaultResponseMessages(false)
+                .groupName("actuate")
+                ;
+    }
+
+    @Bean
     public Docket createRestApi() {
         return new Docket(DocumentationType.SWAGGER_2)//Docket, Springfox’s, primary api configuration mechanism is initialized for swagger specification 2.0
                 .select()//select() returns an instance of ApiSelectorBuilder to give fine grained control over the endpoints exposed via swagger.
-                .apis(RequestHandlerSelectors.basePackage("demo.spring.boot.demospringboot.controller"))
+                .apis(RequestHandlerSelectors.basePackage("demo.spring.boot.demospringboot"))
                 .paths(PathSelectors.any())// .paths(Predicates.or(PathSelectors.regex("/api/.*")))//过滤的接口,此片过滤掉/api/打头的接口
                 .build()//The selector requires to be built after configuring the api and path selectors. Out of the box we provide predicates for regex, ant, any, none
                 .genericModelSubstitutes(DeferredResult.class)//异步http请求

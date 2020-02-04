@@ -1,10 +1,14 @@
-package demo.spring.boot.demospringboot.config;
+package demo.spring.boot.demospringboot.util;
 
-import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.env.Environment;
 
+/**
+ * 用于读取配置文件中的数据
+ * <p>
+ * {@link SpringContext}
+ */
 public class PropertiesUtils {
 
     private static Logger LOGGER = LoggerFactory.getLogger(PropertiesUtils.class);

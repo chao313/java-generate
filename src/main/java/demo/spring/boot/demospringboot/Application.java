@@ -1,15 +1,9 @@
 package demo.spring.boot.demospringboot;
 
-import org.elasticsearch.action.get.GetResponse;
-import org.elasticsearch.client.Client;
-import org.elasticsearch.client.transport.TransportClient;
-import org.elasticsearch.common.settings.Settings;
-import org.elasticsearch.common.transport.InetSocketTransportAddress;
-import org.elasticsearch.common.transport.TransportAddress;
-import org.elasticsearch.common.xcontent.XContentBuilder;
-import org.elasticsearch.common.xcontent.XContentFactory;
-import org.elasticsearch.node.Node;
-import org.elasticsearch.node.NodeBuilder;
+import org.apache.catalina.Context;
+import org.apache.catalina.connector.Connector;
+import org.apache.tomcat.util.descriptor.web.SecurityCollection;
+import org.apache.tomcat.util.descriptor.web.SecurityConstraint;
 import org.mybatis.spring.annotation.MapperScan;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,19 +11,20 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.boot.autoconfigure.websocket.WebSocketAutoConfiguration;
+import org.springframework.boot.context.embedded.EmbeddedServletContainerFactory;
+import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.converter.StringHttpMessageConverter;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.nio.charset.Charset;
 
 @SpringBootApplication
 @MapperScan(value = "demo.spring.boot.demospringboot.mybatis.dao")//mybatis
-public class Application{
+public class Application implements ApplicationRunner {
 
     private static Logger logger = LoggerFactory.getLogger(Application.class);
+
 
     public static void main(String[] args) {
         Application.test();
@@ -63,6 +58,39 @@ public class Application{
 //        logger.info("getFields", getFields);
 //        transportClient.close();
 
-
     }
+
+    @Override
+    public void run(ApplicationArguments args) throws Exception {
+//        UnzipService.generateUnzipBash("idMapName");
+    }
+
+//    //    @Bean
+//    public EmbeddedServletContainerFactory servletContainer() {
+//        TomcatEmbeddedServletContainerFactory tomcat = new TomcatEmbeddedServletContainerFactory() {
+//            @Override
+//            protected void postProcessContext(Context context) {
+//                SecurityConstraint securityConstraint = new SecurityConstraint();
+//                securityConstraint.setUserConstraint("CONFIDENTIAL");
+//                SecurityCollection collection = new SecurityCollection();
+//                collection.addPattern("/*");
+//                securityConstraint.addCollection(collection);
+//                context.addConstraint(securityConstraint);
+//            }
+//        };
+//
+//        tomcat.addAdditionalTomcatConnectors(initiateHttpConnector());
+//        return tomcat;
+//    }
+//
+//    private Connector initiateHttpConnector() {
+//        Connector connector = new Connector("org.apache.coyote.http11.Http11NioProtocol");
+//        connector.setScheme("http");
+//        //需要重定向的http端口 -> 自定义端口号,这个会占用一个端口
+//        connector.setPort(80);
+//        connector.setSecure(false);
+//        //设置重定向到https端口 -> 做个就是yml配置的端口号
+//        connector.setRedirectPort(443);
+//        return connector;
+//    }
 }

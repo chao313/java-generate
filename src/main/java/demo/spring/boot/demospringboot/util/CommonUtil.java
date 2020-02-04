@@ -3,15 +3,19 @@ package demo.spring.boot.demospringboot.util;
 import org.apache.commons.io.Charsets;
 import org.apache.commons.io.FileUtils;
 import org.springframework.util.ResourceUtils;
+import org.springframework.util.StringUtils;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class CommonUtil {
+
+    public static final String ZIP = "zip";
+    public static final String RAR = "rar";
+    public static final String TARGZ = ".tar.gz";
 
 
     /**
@@ -62,7 +66,27 @@ public class CommonUtil {
             return "";
         }
     }
-    
+
+    /**
+     * 从CSV中读取数据，格式类似
+     * 62857,ytcms.zip
+     *
+     * @param classPath
+     * @return
+     * @throws IOException
+     */
+    public static Map<Integer, List<String>> readListFromClassCSV(String classPath) throws IOException {
+        Map<Integer, List<String>> line2Values = new HashMap<>();
+        List<String> lines = CommonUtil.getListByClassPath(classPath);
+        for (int i = 0; i < lines.size(); i++) {
+            String line = lines.get(i);
+            if (!StringUtils.isEmpty(line)) {
+                String[] split = line.split(",");
+                line2Values.put(i, Arrays.asList(split));
+            }
+        }
+        return line2Values;
+    }
 
 
 }

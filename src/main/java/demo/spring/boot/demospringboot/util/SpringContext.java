@@ -1,4 +1,4 @@
-package demo.spring.boot.demospringboot.config;
+package demo.spring.boot.demospringboot.util;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeansException;
