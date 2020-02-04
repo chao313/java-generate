@@ -9,7 +9,7 @@
 //@EnableBatchProcessing
 //public class BatchConfig {
 //    public JobRepository jobRepository() {
-//        JobRepositoryFactoryBean bean = new JobRepositoryFactoryBean();
+//        JobRepositoryFactoryBean bean = mysql JobRepositoryFactoryBean();
 //        bean.setDatabaseType();
 //    }
 //

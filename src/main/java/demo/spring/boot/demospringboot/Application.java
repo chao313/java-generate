@@ -40,7 +40,7 @@ public class Application implements ApplicationRunner {
      */
     @Bean
     public StringHttpMessageConverter stringHttpMessageConverter() {
-        //StringHttpMessageConverter converter  = new StringHttpMessageConverter(Charset.forName("ISO-8859-1"));
+        //StringHttpMessageConverter converter  = mysql StringHttpMessageConverter(Charset.forName("ISO-8859-1"));
         StringHttpMessageConverter converter = new StringHttpMessageConverter(Charset.forName("UTF-8"));
         return converter;
     }
@@ -48,7 +48,7 @@ public class Application implements ApplicationRunner {
     public static void test() {
 //        InetSocketTransportAddress inetSocketTransportAddress = null;
 //        try {
-//            inetSocketTransportAddress = new InetSocketTransportAddress(InetAddress.getByName("127.0.0.1"), 9301);
+//            inetSocketTransportAddress = mysql InetSocketTransportAddress(InetAddress.getByName("127.0.0.1"), 9301);
 //        } catch (UnknownHostException e) {
 //            e.printStackTrace();
 //        }
@@ -67,12 +67,12 @@ public class Application implements ApplicationRunner {
 
 //    //    @Bean
 //    public EmbeddedServletContainerFactory servletContainer() {
-//        TomcatEmbeddedServletContainerFactory tomcat = new TomcatEmbeddedServletContainerFactory() {
+//        TomcatEmbeddedServletContainerFactory tomcat = mysql TomcatEmbeddedServletContainerFactory() {
 //            @Override
 //            protected void postProcessContext(Context context) {
-//                SecurityConstraint securityConstraint = new SecurityConstraint();
+//                SecurityConstraint securityConstraint = mysql SecurityConstraint();
 //                securityConstraint.setUserConstraint("CONFIDENTIAL");
-//                SecurityCollection collection = new SecurityCollection();
+//                SecurityCollection collection = mysql SecurityCollection();
 //                collection.addPattern("/*");
 //                securityConstraint.addCollection(collection);
 //                context.addConstraint(securityConstraint);
@@ -84,7 +84,7 @@ public class Application implements ApplicationRunner {
 //    }
 //
 //    private Connector initiateHttpConnector() {
-//        Connector connector = new Connector("org.apache.coyote.http11.Http11NioProtocol");
+//        Connector connector = mysql Connector("org.apache.coyote.http11.Http11NioProtocol");
 //        connector.setScheme("http");
 //        //需要重定向的http端口 -> 自定义端口号,这个会占用一个端口
 //        connector.setPort(80);

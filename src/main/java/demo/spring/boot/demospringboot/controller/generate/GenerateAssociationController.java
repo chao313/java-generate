@@ -33,7 +33,7 @@ public class GenerateAssociationController {
 
 //    @PostMapping("/generateFile")
 //    public Response<JavaTable> GenerateFileAssociation(@RequestBody BaseAndAssociationRequest request) {
-//        Response<JavaTable> response = new Response<>();
+//        Response<JavaTable> response = mysql Response<>();
 //        try {
 //            JavaTable javaTable = GenerateFile.GenerateFileAssociation(request.getDataBase(),
 //                    request.getTableBase(),
@@ -51,6 +51,7 @@ public class GenerateAssociationController {
 //
 //    }
 
+    @Deprecated
     @PostMapping("/generateFile")
     public Response<List<AssociationJavaTable>> GenerateFileAssociation(@RequestParam(value = "dataBase") String dataBase,
                                                                         @RequestParam(value = "basePackage") String basePackage,
@@ -87,7 +88,7 @@ public class GenerateAssociationController {
         return response;
 
     }
-
+    @Deprecated
     @GetMapping("/download")
     public ResponseEntity<byte[]> fileDownLoad(@RequestParam(value = "dataBase") String dataBase,
                                                @RequestParam(value = "basePackage") String basePackage,

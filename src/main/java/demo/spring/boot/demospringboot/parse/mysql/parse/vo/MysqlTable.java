@@ -37,19 +37,21 @@ import java.util.List;
 @Slf4j
 @ToString
 public class MysqlTable {
-    String tableName;                  //TABLE_NAME
-    String tableType;                  //TABLE_TYPE
-    String engine;                     //ENGINE
-    int version;                       //VERSION
-    String rowFormat;                  //ROW_FORMAT
-    Date createTime;                   //CREATE_TIME
-    String tableCollation;             //TABLE_COLLATION
-    String tableComment;               //TABLE_COMMENT
+    String tableName;                  //TABLE_NAME      表名称
+    String tableType;                  //TABLE_TYPE      表类型   [BASE TABLE\VIEW|SYSTEM VIEW]
+    String engine;                     //ENGINE          引擎     [MEMORY|InnoDB|MyISAM\CSV|PERFORMANCE_SCHEMA]
+    int version;                       //VERSION         版本
+    String rowFormat;                  //ROW_FORMAT      行格式    [Fixed|Dynamic]
+    Date createTime;                   //CREATE_TIME     创建时间
+    String tableCollation;             //TABLE_COLLATION 表的字符集 [utf8_general_ci|utf8_croatian_ci]
+    String tableComment;               //TABLE_COMMENT   表的注释
     private List<MysqlField> mysqlFields;
     private List<MysqlField> primaryKeys;//sql key
 
     /**
-     * 获得处理好的vo
+     * 获得处理好的
+     * 把字段中属于主键的部分筛选出来
+     *
      * @param mysqlTable
      * @return
      */
@@ -62,5 +64,21 @@ public class MysqlTable {
         });
         mysqlTable.setPrimaryKeys(primaryKeys);
         return mysqlTable;
+    }
+
+    /**
+     * 把主键字段中从全部字段中筛选出来
+     *
+     * @param mysqlFields 全部的字段
+     * @return 筛选出来的字段
+     */
+    public static List<MysqlField> getPRIFromFields(List<MysqlField> mysqlFields) {
+        List<MysqlField> primaryKeys = new ArrayList<>();
+        mysqlFields.forEach(mysqlField -> {
+            if (mysqlField.getIsPRI()) {
+                primaryKeys.add(mysqlField);
+            }
+        });
+        return primaryKeys;
     }
 }

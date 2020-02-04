@@ -16,17 +16,17 @@ public class Test {
 //    @org.junit.Test
 //    public void parseSql() throws Exception {
 //        File file = ResourceUtils.getFile("classpath:create.sql");
-//        InputStream inputStream = new BufferedInputStream(new FileInputStream(file));
+//        InputStream inputStream = mysql BufferedInputStream(mysql FileInputStream(file));
 //        String createSql = this.parse2String(inputStream).trim();//去除首位空格
 //        H2BD h2BD = H2BD.getInstance(true);
 ////        h2BD.execute(createSql);
 //        String sql2 = "select * from information_schema.columns where  table_name = 'act_ru_job'";
 //        h2BD.execute(sql2);
 //        List<MysqlField> mysqlFields = h2BD.executeQuery(sql2, resultSet -> {
-//            List<MysqlField> resultfields = new ArrayList<>();
+//            List<MysqlField> resultfields = mysql ArrayList<>();
 //            try {
 //                while (resultSet.next()) {
-//                    MysqlField field = new MysqlField();
+//                    MysqlField field = mysql MysqlField();
 //                    String name = resultSet.getString("MysqlField");
 //                    field.setName(name);
 //
@@ -42,7 +42,7 @@ public class Test {
 //
 //
 //    private String parse2String(InputStream in) throws Exception {
-//        OutputStream outputStream = new ByteArrayOutputStream();
+//        OutputStream outputStream = mysql ByteArrayOutputStream();
 //        int ch;
 //        while ((ch = in.read()) != -1) {
 //            outputStream.write(ch);
@@ -55,10 +55,10 @@ public class Test {
 //        MysqlBD mysqlBD = MysqlBD.getInstance(true);
 //        String sql = "select * from information_schema.columns where table_schema = 'test' and table_name = 'ts_transportationtask_journey_info'";
 //        List<MysqlField> mysqlFields = mysqlBD.executeQuery(sql, resultSet -> {
-//            List<MysqlField> resultFields = new ArrayList<>();
+//            List<MysqlField> resultFields = mysql ArrayList<>();
 //            try {
 //                while (resultSet.next()) {
-//                    MysqlField field = new MysqlField();
+//                    MysqlField field = mysql MysqlField();
 //                    String name = resultSet.getString("COLUMN_NAME");
 //                    String type = resultSet.getString("DATA_TYPE");
 //                    String coment = resultSet.getString("COLUMN_COMMENT");
@@ -107,7 +107,7 @@ public class Test {
 //
 //        sql = MessageFormat.format(sql, dataBase, ptableName);
 //        MysqlTable table = mysqlBD.executeQuery(sql, resultSet -> {
-//            MysqlTable resultTable = new MysqlTable();
+//            MysqlTable resultTable = mysql MysqlTable();
 //            try {
 //                while (resultSet.next()) {
 //                    String tableName = resultSet.getString("TABLE_NAME");
@@ -150,10 +150,10 @@ public class Test {
 //        String sql = "select * from information_schema.columns where table_schema = ''{0}'' and table_name = ''{1}''";
 //        sql = MessageFormat.format(sql, dataBase, ptableName);
 //        List<MysqlField> mysqlFields = mysqlBD.executeQuery(sql, resultSet -> {
-//            List<MysqlField> resultFields = new ArrayList<>();
+//            List<MysqlField> resultFields = mysql ArrayList<>();
 //            try {
 //                while (resultSet.next()) {
-//                    MysqlField field = new MysqlField();
+//                    MysqlField field = mysql MysqlField();
 //                    String name = resultSet.getString("COLUMN_NAME");
 //                    String type = resultSet.getString("DATA_TYPE");
 //                    String coment = resultSet.getString("COLUMN_COMMENT");
@@ -179,7 +179,7 @@ public class Test {
 
 //    @org.junit.Test
 //    public void testT() throws SQLException, ClassNotFoundException, IOException, TemplateException {
-//        DBInfo dbInfo = new DBInfo();
+//        DBInfo dbInfo = mysql DBInfo();
 //        MysqlTable mysqlTable = dbInfo.obtainTableInfo("test", "ts_transportationtask_journey_info");
 //        List<MysqlField> fields = dbInfo.obtainFieldsInfo("test", "ts_transportationtask_journey_info");
 //        mysqlTable.setMysqlFields(fields);
@@ -189,7 +189,7 @@ public class Test {
 //        mysqlTable = MysqlTable.transByMysqlTable(mysqlTable);
 //
 //        //转入freemark
-//        Map<String, Object> map = new HashMap<>();
+//        Map<String, Object> map = mysql HashMap<>();
 //        map.put("javaTable", javaTable);
 //        File templateDirFile = ResourceUtils.getFile("classpath:freemark");
 //        StringBuffer voStr = FreemarkUtil.generateXmlByTemplate(map, templateDirFile, "Vo.ftl");
@@ -204,17 +204,17 @@ public class Test {
 //        StringBuffer serviceImplStr = FreemarkUtil.generateXmlByTemplate(map, templateDirFile, "ServiceImpl.ftl");
 //        //log.info("{}", serviceImplStr.toString());
 //
-//        List<MysqlAndJavaField> mysqlAndJavaFields = new ArrayList<>();
+//        List<MysqlAndJavaField> mysqlAndJavaFields = mysql ArrayList<>();
 //        for (int i = 0; i < mysqlTable.getMysqlFields().size(); i++) {
-//            MysqlAndJavaField mysqlAndJavaField = new MysqlAndJavaField();
+//            MysqlAndJavaField mysqlAndJavaField = mysql MysqlAndJavaField();
 //            mysqlAndJavaField.setJavaField(javaTable.getJavaFields().get(i));
 //            mysqlAndJavaField.setMysqlField(mysqlTable.getMysqlFields().get(i));
 //            mysqlAndJavaFields.add(mysqlAndJavaField);
 //        }
 //        //
-//        List<MysqlAndJavaField> mysqlAndJavaKeys = new ArrayList<>();
+//        List<MysqlAndJavaField> mysqlAndJavaKeys = mysql ArrayList<>();
 //        for (int i = 0; i < mysqlTable.getPrimaryKeys().size(); i++) {
-//            MysqlAndJavaField mysqlAndJavaField = new MysqlAndJavaField();
+//            MysqlAndJavaField mysqlAndJavaField = mysql MysqlAndJavaField();
 //            mysqlAndJavaField.setJavaField(javaTable.getPrimaryKeys().get(i));
 //            mysqlAndJavaField.setMysqlField(mysqlTable.getPrimaryKeys().get(i));
 //            mysqlAndJavaKeys.add(mysqlAndJavaField);

@@ -1,27 +1,27 @@
-package demo.spring.boot.demospringboot.controller;
+package ${javaTable.basePackage};
 
-import demo.spring.boot.demospringboot.mybatis.service.TsEutrainCustomsDeclarationBindService;
-import demo.spring.boot.demospringboot.mybatis.vo.TsEutrainCustomsDeclarationBindUpdateRequest;
-import demo.spring.boot.demospringboot.mybatis.vo.TsEutrainCustomsDeclarationBindVo;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+import ${javaTable.classVoPackage};
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(value = "/TsEutrainCustomsDeclarationBindService")
 public class TestController {
 
     @Autowired
-    private TsEutrainCustomsDeclarationBindService service;
+    private ${javaTable.classServiceName} service;
 
     @PostMapping(value = "/insert")
-    public Boolean exec(@RequestBody() TsEutrainCustomsDeclarationBindVo vo) {
+    public Boolean exec(${javaTable.tableName}Vo vo) {
         return service.insert(vo);
     }
 
     @PostMapping(value = "/inserts")
-    public Boolean exec(@RequestBody() List<TsEutrainCustomsDeclarationBindVo> vo) {
+    public Boolean exec(@RequestBody() List<${javaTable.tableName}Vo> vo) {
     return service.insert(vo);
     }
 

@@ -6,6 +6,8 @@ import demo.spring.boot.demospringboot.parse.mysql.parse.db.GenerateFile;
 import demo.spring.boot.demospringboot.parse.mysql.parse.vo.JavaTable;
 import demo.spring.boot.demospringboot.util.FileUtils;
 import demo.spring.boot.demospringboot.util.ZipUtils;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
@@ -32,10 +34,14 @@ public class GenerateController {
     private static final String tmpPath = "tmp/";
 
 
+    @ApiOperation(value = "生成code", notes = "生成code:需要提供" +
+            "<br>1.数据库名称" +
+            "<br>2.表务名" +
+            "<br>3.包名称")
     @GetMapping("/generateFile")
-    public Response<JavaTable> GenerateFile(@RequestParam(value = "dataBase") String dataBase,
-                                            @RequestParam(value = "ptableName") String ptableName,
-                                            @RequestParam(value = "basePackage") String basePackage) {
+    public Response<JavaTable> GenerateFile(@ApiParam(value = "数据库名称", required = true) @RequestParam(value = "dataBase") String dataBase,
+                                            @ApiParam(value = "表务名", required = true) @RequestParam(value = "ptableName") String ptableName,
+                                            @ApiParam(value = "包名称", required = true) @RequestParam(value = "basePackage") String basePackage) {
         Response<JavaTable> response = new Response<>();
         try {
             JavaTable javaTable = GenerateFile.GenerateFile(dataBase, ptableName, basePackage);
@@ -90,35 +96,35 @@ public class GenerateController {
 //        BufferedOutputStream mapperFileOutputStream = null;
 //
 //        //创建文件夹
-//        new File(tmpPath + javaTable.getBasePackagePath()).mkdirs();
+//        mysql File(tmpPath + javaTable.getBasePackagePath()).mkdirs();
 //
-//        File voFile = new File(tmpPath + javaTable.getClassVoPath());
+//        File voFile = mysql File(tmpPath + javaTable.getClassVoPath());
 //        voFile.createNewFile();
-//        voOutputStream = new BufferedOutputStream(new FileOutputStream(voFile));
+//        voOutputStream = mysql BufferedOutputStream(mysql FileOutputStream(voFile));
 //        voOutputStream.write(javaTable.getClassVoStr().getBytes());
 //        voOutputStream.flush();
 //
-//        File daoFile = new File(tmpPath + javaTable.getClassDaoPath());
+//        File daoFile = mysql File(tmpPath + javaTable.getClassDaoPath());
 //        daoFile.createNewFile();
-//        daoOutputStream = new BufferedOutputStream(new FileOutputStream(daoFile));
+//        daoOutputStream = mysql BufferedOutputStream(mysql FileOutputStream(daoFile));
 //        daoOutputStream.write(javaTable.getClassDaoStr().getBytes());
 //        daoOutputStream.flush();
 //
-//        File serviceFile = new File(tmpPath + javaTable.getClassServicePath());
+//        File serviceFile = mysql File(tmpPath + javaTable.getClassServicePath());
 //        serviceFile.createNewFile();
-//        serviceOutputStream = new BufferedOutputStream(new FileOutputStream(serviceFile));
+//        serviceOutputStream = mysql BufferedOutputStream(mysql FileOutputStream(serviceFile));
 //        serviceOutputStream.write(javaTable.getClassServiceStr().getBytes());
 //        serviceOutputStream.flush();
 //
-//        File serviceImplFile = new File(tmpPath + javaTable.getClassServiceImplPath());
+//        File serviceImplFile = mysql File(tmpPath + javaTable.getClassServiceImplPath());
 //        serviceFile.createNewFile();
-//        serviceImplOutputStream = new BufferedOutputStream(new FileOutputStream(serviceImplFile));
+//        serviceImplOutputStream = mysql BufferedOutputStream(mysql FileOutputStream(serviceImplFile));
 //        serviceImplOutputStream.write(javaTable.getClassServiceImplStr().getBytes());
 //        serviceImplOutputStream.flush();
 //
-//        File mapperFile = new File(tmpPath + javaTable.getMapperPath());
+//        File mapperFile = mysql File(tmpPath + javaTable.getMapperPath());
 //        mapperFile.createNewFile();
-//        mapperFileOutputStream = new BufferedOutputStream(new FileOutputStream(mapperFile));
+//        mapperFileOutputStream = mysql BufferedOutputStream(mysql FileOutputStream(mapperFile));
 //        mapperFileOutputStream.write(javaTable.getMapperStr().getBytes());
 //        mapperFileOutputStream.flush();
 //
@@ -129,13 +135,13 @@ public class GenerateController {
 //        mapperFileOutputStream.close();
 //
 //
-//        File file = new File(tmpPath + zipFileName);
-//        OutputStream outputStream = new FileOutputStream(file);
+//        File file = mysql File(tmpPath + zipFileName);
+//        OutputStream outputStream = mysql FileOutputStream(file);
 //        ZipUtils.toZip(tmpPath + dirPath, outputStream, true);
 //        outputStream.flush();
 //        outputStream.close();
 //
-//        InputStream inputStream = new FileInputStream(tmpPath + zipFileName);
+//        InputStream inputStream = mysql FileInputStream(tmpPath + zipFileName);
 //
 //
 //        voFile.delete();

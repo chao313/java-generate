@@ -18,7 +18,17 @@ public class DBInfo {
      *
      * @param dataBase
      * @param ptableName
-     * @return
+     * @return 返回这个表的所有相关信息:表名称,表类型,引擎,表的字符集,表的注释<br>
+     * String tableName;                             //TABLE_NAME      表名称
+     * String tableType;                             //TABLE_TYPE      表类型   [BASE TABLE\VIEW|SYSTEM VIEW]
+     * String engine;                                //ENGINE          引擎     [MEMORY|InnoDB|MyISAM\CSV|PERFORMANCE_SCHEMA]
+     * int version;                                  //VERSION         版本
+     * String rowFormat;                             //ROW_FORMAT      行格式    [Fixed|Dynamic]
+     * Date createTime;                              //CREATE_TIME     创建时间
+     * String tableCollation;                        //TABLE_COLLATION 表的字符集 [utf8_general_ci|utf8_croatian_ci]
+     * String tableComment;                          //TABLE_COMMENT   表的注释
+     * private List<MysqlField> mysqlFields;         //表的字段!! 这里没有被注入
+     * private List<MysqlField> primaryKeys;         //表的主键!! 这里没有被注入
      * @throws SQLException
      * @throws ClassNotFoundException
      */
@@ -70,9 +80,14 @@ public class DBInfo {
 
 
     /**
-     * 获取字段的信息
+     * 获取字段的信息：字段名称,字段类型,字段注释,字段是否允许为null,字段是否为主键
      *
-     * @return
+     * @return <br>
+     * private String name;       //字段名称
+     * private String type;       //字段类型
+     * private String comment;    //字段注释
+     * private Boolean isNotNull; //字段是否允许为null
+     * private Boolean isPRI;     //字段是否为主键
      * @throws SQLException
      * @throws ClassNotFoundException
      */
@@ -80,7 +95,7 @@ public class DBInfo {
         MysqlBD mysqlBD = MysqlBD.getInstance(true);
         String sql = "select * from information_schema.columns where table_schema = ''{0}'' and table_name = ''{1}''";
         sql = MessageFormat.format(sql, dataBase, ptableName);
-        List<MysqlField> fields = mysqlBD.executeQuery(sql, resultSet -> {
+        List<MysqlField> mysqlFields = mysqlBD.executeQuery(sql, resultSet -> {
             List<MysqlField> resultFields = new ArrayList<>();
             try {
                 while (resultSet.next()) {
@@ -103,8 +118,8 @@ public class DBInfo {
             }
             return resultFields;
         });
-        log.info("[mysql解析][获取字段信息]{}", fields);
-        return fields;
+        log.info("[mysql解析][获取字段信息]{}", mysqlFields);
+        return mysqlFields;
     }
 
 }
