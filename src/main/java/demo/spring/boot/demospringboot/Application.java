@@ -8,12 +8,14 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.converter.StringHttpMessageConverter;
 
 import java.nio.charset.Charset;
 
 @SpringBootApplication
-@MapperScan(value = {"demo.spring.boot.demospringboot.mybatis.dao", "demo.spring.boot.demospringboot.demo2.dao"})//mybatis
+@ComponentScan(value = {"demo.spring.boot", "demo2"})
+@MapperScan(value = {"demo.spring.boot.demospringboot.mybatis.dao", "demo2.dao"})//mybatis
 public class Application implements ApplicationRunner {
 
     private static Logger logger = LoggerFactory.getLogger(Application.class);

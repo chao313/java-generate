@@ -17,32 +17,32 @@ public class ${ftlVo.className} {
     private ${allFtl.serviceFtl.className} service;
 
     @PostMapping(value = "/insert")
-    public Boolean insert(${allFtl.voFtl.className} vo) {
+    public Boolean insert(@RequestBody ${allFtl.voFtl.className} vo) {
         return service.insert(vo);
     }
 
     @PostMapping(value = "/inserts")
-    public Boolean insert(List<${allFtl.voFtl.className}> vos) {
+    public Boolean insert(@RequestBody List<${allFtl.voFtl.className}> vos) {
         return service.insert(vos);
     }
 
     @PostMapping(value = "/queryBase")
-    public List<${allFtl.voFtl.className}> queryBase(${allFtl.voFtl.className} query) {
+    public List<${allFtl.voFtl.className}> queryBase(@RequestBody ${allFtl.voFtl.className} query) {
         return service.queryBase(query);
     }
 
     @PostMapping(value = "/updateBase")
-    public Boolean updateBase(${allFtl.voFtl.className} source, ${allFtl.voFtl.className} target) {
+    public Boolean updateBase(@RequestBody ${allFtl.voFtl.className} source, @RequestBody ${allFtl.voFtl.className} target) {
         return service.updateBase(source, target);
     }
 
     @PostMapping(value = "/updateBaseIncludeNull")
-    public Boolean updateBaseIncludeNull(${allFtl.voFtl.className} source, ${allFtl.voFtl.className} target) {
+    public Boolean updateBaseIncludeNull(@RequestBody ${allFtl.voFtl.className} source, @RequestBody ${allFtl.voFtl.className} target) {
         return service.updateBaseIncludeNull(source, target);
     }
 
     @PostMapping(value = "/deleteBase")
-    public Boolean deleteBase(${allFtl.voFtl.className} vo) {
+    public Boolean deleteBase(@RequestBody ${allFtl.voFtl.className} vo) {
         return service.deleteBase(vo);
     }
 

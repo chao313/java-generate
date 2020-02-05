@@ -61,14 +61,14 @@ public interface ${ftlVo.className} {
      * <#list ftlVo.primaryKeyJavaFields as field><p>
      * ${field.name} : ${field.comment}</#list>
      */
-    ${allFtl.voFtl.className} queryByPrimaryKey(<#list ftlVo.primaryKeyJavaFields as field>${field.type} ${field.name}<#if field_has_next>,</#if></#list>);
+    ${allFtl.voFtl.className} queryByPrimaryKey(<#list ftlVo.primaryKeyJavaFields as field>@Param(value = "${field.name}") ${field.type} ${field.name}<#if field_has_next>,</#if></#list>);
 
     /**
      * 根据PrimaryKey删除
      * <#list ftlVo.primaryKeyJavaFields as field><p>
      * ${field.name} : ${field.comment}</#list>
      */
-    int deleteByPrimaryKey(<#list ftlVo.primaryKeyJavaFields as field>${field.type} ${field.name}<#if field_has_next>,</#if></#list>);
+    int deleteByPrimaryKey(<#list ftlVo.primaryKeyJavaFields as field>@Param(value = "${field.name}") ${field.type} ${field.name}<#if field_has_next>,</#if></#list>);
 
  </#if>
 }

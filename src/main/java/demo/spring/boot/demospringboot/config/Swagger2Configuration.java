@@ -23,7 +23,7 @@ public class Swagger2Configuration {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
                 .apis(RequestHandlerSelectors
-                        .basePackage("demo.spring.boot.demospringboot.demo2.controller"))
+                        .basePackage("demo2"))
                 .paths(PathSelectors.any())
                 .build()
                 .genericModelSubstitutes(DeferredResult.class)//异步http请求
