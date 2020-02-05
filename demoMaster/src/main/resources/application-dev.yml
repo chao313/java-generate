@@ -1,0 +1,57 @@
+## dev环境使用是配置
+server:
+  port: 8000
+  context-path: /demomaster
+
+
+spring:
+  mvc:
+    favicon:
+      enabled: true
+  ## freemarker
+  #spring.freemarker.allow-request-override=false
+  #spring.freemarker.cache=true
+  #spring.freemarker.check-template-location=true
+  #spring.freemarker.charset=UTF-8
+  #spring.freemarker.content-type=text/html
+  #spring.freemarker.expose-request-attributes=false
+  #spring.freemarker.expose-session-attributes=false
+  #spring.freemarker.expose-spring-macro-helpers=false
+  freemarker:
+    charset: UTF-8
+    content-type: text/html
+    cache: false
+    suffix: .html
+
+  #  ##数据sql
+  #     datasource:
+  #       driver-class-name: com.mysql.jdbc.Driver
+  #       url: jdbc:mysql://127.0.0.1:3306/information_schema
+  #       username: root
+  #       password: 123456
+  ##数据sql
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    #    url: jdbc:mysql://127.0.0.1:3306/information_schema
+    url: jdbc:mysql://127.0.0.1:3306/docker2
+    username: root
+    password: 123456
+#
+#  可以在application 上面加注解
+#  配合使用
+#  @MapperScan(value = "demo.spring.boot.demospringboot.mybatis.mapper")
+mybatis:
+  mapper-locations: classpath:mybatis/mapper/*Mapper.xml,classpath*:demomaster/mapper/*Mapper.xml
+  config-location: classpath:mybatis/config/mybatis-config.xml
+
+  ##静态资源
+resources:
+  ##静态资源
+  ## -- 如果不配置，都可以访问
+  ## -- 如果配置，都可以只能访问指定路径下的
+  ## http://localhost:8081/chao/static.txt
+  static-locations: classpath:/static/,classpath:/public/
+
+
+
+

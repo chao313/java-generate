@@ -5,7 +5,6 @@ import demo.spring.boot.demospringboot.framework.Response;
 import demo.spring.boot.demospringboot.parse.mysql.parse.db.GenerateFile;
 import demo.spring.boot.demospringboot.parse.mysql.parse.vo.JavaTable;
 import demo.spring.boot.demospringboot.parse.mysql.parse.vo.mysql.ftl.AllFtl;
-import demo.spring.boot.demospringboot.util.FileUtils;
 import demo.spring.boot.demospringboot.util.ZipUtils;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -33,7 +32,8 @@ public class GenerateController {
     private static Logger LOGGER =
             LoggerFactory.getLogger(GenerateController.class);
 
-    public static final String demoMaster = "demoMaster/";
+    public static final String demoMasterBasePackage = "demoMaster";//这里是作为package存在的
+    public static final String demoMasterDirPath = "demoMaster/";//这里是作为package存在的
 
     private static final String tmpPath = "tmp/";
 
@@ -150,7 +150,7 @@ public class GenerateController {
         /**
          *
          */
-        String basePackage = demoMaster;
+        String basePackage = demoMasterBasePackage;
         AllFtl allFtl = GenerateFile.GenerateFileV2(dataBase, ptableName, basePackage);
         String operateDir = String.valueOf(new Date().getTime());
         String fileNameZip = operateDir + ".zip";

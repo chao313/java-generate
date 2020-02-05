@@ -212,10 +212,12 @@ public class ZipUtils {
      */
     public static byte[] createFilesAndZipMavenDemoMaster(AllFtl allFtl, String zipFileName, String operateDir) throws IOException {
 
-
-        String sourceMavenDirPath = GenerateController.demoMaster;//maven项目地址的文件夹
-        String targetOperateDirPath = tmpPath + operateDir;//操作的目录
-        String codeDirPath = tmpPath + operateDir + "src/main/java/";//code存放的地址
+        // ---> demoMaster
+        String sourceMavenDirPath = GenerateController.demoMasterDirPath;//maven项目地址的文件夹
+        // ---> tmp/1580899138501/demoMaster/
+        String targetOperateDirPath = tmpPath + operateDir + "/" + GenerateController.demoMasterBasePackage + "/";//操作的目录
+        // ---> tmp/1580899138501/src/main/java/
+        String codeDirPath = targetOperateDirPath + "src/main/java/";//code存放的地址
 
 
         /**
