@@ -1,5 +1,6 @@
 package demo.spring.boot.demospringboot.util;
 
+import demo.spring.boot.demospringboot.controller.generate.GenerateController;
 import demo.spring.boot.demospringboot.parse.mysql.parse.vo.AssociationJavaTable;
 import demo.spring.boot.demospringboot.parse.mysql.parse.vo.JavaTable;
 import demo.spring.boot.demospringboot.parse.mysql.parse.vo.mysql.ftl.AllFtl;
@@ -16,6 +17,7 @@ public class ZipUtils {
     private static final int BUFFER_SIZE = 2 * 1024;
 
     private static final String tmpPath = "tmp/";
+    private static final String tmpPathTarget = "tmpTarget/";
 
     /**
      * 压缩成ZIP 方法1
@@ -199,7 +201,93 @@ public class ZipUtils {
         return inputStream;
     }
 
-    public static InputStream createFilesAndZipV2(AllFtl allFtl, String zipFileName) throws IOException {
+    /**
+     * 目前的生成方式 maven的项目
+     *
+     * @param allFtl
+     * @param zipFileName
+     * @param operateDir  -> 用于存放临时文件夹的目录
+     * @return
+     * @throws IOException
+     */
+    public static byte[] createFilesAndZipMavenDemoMaster(AllFtl allFtl, String zipFileName, String operateDir) throws IOException {
+
+
+        String sourceMavenDirPath = GenerateController.demoMaster;//maven项目地址的文件夹
+        String targetOperateDirPath = tmpPath + operateDir;//操作的目录
+        String codeDirPath = tmpPath + operateDir + "src/main/java/";//code存放的地址
+
+
+        /**
+         * 1.把maven项目复制到操作目录下
+         */
+        File sourceMavenDir = new File(sourceMavenDirPath);
+        sourceMavenDir.mkdirs();//创建文件夹
+        File targetOperateDir = new File(targetOperateDirPath);
+        org.apache.commons.io.FileUtils.copyDirectory(sourceMavenDir, targetOperateDir);//项目复制到目标文件夹下
+
+        /**
+         * 2.生成code
+         */
+
+        /**
+         * 所有的文件统一处理
+         */
+        List<FtlInterface> ftlInterfaces = new ArrayList<>();
+        ftlInterfaces.add(allFtl.getControllerFtl());
+        ftlInterfaces.add(allFtl.getServiceImplFtl());
+        ftlInterfaces.add(allFtl.getServiceFtl());
+        ftlInterfaces.add(allFtl.getDaoFtl());
+        ftlInterfaces.add(allFtl.getVoFtl());
+        ftlInterfaces.add(allFtl.getMapperFtl());
+
+        /**
+         * 创建文件并写入数据
+         */
+        for (FtlInterface ftlInterface : ftlInterfaces) {
+            BufferedOutputStream outputStream = null;
+            String dir = (codeDirPath + ftlInterface.getPackageName()).replace(".", "/");
+            //创建文件夹
+            new File(dir).mkdirs();
+            File voFile = new File(dir + "/" + ftlInterface.getFileName());
+            voFile.createNewFile();
+            outputStream = new BufferedOutputStream(new FileOutputStream(voFile));
+            outputStream.write(ftlInterface.getFreeMarkStr().getBytes());
+            outputStream.flush();
+            outputStream.close();
+
+        }
+
+        String targetZip = tmpPathTarget + zipFileName;
+        new File(tmpPathTarget).mkdirs();
+        /**
+         * 打包压缩
+         */
+        File file = new File(targetZip);
+        OutputStream outputStream = new FileOutputStream(file);
+        ZipUtils.toZip(tmpPath, outputStream, true);
+        outputStream.flush();
+        outputStream.close();
+
+        byte[] bytes = org.apache.commons.io.FileUtils.readFileToByteArray(new File(targetZip));
+
+
+        FileUtils.deleteDirectory(tmpPath);
+        FileUtils.deleteDirectory(tmpPathTarget);
+
+        return bytes;
+    }
+
+
+    /**
+     * 目前的生成方式 - maven
+     *
+     * @param allFtl
+     * @param zipFileName
+     * @return
+     * @throws IOException
+     */
+    public static byte[] createFilesAndZipV2(AllFtl allFtl, String zipFileName) throws IOException {
 
         /**
          * 所有的文件统一处理
@@ -229,22 +317,24 @@ public class ZipUtils {
 
         }
 
+        String targetZip = tmpPathTarget + zipFileName;
+        new File(tmpPathTarget).mkdirs();
         /**
          * 打包压缩
          */
-        File file = new File(tmpPath + zipFileName);
+        File file = new File(targetZip);
         OutputStream outputStream = new FileOutputStream(file);
         ZipUtils.toZip(tmpPath, outputStream, true);
         outputStream.flush();
         outputStream.close();
 
-        InputStream inputStream = new FileInputStream(tmpPath + zipFileName);
+        byte[] bytes = org.apache.commons.io.FileUtils.readFileToByteArray(new File(targetZip));
 
 
-        // FileUtils.deleteDirectory(tmpPath);
-//        file.delete();
+        FileUtils.deleteDirectory(tmpPath);
+        FileUtils.deleteDirectory(tmpPathTarget);
 
-        return inputStream;
+        return bytes;
     }
 
 

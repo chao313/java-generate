@@ -33,6 +33,8 @@ public class GenerateController {
     private static Logger LOGGER =
             LoggerFactory.getLogger(GenerateController.class);
 
+    public static final String demoMaster = "demoMaster/";
+
     private static final String tmpPath = "tmp/";
 
 
@@ -41,6 +43,7 @@ public class GenerateController {
             "<br>2.表务名" +
             "<br>3.包名称")
     @GetMapping("/generateFile")
+    @Deprecated
     public Response<JavaTable> GenerateFile(@ApiParam(value = "数据库名称", required = true) @RequestParam(value = "dataBase") String dataBase,
                                             @ApiParam(value = "表务名", required = true) @RequestParam(value = "ptableName") String ptableName,
                                             @ApiParam(value = "包名称", required = true) @RequestParam(value = "basePackage") String basePackage) {
@@ -65,8 +68,8 @@ public class GenerateController {
             "<br>3.包名称")
     @GetMapping("/generateFileV2")
     public Response<AllFtl> GenerateFileV2(@ApiParam(value = "数据库名称", required = true) @RequestParam(value = "dataBase") String dataBase,
-                                            @ApiParam(value = "表务名", required = true) @RequestParam(value = "ptableName") String ptableName,
-                                            @ApiParam(value = "包名称", required = true) @RequestParam(value = "basePackage") String basePackage) {
+                                           @ApiParam(value = "表务名", required = true) @RequestParam(value = "ptableName") String ptableName,
+                                           @ApiParam(value = "包名称", required = true) @RequestParam(value = "basePackage") String basePackage) {
         Response<AllFtl> response = new Response<>();
         try {
             AllFtl allFtl = GenerateFile.GenerateFileV2(dataBase, ptableName, basePackage);
@@ -84,6 +87,7 @@ public class GenerateController {
 
 
     @GetMapping("/download")
+    @Deprecated
     public ResponseEntity<byte[]> fileDownLoad(@RequestParam(value = "dataBase") String dataBase,
                                                @RequestParam(value = "ptableName") String ptableName,
                                                @RequestParam(value = "basePackage") String basePackage) throws Exception {
@@ -105,18 +109,52 @@ public class GenerateController {
         return response;
     }
 
+    /**
+     * 注意->这里的下载目前通过swagger-ui的url是不行的，但是通过url直接访问是可以的
+     *
+     * @param dataBase
+     * @param ptableName
+     * @param basePackage
+     * @return
+     * @throws Exception
+     */
     @GetMapping("/downloadV2")
     public ResponseEntity<byte[]> fileDownLoadV2(@RequestParam(value = "dataBase") String dataBase,
-                                               @RequestParam(value = "ptableName") String ptableName,
-                                               @RequestParam(value = "basePackage") String basePackage) throws Exception {
+                                                 @RequestParam(value = "ptableName") String ptableName,
+                                                 @RequestParam(value = "basePackage") String basePackage) throws Exception {
 
         AllFtl allFtl = GenerateFile.GenerateFileV2(dataBase, ptableName, basePackage);
         String fileNameZip = new Date().getTime() + ".zip";
-        InputStream inputStream = ZipUtils.createFilesAndZipV2(allFtl, fileNameZip);
+        byte[] body = ZipUtils.createFilesAndZipV2(allFtl, fileNameZip);
 
-        byte[] body = null;
-        body = new byte[inputStream.available()];
-        inputStream.read(body);//读入到输入流里面
+        HttpHeaders headers = new HttpHeaders();//设置响应头
+        headers.add("Content-Disposition", "attachment;filename=" + fileNameZip);//下载的文件名称
+        HttpStatus statusCode = HttpStatus.OK;//设置响应吗
+        ResponseEntity<byte[]> response = new ResponseEntity<>(body, headers, statusCode);
+        return response;
+    }
+
+
+    /**
+     * 注意->这里的下载目前通过swagger-ui的url是不行的，但是通过url直接访问是可以的
+     *
+     * @param dataBase
+     * @param ptableName
+     * @return
+     * @throws Exception
+     */
+    @GetMapping("/downloadMavenDemoMaster")
+    public ResponseEntity<byte[]> downloadMavenDemoMaster(@RequestParam(value = "dataBase") String dataBase,
+                                                          @RequestParam(value = "ptableName") String ptableName) throws Exception {
+
+        /**
+         *
+         */
+        String basePackage = demoMaster;
+        AllFtl allFtl = GenerateFile.GenerateFileV2(dataBase, ptableName, basePackage);
+        String operateDir = String.valueOf(new Date().getTime());
+        String fileNameZip = operateDir + ".zip";
+        byte[] body = ZipUtils.createFilesAndZipMavenDemoMaster(allFtl, fileNameZip, operateDir);
 
         HttpHeaders headers = new HttpHeaders();//设置响应头
         headers.add("Content-Disposition", "attachment;filename=" + fileNameZip);//下载的文件名称

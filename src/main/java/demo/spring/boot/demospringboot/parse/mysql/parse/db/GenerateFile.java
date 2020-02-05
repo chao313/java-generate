@@ -408,6 +408,7 @@ public class GenerateFile {
      * @throws IOException
      * @throws TemplateException
      */
+    @Deprecated
     public static JavaTable GenerateFile(String dataBase, String ptableName, String basePackage)
             throws SQLException, ClassNotFoundException, IOException, TemplateException {
         DBInfo dbInfo = new DBInfo();
