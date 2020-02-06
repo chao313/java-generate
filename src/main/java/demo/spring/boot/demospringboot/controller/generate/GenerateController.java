@@ -19,7 +19,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 2018/4/6    Created by   juan
@@ -154,7 +157,7 @@ public class GenerateController {
         AllFtl allFtl = GenerateFile.GenerateFileV2(dataBase, ptableName, basePackage);
         String operateDir = String.valueOf(new Date().getTime());
         String fileNameZip = operateDir + ".zip";
-        byte[] body = ZipUtils.createFilesAndZipMavenDemoMaster(allFtl, fileNameZip, operateDir);
+        byte[] body = ZipUtils.createFilesAndZipMavenDemoMaster(Arrays.asList(allFtl), fileNameZip, operateDir);
 
         HttpHeaders headers = new HttpHeaders();//设置响应头
         headers.add("Content-Disposition", "attachment;filename=" + fileNameZip);//下载的文件名称
@@ -163,81 +166,39 @@ public class GenerateController {
         return response;
     }
 
+    /**
+     * 注意->这里的下载目前通过swagger-ui的url是不行的，但是通过url直接访问是可以的
+     * 这里兼容了多个table的情况
+     *
+     * @param dataBase
+     * @param ptableNames
+     * @return
+     * @throws Exception
+     */
+    @GetMapping("/downloadMavenDemoMasterMoreTables")
+    public ResponseEntity<byte[]> downloadMavenDemoMasterMoreTables(
+            @ApiParam(example = "docker2") @RequestParam(value = "dataBase") String dataBase,
+            @ApiParam(example = "t_host,t_user") @RequestParam(value = "ptableNames") List<String> ptableNames) throws Exception {
 
-//    /**
-//     * 返回的是压缩后的文件流,
-//     *
-//     * @param javaTable
-//     * @param zipFileName 文件地址
-//     * @return
-//     * @throws IOException
-//     */
-//    private InputStream createFilesAndZip(JavaTable javaTable, String zipFileName, String dirPath) throws IOException {
-//        BufferedOutputStream voOutputStream = null;
-//        BufferedOutputStream daoOutputStream = null;
-//        BufferedOutputStream serviceOutputStream = null;
-//        BufferedOutputStream serviceImplOutputStream = null;
-//        BufferedOutputStream mapperFileOutputStream = null;
-//
-//        //创建文件夹
-//        mysql File(tmpPath + javaTable.getBasePackagePath()).mkdirs();
-//
-//        File voFile = mysql File(tmpPath + javaTable.getClassVoPath());
-//        voFile.createNewFile();
-//        voOutputStream = mysql BufferedOutputStream(mysql FileOutputStream(voFile));
-//        voOutputStream.write(javaTable.getClassVoStr().getBytes());
-//        voOutputStream.flush();
-//
-//        File daoFile = mysql File(tmpPath + javaTable.getClassDaoPath());
-//        daoFile.createNewFile();
-//        daoOutputStream = mysql BufferedOutputStream(mysql FileOutputStream(daoFile));
-//        daoOutputStream.write(javaTable.getClassDaoStr().getBytes());
-//        daoOutputStream.flush();
-//
-//        File serviceFile = mysql File(tmpPath + javaTable.getClassServicePath());
-//        serviceFile.createNewFile();
-//        serviceOutputStream = mysql BufferedOutputStream(mysql FileOutputStream(serviceFile));
-//        serviceOutputStream.write(javaTable.getClassServiceStr().getBytes());
-//        serviceOutputStream.flush();
-//
-//        File serviceImplFile = mysql File(tmpPath + javaTable.getClassServiceImplPath());
-//        serviceFile.createNewFile();
-//        serviceImplOutputStream = mysql BufferedOutputStream(mysql FileOutputStream(serviceImplFile));
-//        serviceImplOutputStream.write(javaTable.getClassServiceImplStr().getBytes());
-//        serviceImplOutputStream.flush();
-//
-//        File mapperFile = mysql File(tmpPath + javaTable.getMapperPath());
-//        mapperFile.createNewFile();
-//        mapperFileOutputStream = mysql BufferedOutputStream(mysql FileOutputStream(mapperFile));
-//        mapperFileOutputStream.write(javaTable.getMapperStr().getBytes());
-//        mapperFileOutputStream.flush();
-//
-//        voOutputStream.close();
-//        daoOutputStream.close();
-//        serviceOutputStream.close();
-//        serviceImplOutputStream.close();
-//        mapperFileOutputStream.close();
-//
-//
-//        File file = mysql File(tmpPath + zipFileName);
-//        OutputStream outputStream = mysql FileOutputStream(file);
-//        ZipUtils.toZip(tmpPath + dirPath, outputStream, true);
-//        outputStream.flush();
-//        outputStream.close();
-//
-//        InputStream inputStream = mysql FileInputStream(tmpPath + zipFileName);
-//
-//
-//        voFile.delete();
-//        daoFile.delete();
-//        serviceFile.delete();
-//        serviceImplFile.delete();
-//        mapperFile.delete();
-//        FileUtils.deleteDirectory(tmpPath + dirPath);
-//        file.delete();
-//
-//        return inputStream;
-//    }
+        /**
+         *
+         */
+        String basePackage = demoMasterBasePackage;
+        List<AllFtl> allFtls = new ArrayList<>();
+        for (String ptableName : ptableNames) {
+            AllFtl allFtl = GenerateFile.GenerateFileV2(dataBase, ptableName, basePackage);
+            allFtls.add(allFtl);
+        }
+        String operateDir = String.valueOf(new Date().getTime());
+        String fileNameZip = operateDir + ".zip";
+        byte[] body = ZipUtils.createFilesAndZipMavenDemoMaster(allFtls, fileNameZip, operateDir);
+
+        HttpHeaders headers = new HttpHeaders();//设置响应头
+        headers.add("Content-Disposition", "attachment;filename=" + fileNameZip);//下载的文件名称
+        HttpStatus statusCode = HttpStatus.OK;//设置响应吗
+        ResponseEntity<byte[]> response = new ResponseEntity<>(body, headers, statusCode);
+        return response;
+    }
 
 
 }

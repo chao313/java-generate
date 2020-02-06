@@ -204,13 +204,13 @@ public class ZipUtils {
     /**
      * 目前的生成方式 maven的项目
      *
-     * @param allFtl
+     * @param allFtls     -> 抱哈多个从vo到controller
      * @param zipFileName
      * @param operateDir  -> 用于存放临时文件夹的目录
      * @return
      * @throws IOException
      */
-    public static byte[] createFilesAndZipMavenDemoMaster(AllFtl allFtl, String zipFileName, String operateDir) throws IOException {
+    public static byte[] createFilesAndZipMavenDemoMaster(List<AllFtl> allFtls, String zipFileName, String operateDir) throws IOException {
 
         // ---> demoMaster
         String sourceMavenDirPath = GenerateController.demoMasterDirPath;//maven项目地址的文件夹
@@ -228,37 +228,40 @@ public class ZipUtils {
         File targetOperateDir = new File(targetOperateDirPath);
         org.apache.commons.io.FileUtils.copyDirectory(sourceMavenDir, targetOperateDir);//项目复制到目标文件夹下
 
-        /**
-         * 2.生成code
-         */
+        for (AllFtl allFtl : allFtls) {
+            /**
+             * 2.生成code
+             */
 
-        /**
-         * 所有的文件统一处理
-         */
-        List<FtlInterface> ftlInterfaces = new ArrayList<>();
-        ftlInterfaces.add(allFtl.getControllerFtl());
-        ftlInterfaces.add(allFtl.getServiceImplFtl());
-        ftlInterfaces.add(allFtl.getServiceFtl());
-        ftlInterfaces.add(allFtl.getDaoFtl());
-        ftlInterfaces.add(allFtl.getVoFtl());
-        ftlInterfaces.add(allFtl.getMapperFtl());
+            /**
+             * 所有的文件统一处理
+             */
+            List<FtlInterface> ftlInterfaces = new ArrayList<>();
+            ftlInterfaces.add(allFtl.getControllerFtl());
+            ftlInterfaces.add(allFtl.getServiceImplFtl());
+            ftlInterfaces.add(allFtl.getServiceFtl());
+            ftlInterfaces.add(allFtl.getDaoFtl());
+            ftlInterfaces.add(allFtl.getVoFtl());
+            ftlInterfaces.add(allFtl.getMapperFtl());
 
-        /**
-         * 创建文件并写入数据
-         */
-        for (FtlInterface ftlInterface : ftlInterfaces) {
-            BufferedOutputStream outputStream = null;
-            String dir = (codeDirPath + ftlInterface.getPackageName()).replace(".", "/");
-            //创建文件夹
-            new File(dir).mkdirs();
-            File voFile = new File(dir + "/" + ftlInterface.getFileName());
-            voFile.createNewFile();
-            outputStream = new BufferedOutputStream(new FileOutputStream(voFile));
-            outputStream.write(ftlInterface.getFreeMarkStr().getBytes());
-            outputStream.flush();
-            outputStream.close();
+            /**
+             * 创建文件并写入数据
+             */
+            for (FtlInterface ftlInterface : ftlInterfaces) {
+                BufferedOutputStream outputStream = null;
+                String dir = (codeDirPath + ftlInterface.getPackageName()).replace(".", "/");
+                //创建文件夹
+                new File(dir).mkdirs();
+                File voFile = new File(dir + "/" + ftlInterface.getFileName());
+                voFile.createNewFile();
+                outputStream = new BufferedOutputStream(new FileOutputStream(voFile));
+                outputStream.write(ftlInterface.getFreeMarkStr().getBytes());
+                outputStream.flush();
+                outputStream.close();
 
+            }
         }
+
 
         String targetZip = tmpPathTarget + zipFileName;
         new File(tmpPathTarget).mkdirs();
