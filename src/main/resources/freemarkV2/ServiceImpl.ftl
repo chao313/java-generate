@@ -109,6 +109,8 @@ public class ${ftlVo.className} implements ${allFtl.serviceFtl.className} {
      * 根据PrimaryKey删除
      * <#list ftlVo.primaryKeyJavaFields as field><p>
      * ${field.name} : ${field.comment}</#list>
+     * <#list ftlVo.primaryKeyJavaFields as field>@param ${field.name}
+     * </#list>
      */
     @Override
     public boolean deleteByPrimaryKey(<#list ftlVo.primaryKeyJavaFields as field>${field.type} ${field.name}<#if field_has_next>, </#if></#list>) {

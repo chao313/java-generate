@@ -60,6 +60,8 @@ public interface ${ftlVo.className} {
      * 根据PrimaryKey查询
      * <#list ftlVo.primaryKeyJavaFields as field><p>
      * ${field.name} : ${field.comment}</#list>
+     * <#list ftlVo.primaryKeyJavaFields as field>@param ${field.name}
+     * </#list>
      */
     ${allFtl.voFtl.className} queryByPrimaryKey(<#list ftlVo.primaryKeyJavaFields as field>@Param(value = "${field.name}") ${field.type} ${field.name}<#if field_has_next>,</#if></#list>);
 
@@ -67,6 +69,8 @@ public interface ${ftlVo.className} {
      * 根据PrimaryKey删除
      * <#list ftlVo.primaryKeyJavaFields as field><p>
      * ${field.name} : ${field.comment}</#list>
+     * <#list ftlVo.primaryKeyJavaFields as field>@param ${field.name}
+     * </#list>
      */
     int deleteByPrimaryKey(<#list ftlVo.primaryKeyJavaFields as field>@Param(value = "${field.name}") ${field.type} ${field.name}<#if field_has_next>,</#if></#list>);
 
