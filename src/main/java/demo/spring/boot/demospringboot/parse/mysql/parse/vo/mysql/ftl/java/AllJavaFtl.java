@@ -5,6 +5,10 @@ import lombok.Data;
 @Data
 public class AllJavaFtl {
     private VoFtl voFtl;
+    private VoPriFtl voPriFtl;
+    private VoNoPriFtl voNoPriFtl;
+    private RequestUpdateBaseFtl requestUpdateBaseFtl;
+    private RequestUpdatePrimaryKeyFtl requestUpdatePrimaryKeyFtl;
     private DAOFtl daoFtl;
     private ServiceFtl serviceFtl;
     private ServiceImplFtl serviceImplFtl;

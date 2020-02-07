@@ -31,25 +31,9 @@ public class Swagger2Configuration {
                 .pathMapping("/")
                 .apiInfo(apiInfo())
                 .useDefaultResponseMessages(false)
-                .groupName("demo")
+                .groupName("demoMaster")
                 ;
     }
-
-    @Bean
-    public Docket createRestApi() {
-        return new Docket(DocumentationType.SWAGGER_2)
-                .select()
-                .apis(RequestHandlerSelectors.basePackage("demo.spring.boot.demospringboot"))
-                .paths(PathSelectors.any())
-                .build()
-                .genericModelSubstitutes(DeferredResult.class)
-                .forCodeGeneration(true)
-                .pathMapping("/")
-                .apiInfo(apiInfo())
-                .useDefaultResponseMessages(false)
-                ;
-    }
-
 
     /**
      * api描述信息

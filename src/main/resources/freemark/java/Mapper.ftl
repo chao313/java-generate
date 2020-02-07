@@ -60,11 +60,9 @@
         UPDATE `${ftlVo.table.tableName}`
         <set>
         <#list ftlVo.mysqlAndJavaFields as mysqlAndJavaField>
-            <#if mysqlAndJavaField.mysqlField.isPRI=false>
             <if test="source.${mysqlAndJavaField.javaField.name} != null">
                 `${mysqlAndJavaField.mysqlField.name}` = <#noparse>#{source.</#noparse>${mysqlAndJavaField.javaField.name}<#noparse>}</#noparse><#if mysqlAndJavaField_has_next>,</#if>
             </if>
-            </#if>
         </#list>
         </set>
         <where>
@@ -82,9 +80,7 @@
         UPDATE `${ftlVo.table.tableName}`
         <set>
          <#list ftlVo.mysqlAndJavaFields as mysqlAndJavaField>
-             <#if mysqlAndJavaField.mysqlField.isPRI=false>
             `${mysqlAndJavaField.mysqlField.name}` = <#noparse>#{source.</#noparse>${mysqlAndJavaField.javaField.name}<#noparse>}</#noparse><#if mysqlAndJavaField_has_next>,</#if>
-             </#if>
          </#list>
         </set>
         <where>
@@ -136,6 +132,26 @@
             </#list>
         </where>
     </delete>
+
+    <update id="updateByPrimaryKey"
+            parameterType="${allJavaFtl.voFtl.packageName}.${allJavaFtl.voFtl.className}">
+        UPDATE `${ftlVo.table.tableName}`
+        <set>
+            <#list ftlVo.mysqlAndJavaFields as mysqlAndJavaField>
+                <#if mysqlAndJavaField.mysqlField.isPRI=false>
+               <if test="source.${mysqlAndJavaField.javaField.name} != null">
+                   `${mysqlAndJavaField.mysqlField.name}` = <#noparse>#{source.</#noparse>${mysqlAndJavaField.javaField.name}<#noparse>}</#noparse><#if mysqlAndJavaField_has_next>,</#if>
+               </if>
+                </#if>
+            </#list>
+        </set>
+        <where>
+            1 =1
+            <#list ftlVo.primaryKeyMysqlAndJavaFields as mysqlAndJavaField>
+               AND `${mysqlAndJavaField.mysqlField.name}` = <#noparse>#{target.</#noparse>${mysqlAndJavaField.javaField.name}<#noparse>}</#noparse>
+            </#list>
+        </where>
+    </update>
 </#if>
 
 </mapper>

@@ -4,6 +4,9 @@ package ${ftlVo.packageName};
 import java.util.List;
 
 import ${allJavaFtl.voFtl.packageName}.${allJavaFtl.voFtl.className};
+import ${allJavaFtl.voPriFtl.packageName}.${allJavaFtl.voPriFtl.className};
+import ${allJavaFtl.voNoPriFtl.packageName}.${allJavaFtl.voNoPriFtl.className};
+
 <#list ftlVo.javaFieldTypes as fieldType><#if fieldType = "Timestamp" >import java.sql.Timestamp;
 </#if><#if fieldType = "Time" >import java.sql.Time;
 </#if><#if fieldType = "Date" >import java.util.Date;
@@ -71,6 +74,16 @@ public interface ${ftlVo.className} {
      * </#list>
      */
     boolean deleteByPrimaryKey(<#list ftlVo.primaryKeyJavaFields as field>${field.type} ${field.name}<#if field_has_next>,</#if></#list>);
+
+    /**
+     * 根据PrimaryKey更新，会根据主键去更新其他的值(空值不覆盖有值) -> 主键不更新
+     * <#list ftlVo.primaryKeyJavaFields as field><p>
+     * ${field.name} : ${field.comment}</#list>
+     * <#list ftlVo.primaryKeyJavaFields as field>@param ${field.name}
+     * </#list>
+     */
+    boolean updateByPrimaryKey(${allJavaFtl.voNoPriFtl.className} source,${allJavaFtl.voPriFtl.className} target);
+
 
  </#if>
 

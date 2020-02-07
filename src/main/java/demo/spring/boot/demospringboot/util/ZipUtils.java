@@ -204,7 +204,7 @@ public class ZipUtils {
     /**
      * 目前的生成方式 maven的项目
      *
-     * @param allJavaFtls     -> 抱哈多个从vo到controller
+     * @param allJavaFtls -> 抱哈多个从vo到controller
      * @param zipFileName
      * @param operateDir  -> 用于存放临时文件夹的目录
      * @return
@@ -241,6 +241,10 @@ public class ZipUtils {
             ftlJavaInterfaces.add(allJavaFtl.getServiceImplFtl());
             ftlJavaInterfaces.add(allJavaFtl.getServiceFtl());
             ftlJavaInterfaces.add(allJavaFtl.getDaoFtl());
+            ftlJavaInterfaces.add(allJavaFtl.getRequestUpdatePrimaryKeyFtl());
+            ftlJavaInterfaces.add(allJavaFtl.getRequestUpdateBaseFtl());
+            ftlJavaInterfaces.add(allJavaFtl.getVoNoPriFtl());
+            ftlJavaInterfaces.add(allJavaFtl.getVoPriFtl());
             ftlJavaInterfaces.add(allJavaFtl.getVoFtl());
             ftlJavaInterfaces.add(allJavaFtl.getMapperFtl());
 

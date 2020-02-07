@@ -104,6 +104,15 @@ public class GenerateFileJava {
         AllJavaFtl allJavaFtl = new AllJavaFtl();
         VoFtl voFtl = GenerateFileJava.getVoFtl(table, basePackage, classNamePrefix, mysqlFields, primaryKeyMysqlFields, javaFields, primaryKeyJavaFields, javaFieldTypes);
         allJavaFtl.setVoFtl(voFtl);
+        VoPriFtl voPriFtl = GenerateFileJava.getVoPriFtl(table, basePackage, classNamePrefix, javaFields, javaFieldTypes);
+        allJavaFtl.setVoPriFtl(voPriFtl);
+        VoNoPriFtl voNoPriFtl = GenerateFileJava.getVoNoPriFtl(table, basePackage, classNamePrefix, javaFields, javaFieldTypes);
+        allJavaFtl.setVoNoPriFtl(voNoPriFtl);
+        RequestUpdateBaseFtl requestUpdateBaseFtl = GenerateFileJava.getRequestUpdateBaseFtl(table, basePackage, classNamePrefix, allJavaFtl);
+        allJavaFtl.setRequestUpdateBaseFtl(requestUpdateBaseFtl);
+        RequestUpdatePrimaryKeyFtl requestUpdatePrimaryKeyFtl = GenerateFileJava.getRequestUpdatePrimaryKeyFtl(table, basePackage, classNamePrefix, allJavaFtl);
+        allJavaFtl.setRequestUpdatePrimaryKeyFtl(requestUpdatePrimaryKeyFtl);
+
         DAOFtl daoFtl = GenerateFileJava.getDAOFtl(table, basePackage, classNamePrefix, mysqlFields, primaryKeyMysqlFields, javaFields, primaryKeyJavaFields, javaFieldTypes, allJavaFtl);
         allJavaFtl.setDaoFtl(daoFtl);
         ServiceFtl serviceFtl = GenerateFileJava.getServiceFtl(table, basePackage, classNamePrefix, mysqlFields, primaryKeyMysqlFields, javaFields, primaryKeyJavaFields, javaFieldTypes, allJavaFtl);
@@ -163,6 +172,159 @@ public class GenerateFileJava {
 
         return voFtl;
     }
+
+    /**
+     * 主键vo
+     *
+     * @param table
+     * @param basePackage
+     * @param classNamePrefix
+     * @param javaFields
+     * @return
+     * @throws IOException
+     * @throws TemplateException
+     */
+    private static VoPriFtl getVoPriFtl(Table table,
+                                        String basePackage,
+                                        String classNamePrefix,
+                                        List<JavaField> javaFields,
+                                        Set<String> javaFieldTypes
+    ) throws IOException, TemplateException {
+        VoPriFtl ftl = new GenerateJavaUtil<VoPriFtl>() {
+            @Override
+            public VoPriFtl getFtlVo() {
+                VoPriFtl vo = new VoPriFtl();
+                vo.setTable(table);
+                vo.setPackageName(basePackage.toLowerCase() + "." + vo.getDir());
+                vo.setClassName(classNamePrefix + "PriVo");
+                vo.setJavaFields(javaFields);
+                vo.setJavaFieldTypes(javaFieldTypes);
+                //使用之前提取的className直接加上.java
+                vo.setFileName(vo.getClassName() + ".java");
+                return vo;
+            }
+
+            @Override
+            public AllJavaFtl getAllJavaFtl() {
+                return null;
+            }
+        }.grenerate();
+
+        return ftl;
+    }
+
+    /**
+     * 非主键vo
+     *
+     * @param table
+     * @param basePackage
+     * @param classNamePrefix
+     * @param javaFields
+     * @return
+     * @throws IOException
+     * @throws TemplateException
+     */
+    private static VoNoPriFtl getVoNoPriFtl(Table table,
+                                            String basePackage,
+                                            String classNamePrefix,
+                                            List<JavaField> javaFields,
+                                            Set<String> javaFieldTypes
+    ) throws IOException, TemplateException {
+        VoNoPriFtl ftl = new GenerateJavaUtil<VoNoPriFtl>() {
+            @Override
+            public VoNoPriFtl getFtlVo() {
+                VoNoPriFtl vo = new VoNoPriFtl();
+                vo.setTable(table);
+                vo.setPackageName(basePackage.toLowerCase() + "." + vo.getDir());
+                vo.setClassName(classNamePrefix + "NoPriVo");
+                vo.setJavaFields(javaFields);
+                vo.setJavaFieldTypes(javaFieldTypes);
+                //使用之前提取的className直接加上.java
+                vo.setFileName(vo.getClassName() + ".java");
+                return vo;
+            }
+
+            @Override
+            public AllJavaFtl getAllJavaFtl() {
+                return null;
+            }
+        }.grenerate();
+
+        return ftl;
+    }
+
+    /**
+     * updateBase 的请求的RequestVo
+     *
+     * @param table
+     * @param basePackage
+     * @param classNamePrefix
+     * @return
+     * @throws IOException
+     * @throws TemplateException
+     */
+    private static RequestUpdateBaseFtl getRequestUpdateBaseFtl(Table table,
+                                                                String basePackage,
+                                                                String classNamePrefix,
+                                                                AllJavaFtl allJavaFtl
+    ) throws IOException, TemplateException {
+        RequestUpdateBaseFtl ftl = new GenerateJavaUtil<RequestUpdateBaseFtl>() {
+            @Override
+            public RequestUpdateBaseFtl getFtlVo() {
+                RequestUpdateBaseFtl vo = new RequestUpdateBaseFtl();
+                vo.setTable(table);
+                vo.setPackageName(basePackage.toLowerCase() + ".vo" + "." + vo.getDir());
+                vo.setClassName(classNamePrefix + "RequestUpdateBase");
+                //使用之前提取的className直接加上.java
+                vo.setFileName(vo.getClassName() + ".java");
+                return vo;
+            }
+
+            @Override
+            public AllJavaFtl getAllJavaFtl() {
+                return allJavaFtl;
+            }
+        }.grenerate();
+
+        return ftl;
+    }
+
+    /**
+     * updateBase 的请求的RequestVo
+     *
+     * @param table
+     * @param basePackage
+     * @param classNamePrefix
+     * @return
+     * @throws IOException
+     * @throws TemplateException
+     */
+    private static RequestUpdatePrimaryKeyFtl getRequestUpdatePrimaryKeyFtl(Table table,
+                                                                            String basePackage,
+                                                                            String classNamePrefix,
+                                                                            AllJavaFtl allJavaFtl
+    ) throws IOException, TemplateException {
+        RequestUpdatePrimaryKeyFtl ftl = new GenerateJavaUtil<RequestUpdatePrimaryKeyFtl>() {
+            @Override
+            public RequestUpdatePrimaryKeyFtl getFtlVo() {
+                RequestUpdatePrimaryKeyFtl vo = new RequestUpdatePrimaryKeyFtl();
+                vo.setTable(table);
+                vo.setPackageName(basePackage.toLowerCase() + ".vo" + "." + vo.getDir());
+                vo.setClassName(classNamePrefix + "RequestUpdatePrimaryKey");
+                //使用之前提取的className直接加上.java
+                vo.setFileName(vo.getClassName() + ".java");
+                return vo;
+            }
+
+            @Override
+            public AllJavaFtl getAllJavaFtl() {
+                return allJavaFtl;
+            }
+        }.grenerate();
+
+        return ftl;
+    }
+
 
     /**
      * DAO文件的操作
@@ -285,14 +447,14 @@ public class GenerateFileJava {
      * Service文件的操作
      */
     private static MapperFtl getMapperFtl(Table table,
-                                             String basePackage,
-                                             String classNamePrefix,
-                                             List<MysqlField> mysqlFields,
-                                             List<MysqlField> primaryKeyMysqlFields,
-                                             List<JavaField> javaFields,
-                                             List<JavaField> primaryKeyJavaFields,
-                                             Set<String> javaFieldTypes,
-                                             AllJavaFtl allJavaFtl
+                                          String basePackage,
+                                          String classNamePrefix,
+                                          List<MysqlField> mysqlFields,
+                                          List<MysqlField> primaryKeyMysqlFields,
+                                          List<JavaField> javaFields,
+                                          List<JavaField> primaryKeyJavaFields,
+                                          Set<String> javaFieldTypes,
+                                          AllJavaFtl allJavaFtl
     ) throws IOException, TemplateException {
 
         /**

@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import ${allJavaFtl.voFtl.packageName}.${allJavaFtl.voFtl.className};
 import ${allJavaFtl.daoFtl.packageName}.${allJavaFtl.daoFtl.className};
 import ${allJavaFtl.serviceFtl.packageName}.${allJavaFtl.serviceFtl.className};
+import ${allJavaFtl.voPriFtl.packageName}.${allJavaFtl.voPriFtl.className};
+import ${allJavaFtl.voNoPriFtl.packageName}.${allJavaFtl.voNoPriFtl.className};
 
 <#list ftlVo.javaFieldTypes as type><#if type = "Timestamp" >import java.sql.Timestamp;
 </#if><#if type = "Time" >import java.sql.Time;
@@ -118,6 +120,21 @@ public class ${ftlVo.className} implements ${allJavaFtl.serviceFtl.className} {
         return dao.deleteByPrimaryKey(<#list ftlVo.primaryKeyJavaFields as field>${field.name}<#if field_has_next>, </#if></#list>) > 0 ? true : false;
 
     }
+
+    /**
+     * 根据PrimaryKey更新，会根据主键去更新其他的值(空值不覆盖有值)
+     * <#list ftlVo.primaryKeyJavaFields as field><p>
+     * ${field.name} : ${field.comment}</#list>
+     * <#list ftlVo.primaryKeyJavaFields as field>@param ${field.name}
+     * </#list>
+     */
+    @Override
+    public boolean updateByPrimaryKey(${allJavaFtl.voNoPriFtl.className} source,${allJavaFtl.voPriFtl.className} target){
+
+        return dao.updateByPrimaryKey(source,target) > 0 ? true : false;
+
+    }
+
 
  </#if>
 }

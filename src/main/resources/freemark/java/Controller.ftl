@@ -7,6 +7,8 @@ import demo.spring.boot.demospringboot.framework.Code;
 import demo.spring.boot.demospringboot.framework.Response;
 import ${allJavaFtl.voFtl.packageName}.${allJavaFtl.voFtl.className};
 import ${allJavaFtl.serviceFtl.packageName}.${allJavaFtl.serviceFtl.className};
+import ${allJavaFtl.requestUpdateBaseFtl.packageName}.${allJavaFtl.requestUpdateBaseFtl.className};
+import ${allJavaFtl.requestUpdatePrimaryKeyFtl.packageName}.${allJavaFtl.requestUpdatePrimaryKeyFtl.className};
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -109,10 +111,10 @@ public class ${ftlVo.className} {
      * content:具体返回值
      */
     @PostMapping(value = "/updateBase")
-    public Response updateBase(@RequestBody ${allJavaFtl.voFtl.className} source, @RequestBody ${allJavaFtl.voFtl.className} target) {
+    public Response updateBase(@RequestBody ${allJavaFtl.requestUpdateBaseFtl.className} update) {
         Response response = new Response();
         try {
-            Boolean result = service.updateBase(source, target);
+            Boolean result = service.updateBase(update.getSource(), update.getTarget());
             response.setCode(Code.System.OK);
             response.setContent(result);
             log.info("success result -> {} ", result);
@@ -137,10 +139,10 @@ public class ${ftlVo.className} {
      * content:具体返回值
      */
     @PostMapping(value = "/updateBaseIncludeNull")
-    public Response updateBaseIncludeNull(@RequestBody ${allJavaFtl.voFtl.className} source, @RequestBody ${allJavaFtl.voFtl.className} target) {
+    public Response updateBaseIncludeNull(@RequestBody ${allJavaFtl.requestUpdateBaseFtl.className} update) {
         Response response = new Response();
         try {
-            Boolean result = service.updateBaseIncludeNull(source, target);
+            Boolean result = service.updateBaseIncludeNull(update.getSource(), update.getTarget());
             response.setCode(Code.System.OK);
             response.setContent(result);
             log.info("success result -> {} ", result);
@@ -225,6 +227,33 @@ public class ${ftlVo.className} {
         Response response = new Response();
         try {
             Boolean result = service.deleteByPrimaryKey(<#list ftlVo.primaryKeyJavaFields as field>${field.name}<#if field_has_next>, </#if></#list>);
+            response.setCode(Code.System.OK);
+            response.setContent(result);
+            log.info("success result -> {} ", result);
+        } catch (Exception e) {
+            response.setCode(Code.System.FAIL);
+            response.setMsg(e.getMessage());
+            response.addException(e);
+            log.error("异常 -> {} ", e.getMessage(), e);
+        }
+        return response;
+    }
+
+    /**
+     * 根据PrimaryKey更新，会根据主键去更新其他的值(空值不覆盖有值)
+     *
+     * @param source 只有非主键的数据有效
+     * <#list ftlVo.primaryKeyJavaFields as field>@param ${field.name}
+     * </#list>
+     * @return 成功和失败都返回Response，具体的结果在response的
+     * code   :状态码
+     * content:具体返回值
+     */
+    @PostMapping(value = "/updateByPrimaryKey")
+    public Response updateByPrimaryKey(@RequestBody ${allJavaFtl.requestUpdatePrimaryKeyFtl.className} update) {
+        Response response = new Response();
+        try {
+            Boolean result = service.updateByPrimaryKey(update.getSource(), update.getTarget());
             response.setCode(Code.System.OK);
             response.setContent(result);
             log.info("success result -> {} ", result);
