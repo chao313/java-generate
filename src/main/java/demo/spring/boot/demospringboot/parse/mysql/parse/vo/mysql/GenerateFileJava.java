@@ -195,7 +195,7 @@ public class GenerateFileJava {
             public VoPriFtl getFtlVo() {
                 VoPriFtl vo = new VoPriFtl();
                 vo.setTable(table);
-                vo.setPackageName(basePackage.toLowerCase() + "." + vo.getDir());
+                vo.setPackageName(basePackage.toLowerCase() + "." + vo.getDir() + ".plugin");
                 vo.setClassName(classNamePrefix + "PriVo");
                 vo.setJavaFields(javaFields);
                 vo.setJavaFieldTypes(javaFieldTypes);
@@ -235,7 +235,7 @@ public class GenerateFileJava {
             public VoNoPriFtl getFtlVo() {
                 VoNoPriFtl vo = new VoNoPriFtl();
                 vo.setTable(table);
-                vo.setPackageName(basePackage.toLowerCase() + "." + vo.getDir());
+                vo.setPackageName(basePackage.toLowerCase() + "." + vo.getDir() + ".plugin");
                 vo.setClassName(classNamePrefix + "NoPriVo");
                 vo.setJavaFields(javaFields);
                 vo.setJavaFieldTypes(javaFieldTypes);
