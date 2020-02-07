@@ -1,8 +1,6 @@
 package demo.spring.boot.test;
 
 
-import demo.spring.boot.demospringboot.parse.mysql.parse.db.GenerateFile;
-import demo.spring.boot.demospringboot.parse.mysql.parse.vo.JavaTable;
 import freemarker.template.TemplateException;
 import lombok.extern.slf4j.Slf4j;
 
@@ -233,7 +231,7 @@ public class Test {
 //        String dataBase = "test";
 //        String ptableName = "ts_transportationtask_journey_info";
 //        String basePackage = "demo.my";
-//        JavaTable javaTable = GenerateFile.GenerateFile(dataBase, ptableName, basePackage);
+//        JavaTable javaTable = GenerateFileJava.GenerateFileJava(dataBase, ptableName, basePackage);
 //        log.info("javaTable:{}",javaTable);
 //
 //    }
