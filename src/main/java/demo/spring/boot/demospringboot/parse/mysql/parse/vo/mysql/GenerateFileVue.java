@@ -35,7 +35,7 @@ public class GenerateFileVue {
         String controllerName = allJavaFtl.getControllerFtl().getClassName();
         String moduleName = controllerName.substring(0, controllerName.lastIndexOf("Controller")) + "Module";//移除最后的 Controller -> TUser
 
-        ApiJsFtl apiJsFtl = GenerateFileVue.getApiJsFtl(allVueFtl);//API的参数
+        ApiJsFtl apiJsFtl = GenerateFileVue.getApiJsFtl(allVueFtl, moduleName);//API的参数
         allVueFtl.setApiJsFtl(apiJsFtl);
 
         ViewVueFtl viewVueFtl = GenerateFileVue.getViewVueFtl(allVueFtl, moduleName);//View界面
@@ -58,7 +58,7 @@ public class GenerateFileVue {
     /**
      * 获取ApiJs的操作
      */
-    private static ApiJsFtl getApiJsFtl(AllVueFtl allVueFtl) throws IOException, TemplateException {
+    private static ApiJsFtl getApiJsFtl(AllVueFtl allVueFtl, String moduleName) throws IOException, TemplateException {
 
         ApiJsFtl apiJsFtl = new GenerateVueUtil<ApiJsFtl>() {
             @Override
@@ -102,6 +102,13 @@ public class GenerateFileVue {
                 vo.setKeyToKeyToUrls(keyToKeyToUrls);
                 vo.setBaseName(baseName);
                 vo.setDirPath("demoWeb/src/utils");
+
+                /**
+                 * 用作跳转的统一
+                 */
+                vo.setEditModulePath(moduleName + "Edit");
+                vo.setViewModulePath(moduleName + "View");
+                vo.setListModulePath(moduleName + "List");
                 return vo;
             }
 
@@ -125,7 +132,7 @@ public class GenerateFileVue {
                 ListVueFtl vo = new ListVueFtl();
                 vo.setDirPath("demoWeb/src/views" + "/" + moduleDirName);
                 vo.setFileName("List.Vue");
-                vo.setModule(moduleDirName + "#/list");
+                vo.setModulePath(moduleDirName + "List");
                 return vo;
             }
 
@@ -150,7 +157,7 @@ public class GenerateFileVue {
                 vo.setDirPath("demoWeb/src/views" + "/" + moduleDirName);
                 vo.setFileName("View.Vue");
                 vo.setFreeMarkFtlPath("View.vue.ftl");
-                vo.setModule(moduleDirName + "#/view");
+                vo.setModulePath(moduleDirName + "View");
                 vo.setJavaFields(allVueFtl.getAllJavaFtl().getVoFtl().getJavaFields());
                 vo.setPrimaryKeyJavaFields(allVueFtl.getAllJavaFtl().getVoFtl().getPrimaryKeyJavaFields());
                 return vo;
@@ -177,7 +184,7 @@ public class GenerateFileVue {
                 vo.setDirPath("demoWeb/src/views" + "/" + moduleDirName);
                 vo.setFileName("Edit.Vue");
                 vo.setFreeMarkFtlPath("Edit.vue.ftl");
-                vo.setModule(moduleDirName + "#/edit");
+                vo.setModulePath(moduleDirName + "Edit");
                 vo.setJavaFields(allVueFtl.getAllJavaFtl().getVoFtl().getJavaFields());
                 vo.setPrimaryKeyJavaFields(allVueFtl.getAllJavaFtl().getVoFtl().getPrimaryKeyJavaFields());
                 return vo;
@@ -201,11 +208,8 @@ public class GenerateFileVue {
             @Override
             public IndexJsFtl getFtlVo() {
                 IndexJsFtl vo = new IndexJsFtl();
-                String controllername = allVueFtl.getAllJavaFtl().getControllerFtl().getClassName();
-                String module = controllername.substring(0, controllername.lastIndexOf("Controller")) + "Module";//移除最后的 Controller -> TUser
                 vo.setDirPath("demoWeb/src/router");
                 vo.setFileName("index.js");
-                vo.setModule(module);
                 /**
                  * modules -> 这里注意是全部的对象的modules
                  */

@@ -140,48 +140,67 @@
                     cancelButtonText: '取消',
                     center: true
                 }).then(() => {
-                    self.$http.post(self.api.${allVueFtl.apiJsFtl.keyToKeyToUrls["deleteByPrimaryKey"].vueKey}, {
-                    params: {
+                    self.$http.get(self.api.${allVueFtl.apiJsFtl.keyToKeyToUrls["deleteByPrimaryKey"].vueKey}
+                        ,{
+                     params: {
                    <#list allVueFtl.allJavaFtl.voFtl.primaryKeyJavaFields as javaField>
                        ${javaField.name}:${javaField.name} <#if javaField_has_next>,</#if>
                    </#list>
-            }
-            },
+                  }
+                 },
+                 function (response) {
+                    if (response.code = 0) {
+                        if (response.content == true) {
+                            self.$message({
+                                type: 'success',
+                                message: '删除成功',
+                                duration: 2000
+                            });
+                        } else {
+                            self.$message({
+                                type: 'warning',
+                                message: '删除失败',
+                                duration: 2000
+                            });
 
-                function (response) {
-                    if (response.content == true) {
-                        self.$message({
-                            type: 'success',
-                            message: '删除成功',
-                            duration: 1000
-                        });
-                        // self.getZipManagersByRegistId(self.registId)
+                        }
                     } else {
                         self.$message({
-                            type: 'warning',
-                            message: '删除失败',
-                            duration: 1000
+                            type: 'error',
+                            message: response.msg,
+                            duration: 2000
                         });
                     }
-                }
-
-            ,
-
+                },
                 function (response) {
+                    console.log(response);
                     //失败回调
+                    self.$message({
+                        type: 'error',
+                        message: "请求异常",
+                        duration: 2000
+                    });
                 }
-
             )
 
             })
             },
             routerToView(<#list allVueFtl.allJavaFtl.voFtl.primaryKeyJavaFields as javaField>${javaField.name}<#if javaField_has_next>,</#if></#list>) {
                 //跳转携带参数
-                window.open("#/zipManagerEdit" + "?id=" + id, '_self');
+                let queryStr="";
+                <#list allVueFtl.allJavaFtl.voFtl.primaryKeyJavaFields as javaField>
+                    queryStr = queryStr + "${javaField.name}=" + ${javaField.name} + "<#if javaField_has_next>&</#if>";
+                </#list>
+                window.open("#/${allVueFtl.apiJsFtl.viewModulePath}" + "?"+queryStr, '_self');
             },
             routerToEdit(<#list allVueFtl.allJavaFtl.voFtl.primaryKeyJavaFields as javaField>${javaField.name}<#if javaField_has_next>,</#if></#list>) {
                 //跳转携带参数
-                window.open("#/zipManagerEdit" + "?id=" + id, '_self');
+                let queryStr="";
+                <#list allVueFtl.allJavaFtl.voFtl.primaryKeyJavaFields as javaField>
+                    queryStr = queryStr + "${javaField.name}=" + ${javaField.name} + "<#if javaField_has_next>&</#if>";
+                </#list>
+                //跳转携带参数
+                window.open("#/${allVueFtl.apiJsFtl.editModulePath}"+ "?"+queryStr, '_self');
             }
 
         }

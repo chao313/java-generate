@@ -19,12 +19,6 @@ public interface FtlVueInterface {
      */
     String getDirPath();
 
-    /**
-     * 模块的名称 -> 页面跳转的时候需要用到
-     *
-     * @return
-     */
-    String getModule();
 
     /**
      * 文件名称 -> 生成文件的时候需要

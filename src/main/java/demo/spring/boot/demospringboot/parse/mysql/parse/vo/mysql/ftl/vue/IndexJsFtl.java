@@ -9,7 +9,6 @@ import java.util.List;
 @Data
 public class IndexJsFtl implements FtlVueInterface {
     private String dirPath;//file名称
-    private String module;//模块的名称
     private String fileName;//file名称
     private String freeMarkFtlPath = "Index.js.ftl";//生成FreeMark的ftlPath
     private String freeMarkStr;//生成FreeMark的str

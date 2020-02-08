@@ -194,7 +194,7 @@ public class ${ftlVo.className} {
      * code   :状态码
      * content:具体返回值
      */
-    @PostMapping(value = "/queryByPrimaryKey")
+    @GetMapping(value = "/queryByPrimaryKey")
     public Response queryByPrimaryKey(<#list ftlVo.primaryKeyJavaFields as field>${field.type} ${field.name}<#if field_has_next>, </#if></#list>) {
         Response response = new Response();
         try {
@@ -222,7 +222,7 @@ public class ${ftlVo.className} {
      * code   :状态码
      * content:具体返回值
      */
-    @PostMapping(value = "/deleteByPrimaryKey")
+    @GetMapping(value = "/deleteByPrimaryKey")
     public Response deleteByPrimaryKey(<#list ftlVo.primaryKeyJavaFields as field>${field.type} ${field.name}<#if field_has_next>, </#if></#list>) {
         Response response = new Response();
         try {
