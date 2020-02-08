@@ -1,6 +1,7 @@
 package demo.spring.boot.demospringboot.parse.mysql.parse.vo.mysql.ftl.vue;
 
 import demo.spring.boot.demospringboot.parse.mysql.parse.vo.mysql.ftl.FtlVueInterface;
+import demo.spring.boot.demospringboot.parse.mysql.parse.vo.mysql.ftl.vue.plugin.KeyToUrlVo;
 import lombok.Data;
 
 import java.util.ArrayList;
@@ -8,8 +9,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
 @Data
 public class ApiJsFtl implements FtlVueInterface {
+
+
+
 
     private String dirPath;//file名称
     private String module;//file名称
@@ -22,6 +27,12 @@ public class ApiJsFtl implements FtlVueInterface {
      * 自定义的属性
      */
     private List<String> apis = new ArrayList<>();
-    private Map<String, String> keyToUrls = new HashMap<>();//key到url的映射，留作使用
+    /**
+     * 举例:
+     * <deleteByPrimaryKey,<deleteTUserByPrimaryKey,/demomsater/TUserController/deleteByPrimaryKey>>
+     */
+    private Map<String, KeyToUrlVo> keyToKeyToUrls = new HashMap<>();//key到url的映射，留作使用
+    private String BASE_URL = FtlVueInterface.tomcatPath;//后台项目的地址 -> 留作拼接使用
+    private String baseName;
 
 }

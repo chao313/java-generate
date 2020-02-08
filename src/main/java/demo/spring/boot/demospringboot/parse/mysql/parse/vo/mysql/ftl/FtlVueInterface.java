@@ -8,18 +8,9 @@ package demo.spring.boot.demospringboot.parse.mysql.parse.vo.mysql.ftl;
  */
 public interface FtlVueInterface {
 
+    String tomcatPath = "demomaster";
+
     String rootPath = "classpath:freemark/";
-
-    /**
-     * 操作的接口
-     */
-    String deleteByPrimaryKey = "deleteByPrimaryKey";
-    String queryByPrimaryKey = "queryByPrimaryKey";
-    String updateBase = "updateBase";
-    String queryBase = "queryBase";
-    String inserts = "inserts";
-    String insert = "insert";
-
 
     /**
      * 文件所在的文件夹 -> 生成文件的时候使用

@@ -141,14 +141,14 @@
                  confirmButtonText: '确定',
                  cancelButtonText: '取消',
                  center: true
-             }).then(() = > {
-                 self.$http.get("${allVueFtl.apiJsFtl.keyToUrls[deleteByPrimaryKey]}", {
+             }).then(() => {
+                 self.$http.get(self.api.${allVueFtl.apiJsFtl.keyToKeyToUrls["deleteByPrimaryKey"].vueKey}, {
                  params: {
                    <#list allVueFtl.allJavaFtl.voFtl.primaryKeyJavaFields as javaField>
                        ${javaField.name}:${javaField.name} <#if javaField_has_next>,</#if>
                    </#list>
                  }
-         }, function (response) {
+            }, function (response) {
                  if (response.content == true) {
                      self.$message({
                          type: 'success',

@@ -13,7 +13,7 @@
       </el-form>
     </section>
     <div class="mt40 ml40">
-      <el-button @click="resetForm('postForm')">取消</el-button>
+       <el-button @click="resetForm('postForm')">取消</el-button>
     </div>
   </div>
 
@@ -51,7 +51,7 @@
       //获取具体的配置
         queryByPrimaryKey(<#list ftlVo.primaryKeyJavaFields as javaField>${javaField.name}<#if javaField_has_next>,</#if></#list>) {
         let self = this;
-        self.$http.get("${ftlVo.queryByPrimaryKeyUrl}", {
+        self.$http.get(self.api.${allVueFtl.apiJsFtl.keyToKeyToUrls["queryByPrimaryKey"].vueKey}, {
           params: {
             <#list ftlVo.primaryKeyJavaFields as javaField>
               ${javaField.name}:${javaField.name}<#if javaField_has_next>,</#if>

@@ -17,15 +17,10 @@ public class EditVueFtl implements FtlVueInterface {
 
     /**
      * 自定义的属性
-     * View Vue
-     * 1.需要的是queryById的接口
      * 2.需要的voFtl的所有的java字段
      * -> 这些都由allVueFtl提供
      * -> 经过考虑，还是决定放在这里
      */
-    private String queryByPrimaryKeyUrl;//根据主键查询的接口
-    private String updateBaseUrl;//多条件更新的接口
-
     private List<JavaField> javaFields;//所有的字段
     private List<JavaField> primaryKeyJavaFields;//所有主键的字段
 

@@ -22,7 +22,7 @@ const ConfigRegistrationsEdit = r => require.ensure([], () => r(require('@/views
 const ZipManagerList = r => require.ensure([], () => r(require('@/views/zipManager/list')), 'zipManagerList')
 const ZipManagerEdit = r => require.ensure([], () => r(require('@/views/zipManager/edit')), 'zipManagerEdit')
 
-/* zipManager */99
+/* zipManager */
 const LocationZipManagerList = r => require.ensure([], () => r(require('@/views/locationZipManager/list')), 'locationZipManagerList')
 const LocationZipManagerEdit = r => require.ensure([], () => r(require('@/views/locationZipManager/edit')), 'locationZipManagerEdit')
 

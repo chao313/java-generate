@@ -1,10 +1,13 @@
 package demo.spring.boot.demospringboot.util;
 
 import demo.spring.boot.demospringboot.controller.generate.GenerateJavaController;
+import demo.spring.boot.demospringboot.controller.generate.GenerateVueController;
 import demo.spring.boot.demospringboot.parse.mysql.parse.vo.AssociationJavaTable;
 import demo.spring.boot.demospringboot.parse.mysql.parse.vo.JavaTable;
+import demo.spring.boot.demospringboot.parse.mysql.parse.vo.mysql.ftl.FtlVueInterface;
 import demo.spring.boot.demospringboot.parse.mysql.parse.vo.mysql.ftl.java.AllJavaFtl;
 import demo.spring.boot.demospringboot.parse.mysql.parse.vo.mysql.ftl.FtlJavaInterface;
+import demo.spring.boot.demospringboot.parse.mysql.parse.vo.mysql.ftl.vue.AllVueFtl;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.*;
@@ -204,7 +207,7 @@ public class ZipUtils {
     /**
      * 目前的生成方式 maven的项目
      *
-     * @param allJavaFtls -> 抱哈多个从vo到controller
+     * @param allJavaFtls -> 包含多个从vo到controller
      * @param zipFileName
      * @param operateDir  -> 用于存放临时文件夹的目录
      * @return
@@ -346,130 +349,86 @@ public class ZipUtils {
         return bytes;
     }
 
+    /**
+     * 目前的生成方式 vue前端的项目
+     *
+     * @param allVueFtls  -> 包含多个从vue
+     * @param zipFileName
+     * @param operateDir  -> 用于存放临时文件夹的目录
+     * @return
+     * @throws IOException
+     */
+    public static byte[] createFilesAndZipVueDemoWeb(List<AllVueFtl> allVueFtls, String zipFileName, String operateDir) throws IOException {
 
-    public static InputStream createFilesAndZip(List<AssociationJavaTable> associationJavaTables, String zipFileName, String dirPath) throws IOException {
-        BufferedOutputStream voOutputStream = null;
-        BufferedOutputStream daoOutputStream = null;
-        BufferedOutputStream serviceOutputStream = null;
-        BufferedOutputStream serviceImplOutputStream = null;
-        BufferedOutputStream mapperFileOutputStream = null;
-        BufferedOutputStream voOutputStreamAssociation = null;
-        BufferedOutputStream daoOutputStreamAssociation = null;
-        BufferedOutputStream serviceOutputStreamAssociation = null;
-        BufferedOutputStream serviceImplOutputStreamAssociation = null;
-        BufferedOutputStream mapperFileOutputStreamAssociation = null;
-        File voFile = null;
-        File daoFile = null;
-        File serviceFile = null;
-        File serviceImplFile = null;
-        File mapperFile = null;
-        File voFileAssociation = null;
-        File daoFileAssociation = null;
-        File serviceFileAssociation = null;
-        File serviceImplFileAssociation = null;
-        File mapperFileAssociation = null;
+        // ---> demoWeb
+        String sourceVueWebDirPath = GenerateVueController.demoWebDirPath;//maven项目地址的文件夹
+        // ---> tmp/1580899138501/
+        String codeDirPath = tmpPath + operateDir + "/";//code存放的地址
+        // ---> tmp/1580899138501/demoWeb/
+        String targetOperateDirPath = tmpPath + operateDir + "/" + GenerateVueController.demoWebDirPath + "/";//操作的目录
 
-        //创建文件夹
-        new File(tmpPath + associationJavaTables.get(0).getBasePackagePath()).mkdirs();
-        for (AssociationJavaTable javaTable : associationJavaTables) {
 
-            if (StringUtils.isNotBlank(javaTable.getClassVoStr())) {
-                voFile = new File(tmpPath + javaTable.getClassVoPath());
+        /**
+         * 1.把maven项目复制到操作目录下
+         */
+        File sourceVueWebDir = new File(sourceVueWebDirPath);
+        sourceVueWebDir.mkdirs();//创建文件夹
+        File targetOperateDir = new File(targetOperateDirPath);
+        org.apache.commons.io.FileUtils.copyDirectory(sourceVueWebDir, targetOperateDir);//项目复制到目标文件夹下
+
+        for (AllVueFtl allVueFtl : allVueFtls) {
+            /**
+             * 2.生成code
+             */
+
+            /**
+             * 所有的文件统一处理
+             */
+            List<FtlVueInterface> ftlJavaInterfaces = new ArrayList<>();
+            ftlJavaInterfaces.add(allVueFtl.getIndexJsFtl());
+            ftlJavaInterfaces.add(allVueFtl.getApiJsFtl());
+            ftlJavaInterfaces.add(allVueFtl.getEditVueFtl());
+            ftlJavaInterfaces.add(allVueFtl.getListVueFtl());
+            ftlJavaInterfaces.add(allVueFtl.getViewVueFtl());
+
+            /**
+             * 创建文件并写入数据
+             */
+            for (FtlVueInterface ftlVueInterface : ftlJavaInterfaces) {
+                BufferedOutputStream outputStream = null;
+                String dir = codeDirPath + ftlVueInterface.getDirPath();
+                //创建文件夹
+                new File(dir).mkdirs();
+                File voFile = new File(dir + "/" + ftlVueInterface.getFileName());
                 voFile.createNewFile();
-                voOutputStream = new BufferedOutputStream(new FileOutputStream(voFile));
-                voOutputStream.write(javaTable.getClassVoStr().getBytes());
-                voOutputStream.flush();
-                voOutputStream.close();
-            }
-            if (StringUtils.isNotBlank(javaTable.getClassDaoStr())) {
-                daoFile = new File(tmpPath + javaTable.getClassDaoPath());
-                daoFile.createNewFile();
-                daoOutputStream = new BufferedOutputStream(new FileOutputStream(daoFile));
-                daoOutputStream.write(javaTable.getClassDaoStr().getBytes());
-                daoOutputStream.flush();
-                daoOutputStream.close();
-            }
+                outputStream = new BufferedOutputStream(new FileOutputStream(voFile));
+                outputStream.write(ftlVueInterface.getFreeMarkStr().getBytes());
+                outputStream.flush();
+                outputStream.close();
 
-            if (StringUtils.isNotBlank(javaTable.getClassServiceStr())) {
-                serviceFile = new File(tmpPath + javaTable.getClassServicePath());
-                serviceFile.createNewFile();
-                serviceOutputStream = new BufferedOutputStream(new FileOutputStream(serviceFile));
-                serviceOutputStream.write(javaTable.getClassServiceStr().getBytes());
-                serviceOutputStream.flush();
-                serviceOutputStream.close();
             }
-            if (StringUtils.isNotBlank(javaTable.getClassServiceImplStr())) {
-                serviceImplFile = new File(tmpPath + javaTable.getClassServiceImplPath());
-                serviceImplFile.createNewFile();
-                serviceImplOutputStream = new BufferedOutputStream(new FileOutputStream(serviceImplFile));
-                serviceImplOutputStream.write(javaTable.getClassServiceImplStr().getBytes());
-                serviceImplOutputStream.flush();
-                serviceImplOutputStream.close();
-            }
-            if (StringUtils.isNotBlank(javaTable.getMapperStr())) {
-                mapperFile = new File(tmpPath + javaTable.getMapperPath());
-                mapperFile.createNewFile();
-                mapperFileOutputStream = new BufferedOutputStream(new FileOutputStream(mapperFile));
-                mapperFileOutputStream.write(javaTable.getMapperStr().getBytes());
-                mapperFileOutputStream.flush();
-                mapperFileOutputStream.close();
-            }
-            //关联处理
-            if (StringUtils.isNotBlank(javaTable.getClassAssociationVoStr())) {
-                voFileAssociation = new File(tmpPath + javaTable.getClassAssociationVoPath());
-                voFileAssociation.createNewFile();
-                voOutputStreamAssociation = new BufferedOutputStream(new FileOutputStream(voFileAssociation));
-                voOutputStreamAssociation.write(javaTable.getClassAssociationVoStr().getBytes());
-                voOutputStreamAssociation.flush();
-                voOutputStreamAssociation.close();
-            }
-            if (StringUtils.isNotBlank(javaTable.getClassAssociationDAOStr())) {
-                daoFileAssociation = new File(tmpPath + javaTable.getClassAssociationDAOPath());
-                daoFileAssociation.createNewFile();
-                daoOutputStreamAssociation = new BufferedOutputStream(new FileOutputStream(daoFileAssociation));
-                daoOutputStreamAssociation.write(javaTable.getClassAssociationDAOStr().getBytes());
-                daoOutputStreamAssociation.flush();
-                daoOutputStreamAssociation.close();
-            }
-
-            if (StringUtils.isNotBlank(javaTable.getClassAssociationServiceStr())) {
-                serviceFileAssociation = new File(tmpPath + javaTable.getClassAssociationServicePath());
-                serviceFileAssociation.createNewFile();
-                serviceOutputStreamAssociation = new BufferedOutputStream(new FileOutputStream(serviceFileAssociation));
-                serviceOutputStreamAssociation.write(javaTable.getClassAssociationServiceStr().getBytes());
-                serviceOutputStreamAssociation.flush();
-                serviceOutputStreamAssociation.close();
-            }
-            if (StringUtils.isNotBlank(javaTable.getClassAssociationServiceImplStr())) {
-                serviceImplFileAssociation = new File(tmpPath + javaTable.getClassAssociationServiceImplPath());
-                serviceImplFileAssociation.createNewFile();
-                serviceImplOutputStreamAssociation = new BufferedOutputStream(new FileOutputStream(serviceImplFileAssociation));
-                serviceImplOutputStreamAssociation.write(javaTable.getClassAssociationServiceImplStr().getBytes());
-                serviceImplOutputStreamAssociation.flush();
-                serviceImplOutputStreamAssociation.close();
-            }
-            if (StringUtils.isNotBlank(javaTable.getAssociationMapperStr())) {
-                mapperFileAssociation = new File(tmpPath + javaTable.getAssociationMapperPath());
-                mapperFileAssociation.createNewFile();
-                mapperFileOutputStreamAssociation = new BufferedOutputStream(new FileOutputStream(mapperFileAssociation));
-                mapperFileOutputStreamAssociation.write(javaTable.getAssociationMapperStr().getBytes());
-                mapperFileOutputStreamAssociation.flush();
-                mapperFileOutputStreamAssociation.close();
-            }
-
         }
-        File file = new File(tmpPath + zipFileName);
+
+
+        String targetZip = tmpPathTarget + zipFileName;
+        new File(tmpPathTarget).mkdirs();
+        /**
+         * 打包压缩
+         */
+        File file = new File(targetZip);
         OutputStream outputStream = new FileOutputStream(file);
-        ZipUtils.toZip(tmpPath + dirPath, outputStream, true);
+        ZipUtils.toZip(tmpPath, outputStream, true);
         outputStream.flush();
         outputStream.close();
 
-        InputStream inputStream = new FileInputStream(tmpPath + zipFileName);
+        byte[] bytes = org.apache.commons.io.FileUtils.readFileToByteArray(new File(targetZip));
 
 
-        FileUtils.deleteDirectory(tmpPath + dirPath);
-        file.delete();
+        FileUtils.deleteDirectory(tmpPath);
+        FileUtils.deleteDirectory(tmpPathTarget);
 
-        return inputStream;
+        return bytes;
     }
+
+
 }

@@ -52,7 +52,7 @@
         //获取具体的配置
         queryByPrimaryKey(<#list ftlVo.primaryKeyJavaFields as javaField>${javaField.name}<#if javaField_has_next>,</#if></#list>) {
             let self = this;
-            self.$http.get("${ftlVo.queryByPrimaryKeyUrl}", {
+            self.$http.get(self.api.${allVueFtl.apiJsFtl.keyToKeyToUrls["queryByPrimaryKey"].vueKey}, {
                 params: {
             <#list ftlVo.primaryKeyJavaFields as javaField>
               ${javaField.name}:${javaField.name}<#if javaField_has_next>,</#if>
@@ -65,23 +65,25 @@
             })
 
          }
-       }
       },
       submitEditForm(formName) {
         let self = this;
-        var params = new FormData()
-        const registId = this.$route.query && this.$route.query.registId;
-        params.append('id', registId);
-        params.append('policyId', self.postForm.policyId);
-        params.append('extractorConf', self.postForm.extractorConf);
-        params.append('contentSignConf', self.postForm.contentSignConf);
-        params.append('keyWordConf', self.postForm.keyWordConf);
-        params.append('ruleConf', self.postForm.ruleConf);
-        params.append('jsonExtractorConf', self.postForm.jsonExtractorConf);
-        params.append('fieldExtractorConf', self.postForm.fieldExtractorConf);
-        params.append('tableRelationConf', self.postForm.tableRelationConf);
-        params.append('relativePath', self.postForm.relativePath);
-        params.append('status', self.postForm.status);
+        var sourceParams = new FormData();
+        var targetParams = new FormData();
+        /**
+         * 处理外界的参数 -> 用于更新
+         */
+        <#list ftlVo.primaryKeyJavaFields as javaField>
+        const ${javaField.name} = this.$route.query && this.$route.query.${javaField.name}<#if javaField_has_next>;</#if>
+        </#list>
+
+        <#list ftlVo.javaFields as javaField>
+        sourceParams.append('${javaField.name}', ${javaField.name});
+        </#list>
+        <#list ftlVo.primaryKeyJavaFields as javaField>
+         targetParams.append('${javaField.name}', ${javaField.name});
+        </#list>
+
 
         self.$http.post(self.api.updateRegistrationsById, params, {
           headers: {
@@ -116,7 +118,6 @@
           path: '/configRegistrations'
         })
       }
-    }
   }
 </script>
 <style rel="stylesheet/scss" lang="scss">

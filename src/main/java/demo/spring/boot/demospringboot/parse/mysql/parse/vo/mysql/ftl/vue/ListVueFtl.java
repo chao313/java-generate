@@ -8,15 +8,8 @@ public class ListVueFtl implements FtlVueInterface {
     private String dirPath;//file名称
     private String module;//file名称
     private String fileName;//file名称
-    private String freeMarkFtlPath = "View.vue.ftl";//生成FreeMark的ftlPath
+    private String freeMarkFtlPath = "List.vue.ftl";//生成FreeMark的ftlPath
     private String freeMarkStr;//生成FreeMark的str
     private String freeMarkDirPathInResources = rootPath + "vue";//freemark所在文件夹的地址
-
-    /**
-     * 自定义的属性
-     * c
-     */
-
-
 
 }

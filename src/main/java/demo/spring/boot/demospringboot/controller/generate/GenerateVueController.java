@@ -4,6 +4,7 @@ import demo.spring.boot.demospringboot.framework.Response;
 import demo.spring.boot.demospringboot.parse.mysql.parse.vo.mysql.GenerateFileJava;
 import demo.spring.boot.demospringboot.parse.mysql.parse.vo.mysql.GenerateFileVue;
 import demo.spring.boot.demospringboot.parse.mysql.parse.vo.mysql.ftl.java.AllJavaFtl;
+import demo.spring.boot.demospringboot.parse.mysql.parse.vo.mysql.ftl.vue.AllVueFtl;
 import demo.spring.boot.demospringboot.util.ZipUtils;
 import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
@@ -33,7 +34,7 @@ public class GenerateVueController {
             LoggerFactory.getLogger(GenerateVueController.class);
 
     public static final String demoMasterBasePackage = "demoMaster";//这里是作为package存在的
-    public static final String demoMasterDirPath = "demoMaster/";//这里是作为package存在的
+    public static final String demoWebDirPath = "demoWeb/";//
 
     private static final String tmpPath = "tmp/";
 
@@ -63,13 +64,12 @@ public class GenerateVueController {
             allJavaFtls.add(allJavaFtl);
         }
 
+        List<AllVueFtl> allVueFtls = new ArrayList<>();
         for (AllJavaFtl allJavaFtl : allJavaFtls) {
-            GenerateFileVue.GenerateFile(allJavaFtl, allJavaFtls);
+            AllVueFtl allVueFtl = GenerateFileVue.GenerateFile(allJavaFtl, allJavaFtls);
+            allVueFtls.add(allVueFtl);
         }
-
-
-        String operateDir = String.valueOf(new Date().getTime());
-        String fileNameZip = operateDir + ".zip";
+        response.setContent(allVueFtls);
         return response;
     }
 
@@ -82,9 +82,9 @@ public class GenerateVueController {
      * @return
      * @throws Exception
      */
-    @GetMapping("/downloadMavenDemoMaster")
-    public ResponseEntity<byte[]> downloadMavenDemoMaster(@RequestParam(value = "dataBase") String dataBase,
-                                                          @RequestParam(value = "ptableName") String ptableName) throws Exception {
+    @GetMapping("/downloadVueDemoWeb")
+    public ResponseEntity<byte[]> downloadVueDemoWeb(@RequestParam(value = "dataBase") String dataBase,
+                                                     @RequestParam(value = "ptableName") String ptableName) throws Exception {
 
         /**
          *
@@ -111,23 +111,31 @@ public class GenerateVueController {
      * @return
      * @throws Exception
      */
-    @GetMapping("/downloadMavenDemoMasterMoreTables")
-    public ResponseEntity<byte[]> downloadMavenDemoMasterMoreTables(
+    @GetMapping("/downloadVueDemoWebMoreTables")
+    public ResponseEntity<byte[]> downloadVueDemoWebMoreTables(
             @ApiParam(example = "docker2") @RequestParam(value = "dataBase") String dataBase,
             @ApiParam(example = "t_host,t_user") @RequestParam(value = "ptableNames") List<String> ptableNames) throws Exception {
 
+
+        List<AllJavaFtl> allJavaFtls = new ArrayList<>();//存放所有的Java code -> controller
         /**
-         *
+         * 这里由于是单个的 -> 现在分开
          */
         String basePackage = demoMasterBasePackage;
-        List<AllJavaFtl> allJavaFtls = new ArrayList<>();
         for (String ptableName : ptableNames) {
             AllJavaFtl allJavaFtl = GenerateFileJava.GenerateFile(dataBase, ptableName, basePackage);
             allJavaFtls.add(allJavaFtl);
         }
+
+        List<AllVueFtl> allVueFtls = new ArrayList<>();//存放所有的Vue结果
+        for (AllJavaFtl allJavaFtl : allJavaFtls) {
+            AllVueFtl allVueFtl = GenerateFileVue.GenerateFile(allJavaFtl, allJavaFtls);
+            allVueFtls.add(allVueFtl);
+        }
+
         String operateDir = String.valueOf(new Date().getTime());
         String fileNameZip = operateDir + ".zip";
-        byte[] body = ZipUtils.createFilesAndZipMavenDemoMaster(allJavaFtls, fileNameZip, operateDir);
+        byte[] body = ZipUtils.createFilesAndZipVueDemoWeb(allVueFtls, fileNameZip, operateDir);
 
         HttpHeaders headers = new HttpHeaders();//设置响应头
         headers.add("Content-Disposition", "attachment;filename=" + fileNameZip);//下载的文件名称

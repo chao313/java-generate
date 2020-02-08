@@ -1,0 +1,139 @@
+/* 表格  */
+table.tile h3,
+table.tile h4,
+table.tile span {
+    font-weight: bold;
+    vertical-align: middle !important
+}
+table.tile th,
+table.tile td {
+    text-align: center
+}
+table.tile th {
+    border-bottom: 1px solid #E6ECEE
+}
+table.tile td {
+    padding: 5px 0
+}
+table.tile td ul {
+    text-align: left;
+    padding-left: 0
+}
+table.tile td ul li {
+    list-style: none;
+    width: 100%
+}
+table.tile td ul li a {
+    width: 100%
+}
+table.tile td ul li a big {
+    right: 0;
+    float: right;
+    margin-right: 13px
+}
+table.tile_info {
+    width: 100%
+}
+table.tile_info td {
+    text-align: left;
+    padding: 1px;
+    font-size: 15px
+}
+table.tile_info td p {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin: 0;
+    line-height: 28px
+}
+table.tile_info td i {
+    margin-right: 8px;
+    font-size: 17px;
+    float: left;
+    width: 18px;
+    line-height: 28px
+}
+table.tile_info td:first-child {
+    width: 83%
+}
+td span {
+    line-height: inherit
+}
+table.jambo_table {
+    border: 1px solid rgba(221, 221, 221, 0.78)
+}
+table.jambo_table thead {
+    background: rgba(52, 73, 94, 0.94);
+    color: #ECF0F1
+}
+table.jambo_table tbody tr:hover td {
+    background: rgba(38, 185, 154, 0.07);
+    border-top: 1px solid rgba(38, 185, 154, 0.11);
+    border-bottom: 1px solid rgba(38, 185, 154, 0.11)
+}
+table.jambo_table tbody tr.selected {
+    background: rgba(38, 185, 154, 0.16)
+}
+table.jambo_table tbody tr.selected td {
+    border-top: 1px solid rgba(38, 185, 154, 0.4);
+    border-bottom: 1px solid rgba(38, 185, 154, 0.4)
+}
+table.dataTable th.focus,
+table.dataTable td.focus {
+    outline: 2px solid #1ABB9C !important;
+    outline-offset: -1px
+}
+table.display {
+    margin: 0 auto;
+    clear: both;
+    width: 100%
+}
+table.display thead th {
+    padding: 8px 18px 8px 10px;
+    border-bottom: 1px solid black;
+    font-weight: bold;
+    cursor: pointer
+}
+table.display tfoot th {
+    padding: 3px 18px 3px 10px;
+    border-top: 1px solid black;
+    font-weight: bold
+}
+table.display tr.heading2 td {
+    border-bottom: 1px solid #aaa
+}
+table.display td {
+    padding: 3px 10px
+}
+table.display td.center {
+    text-align: center
+}
+table.display thead th:active,
+table.display thead td:active {
+    outline: none
+}
+table.display tr.even.row_selected td {
+    background-color: #B0BED9
+}
+table.display tr.odd.row_selected td {
+    background-color: #9FAFD1
+}
+
+
+
+/* 面板 */
+
+.x_panel {
+    position: relative;
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 10px 20px;
+    display: inline-block;
+    background: #fff;
+    border: 1px solid #E6E9ED;
+    -webkit-column-break-inside: avoid;
+    -moz-column-break-inside: avoid;
+    column-break-inside: avoid;
+    opacity: 1;
+    transition: all .2s ease
+}
