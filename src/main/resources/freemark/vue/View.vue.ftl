@@ -51,16 +51,23 @@
       //获取具体的配置
         queryByPrimaryKey(<#list ftlVo.primaryKeyJavaFields as javaField>${javaField.name}<#if javaField_has_next>,</#if></#list>) {
         let self = this;
-        self.$http.get(self.api.${allVueFtl.apiJsFtl.keyToKeyToUrls["queryByPrimaryKey"].vueKey}, {
+        self.$http.post(self.api.${allVueFtl.apiJsFtl.keyToKeyToUrls["queryByPrimaryKey"].vueKey}, {
           params: {
             <#list ftlVo.primaryKeyJavaFields as javaField>
               ${javaField.name}:${javaField.name}<#if javaField_has_next>,</#if>
             </#list>
           }
-        }, function (response) {
+        }, {
+
+         },function (response) {
           self.postForm = response.content;
         }, function (response) {
-          //失败回调
+           //失败回调
+           self.$message({
+               type: 'warning',
+               message: '请求异常',
+               duration: 1000
+           });
         })
 
       }

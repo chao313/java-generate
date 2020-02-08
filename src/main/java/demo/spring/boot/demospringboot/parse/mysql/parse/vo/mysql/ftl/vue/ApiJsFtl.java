@@ -14,8 +14,6 @@ import java.util.Map;
 public class ApiJsFtl implements FtlVueInterface {
 
 
-
-
     private String dirPath;//file名称
     private String module;//file名称
     private String fileName = "api.js";//file名称
@@ -31,7 +29,8 @@ public class ApiJsFtl implements FtlVueInterface {
      * 举例:
      * <deleteByPrimaryKey,<deleteTUserByPrimaryKey,/demomsater/TUserController/deleteByPrimaryKey>>
      */
-    private Map<String, KeyToUrlVo> keyToKeyToUrls = new HashMap<>();//key到url的映射，留作使用
+    private Map<String, KeyToUrlVo> keyToKeyToUrls = new HashMap<>();//key到url的映射，留作各个使用
+    private Map<String, Map<String, KeyToUrlVo>> keyToKeyToUrlsAllMap = new HashMap<>();//key到url的映射，单独留作Api.js使用
     private String BASE_URL = FtlVueInterface.tomcatPath;//后台项目的地址 -> 留作拼接使用
     private String baseName;
 

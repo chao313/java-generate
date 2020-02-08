@@ -31,7 +31,7 @@
                     <thead>
                     <tr>
                         <th>id</th>
-                        /*显示的字段 - 英文*/
+                        <!--显示的字段 - 英文-->
                         <#list allVueFtl.allJavaFtl.voFtl.javaFields as javaField>
                         <th>${javaField.name}</th>
                         </#list>
@@ -40,7 +40,7 @@
                     </thead>
                     <tr>
                         <th>序号</th>
-                        /*显示的字段 - 中文*/
+                        <!--显示的字段 - 中文-->
                         <#list allVueFtl.allJavaFtl.voFtl.javaFields as javaField>
                         <th>${javaField.comment}</th>
                         </#list>
@@ -50,7 +50,7 @@
                     <tbody>
                     <tr v-for="(info,index) in dataList">
                         <td>{{index+1}}</td>
-                        /*显示的字段 - 具体数据*/
+                        <!--显示的字段 - 具体数据-->
                         <#list allVueFtl.allJavaFtl.voFtl.javaFields as javaField>
                         <td>{{info.${javaField.name}}}</td>
                         </#list>
@@ -111,72 +111,78 @@
             let self = this;
         },
         created() {
-            let self = this;
-            /**
-             * 1.接收外界参数
-             */
-            const registId = this.$route.query && this.$route.query.registId;
-            self.registId = registId;
-            self.getZipManagersByRegistId(registId)
+            this.queryBase();
         },
-        watch: {
-            timeRange: {
-                handler: function (newVal, oldVa) {
-                    var self = this;
-                    if (newVal != null) {
-                        self.startTime = self.timeRange.length > 0 ? self.timeRange[0] : '';
-                        self.endTime = self.timeRange.length > 0 ? self.timeRange[1] : '';
-                    } else {
-                        self.startTime = '';
-                        self.endTime = '';
-                    }
+        watch: {},
+        methods: {//获取具体的配置
+            queryBase() {
+                let self = this;
+                self.$http.post(self.api.${allVueFtl.apiJsFtl.keyToKeyToUrls["queryBase"].vueKey}, {
+                    params: {}
+                },{
 
-                },
+                },function (response) {
+                    self.dataList = response.content;
+                }, function (response) {
+                    //失败回调
+                    self.$message({
+                        type: 'warning',
+                        message: '请求异常',
+                        duration: 1000
+                    });
+                })
+
             },
-        },
-        methods: {
-         deleteByPrimaryKey(<#list allVueFtl.allJavaFtl.voFtl.primaryKeyJavaFields as javaField>${javaField.name}<#if javaField_has_next>,</#if></#list>) {
-             var self = this;
-             this.$confirm('是否删除该条数据？', '提示', {
-                 confirmButtonText: '确定',
-                 cancelButtonText: '取消',
-                 center: true
-             }).then(() => {
-                 self.$http.get(self.api.${allVueFtl.apiJsFtl.keyToKeyToUrls["deleteByPrimaryKey"].vueKey}, {
-                 params: {
+            deleteByPrimaryKey(<#list allVueFtl.allJavaFtl.voFtl.primaryKeyJavaFields as javaField>${javaField.name}<#if javaField_has_next>,</#if></#list>) {
+                var self = this;
+                this.$confirm('是否删除该条数据？', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    center: true
+                }).then(() => {
+                    self.$http.post(self.api.${allVueFtl.apiJsFtl.keyToKeyToUrls["deleteByPrimaryKey"].vueKey}, {
+                    params: {
                    <#list allVueFtl.allJavaFtl.voFtl.primaryKeyJavaFields as javaField>
                        ${javaField.name}:${javaField.name} <#if javaField_has_next>,</#if>
                    </#list>
-                 }
-            }, function (response) {
-                 if (response.content == true) {
-                     self.$message({
-                         type: 'success',
-                         message: '删除成功',
-                         duration: 1000
-                     });
-                     // self.getZipManagersByRegistId(self.registId)
-                 } else {
-                     self.$message({
-                         type: 'warning',
-                         message: '删除失败',
-                         duration: 1000
-                     });
-                 }
-             }, function (response) {
-                 //失败回调
-             })
+            }
+            },
 
-         })
-         },
-         routerToView(id) {
-             //跳转携带参数
-             window.open("#/zipManagerEdit" + "?id=" + id, '_self');
-         },
-         routerToEdit(id) {
-             //跳转携带参数
-             window.open("#/zipManagerEdit" + "?id=" + id, '_self');
-         }
+                function (response) {
+                    if (response.content == true) {
+                        self.$message({
+                            type: 'success',
+                            message: '删除成功',
+                            duration: 1000
+                        });
+                        // self.getZipManagersByRegistId(self.registId)
+                    } else {
+                        self.$message({
+                            type: 'warning',
+                            message: '删除失败',
+                            duration: 1000
+                        });
+                    }
+                }
+
+            ,
+
+                function (response) {
+                    //失败回调
+                }
+
+            )
+
+            })
+            },
+            routerToView(<#list allVueFtl.allJavaFtl.voFtl.primaryKeyJavaFields as javaField>${javaField.name}<#if javaField_has_next>,</#if></#list>) {
+                //跳转携带参数
+                window.open("#/zipManagerEdit" + "?id=" + id, '_self');
+            },
+            routerToEdit(<#list allVueFtl.allJavaFtl.voFtl.primaryKeyJavaFields as javaField>${javaField.name}<#if javaField_has_next>,</#if></#list>) {
+                //跳转携带参数
+                window.open("#/zipManagerEdit" + "?id=" + id, '_self');
+            }
 
         }
 

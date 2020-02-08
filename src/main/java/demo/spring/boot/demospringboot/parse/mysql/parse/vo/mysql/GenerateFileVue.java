@@ -68,8 +68,27 @@ public class GenerateFileVue {
                         "deleteBase", "queryByPrimaryKey", "deleteByPrimaryKey");
                 vo.setApis(apis);
                 /**
-                 * 处理接口
+                 * 处理接口 -> 这里需要处理所有的vo-> controller
                  */
+                /**
+                 * 处理接口 -> 这里需要处理所有的vo-> controller
+                 */
+                Map<String, Map<String, KeyToUrlVo>> keyToKeyToUrlsAllMap = new HashMap<>();
+                allVueFtl.getAllJavaFtls().forEach(allJavaFtl -> {
+                    String controllerName = allJavaFtl.getControllerFtl().getClassName(); // -> TUserController
+                    String baseName = controllerName.substring(0, controllerName.lastIndexOf("Controller"));//移除最后的 Controller -> TUser
+                    Map<String, KeyToUrlVo> keyToKeyToUrls = new HashMap<>();
+                    Arrays.stream(InterfaceEnum.values()).forEach(interfaceEnum -> {
+                        KeyToUrlVo keyToUrlVo = new KeyToUrlVo();
+                        keyToUrlVo.setComment(interfaceEnum.getComment() + baseName);
+                        keyToUrlVo.setVueKey(interfaceEnum.getPrefix() + baseName + interfaceEnum.getSuffix());
+                        keyToUrlVo.setUrl(controllerName + "/" + interfaceEnum.getKey());
+                        keyToKeyToUrls.put(interfaceEnum.getKey(), keyToUrlVo);
+                    });
+                    keyToKeyToUrlsAllMap.put(baseName, keyToKeyToUrls);//放入map中 -> 这里的数据全部是给api.js.ftl 使用的，下面的是给各个使用的
+                });
+                vo.setKeyToKeyToUrlsAllMap(keyToKeyToUrlsAllMap);
+
                 String controllerName = allVueFtl.getAllJavaFtl().getControllerFtl().getClassName(); // -> TUserController
                 String baseName = controllerName.substring(0, controllerName.lastIndexOf("Controller"));//移除最后的 Controller -> TUser
                 Map<String, KeyToUrlVo> keyToKeyToUrls = new HashMap<>();

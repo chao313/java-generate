@@ -52,7 +52,7 @@ export const constantRouterMap = [
 export const routerMap = {
   "9901": {
     path: 'test/test',
-    component: test,
+    component: Login,
     name: 'UserMgt',
     meta: {
       title: '用户管理'
