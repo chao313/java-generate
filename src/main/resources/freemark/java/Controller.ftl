@@ -242,7 +242,8 @@ public class ${ftlVo.className} {
     /**
      * 根据PrimaryKey更新，会根据主键去更新其他的值(空值不覆盖有值)
      *
-     * @param source 只有非主键的数据有效
+     * @param update.source 只包含非主键的字段
+     * @param update.target 只包含主键的字段
      * <#list ftlVo.primaryKeyJavaFields as field>@param ${field.name}
      * </#list>
      * @return 成功和失败都返回Response，具体的结果在response的
