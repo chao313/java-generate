@@ -6,6 +6,7 @@ import demo.spring.boot.demospringboot.parse.mysql.parse.vo.mysql.GenerateFileVu
 import demo.spring.boot.demospringboot.parse.mysql.parse.vo.mysql.ftl.java.AllJavaFtl;
 import demo.spring.boot.demospringboot.parse.mysql.parse.vo.mysql.ftl.vue.AllVueFtl;
 import demo.spring.boot.demospringboot.util.ZipUtils;
+import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -82,6 +83,7 @@ public class GenerateVueController {
      * @return
      * @throws Exception
      */
+    @ApiOperation(value = "注意->这里的下载目前通过swagger-ui的url是不行的，但是通过url直接访问是可以的")
     @GetMapping("/downloadVueDemoWeb")
     public ResponseEntity<byte[]> downloadVueDemoWeb(@RequestParam(value = "dataBase") String dataBase,
                                                      @RequestParam(value = "ptableName") String ptableName) throws Exception {
@@ -111,6 +113,7 @@ public class GenerateVueController {
      * @return
      * @throws Exception
      */
+    @ApiOperation(value = "注意->这里的下载目前通过swagger-ui的url是不行的，但是通过url直接访问是可以的")
     @GetMapping("/downloadVueDemoWebMoreTables")
     public ResponseEntity<byte[]> downloadVueDemoWebMoreTables(
             @ApiParam(example = "docker2") @RequestParam(value = "dataBase") String dataBase,

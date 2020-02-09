@@ -13,7 +13,7 @@
       </el-form>
     </section>
     <div class="mt40 ml40">
-       <el-button @click="resetForm('postForm')">取消</el-button>
+       <el-button type="primary" class="el-button-search" @click="routerToList()">返回列表</el-button>
     </div>
   </div>
 
@@ -48,7 +48,7 @@
     },
     watch: {},
     methods: {
-      //获取具体的配置
+       //获取具体的配置
         queryByPrimaryKey(<#list ftlVo.primaryKeyJavaFields as javaField>${javaField.name}<#if javaField_has_next>,</#if></#list>) {
         let self = this;
         self.$http.get(self.api.${allVueFtl.apiJsFtl.keyToKeyToUrls["queryByPrimaryKey"].vueKey}, {
@@ -58,7 +58,20 @@
             </#list>
           }
         },function (response) {
-          self.postForm = response.content;
+                if (response.code == 0) {
+                    self.postForm = response.content;
+                    self.$message({
+                        type: 'success',
+                        message: '查询成功',
+                        duration: 2000
+                    });
+                } else {
+                    self.$message({
+                        type: 'error',
+                        message: response.msg,
+                        duration: 2000
+                    });
+                }
         }, function (response) {
            //失败回调
            self.$message({
@@ -68,7 +81,12 @@
            });
         })
 
-      }
+      },
+        routerToList() {
+            //跳转回List
+            window.open("#/${allVueFtl.apiJsFtl.listModulePath}", '_self');
+        }
+
     }
   }
 </script>

@@ -149,7 +149,7 @@
                   }
                  },
                  function (response) {
-                    if (response.code = 0) {
+                    if (response.code == 0) {
                         if (response.content == true) {
                             self.$message({
                                 type: 'success',
