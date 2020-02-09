@@ -2,22 +2,17 @@
     <div class="app-container">
         <div class="mt20">
             <el-form :inline="true" size="mini">
-                <el-form-item label="字段选择">
-                    <el-select v-model="policyId" filterable clearable>
-                        <el-option v-for="(item,index) in policyIdList" :key="item.policyId" :label="item.policyId"
-                                   :value="item.policyId">
-                        </el-option>
-                    </el-select>
+                <#list allVueFtl.allJavaFtl.voFtl.javaFields as javaField>
+                <el-form-item label="${javaField.name}">
+                    <el-input v-model="search.${javaField.name}" placeholder="请输入"></el-input>
                 </el-form-item>
-                <el-form-item label="状态">
-                    <el-select v-model="status" filterable clearable>
-                        <el-option v-for="(item,index) in statuses" :key="item.value" :label="item.title"
-                                   :value="item.value">
-                        </el-option>
-                    </el-select>
+                </#list>
+                <el-form-item>
+                    <el-button type="primary" class="el-button-search" @click="searchEvent()">查询</el-button>
                 </el-form-item>
                 <el-form-item>
-                    <el-button type="primary" class="el-button-search" @click="searchEvent">查询</el-button>
+                    <el-button type="primary" class="el-button-search" @click="searchRest()">重置
+                    </el-button>
                 </el-form-item>
                 <el-form-item>
                     <el-button type="primary" class="el-button-search" @click="routerToAdd()">添加
@@ -104,7 +99,12 @@
                 endTime: '',
                 timeRange: [],
                 registId: '',
-                jsonData: ''
+                jsonData: '',
+                search:{
+                  <#list allVueFtl.allJavaFtl.voFtl.javaFields as javaField>
+                  ${javaField.name}:''<#if javaField_has_next>,</#if>
+                  </#list>
+                }
             }
         },
         mounted() {
@@ -117,9 +117,16 @@
         methods: {//获取具体的配置
             queryBase() {
                 let self = this;
-                self.$http.post(self.api.${allVueFtl.apiJsFtl.keyToKeyToUrls["queryBase"].vueKey}, {
-                    params: {}
-                },{
+                var params = new FormData();
+                <#list allVueFtl.allJavaFtl.voFtl.javaFields as javaField>
+                if(self.search.${javaField.name} != null && self.search.${javaField.name} !=''){
+                    params.append("${javaField.name}",self.search.${javaField.name});
+                }
+                </#list>
+                var paramsJson = {};
+                params.forEach((value, key) => paramsJson[key] = value);
+                self.$http.post(self.api.${allVueFtl.apiJsFtl.keyToKeyToUrls["queryBase"].vueKey},
+                paramsJson,{
 
                 },function (response) {
                     self.dataList = response.content;
@@ -134,7 +141,7 @@
 
             },
             deleteByPrimaryKey(<#list allVueFtl.allJavaFtl.voFtl.primaryKeyJavaFields as javaField>${javaField.name}<#if javaField_has_next>,</#if></#list>) {
-                var self = this;
+                let self = this;
                 this.$confirm('是否删除该条数据？', '提示', {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
@@ -205,6 +212,16 @@
             },
             routerToAdd() {
                 window.open("#/${allVueFtl.apiJsFtl.addModulePath}", '_self');
+            },
+            searchEvent(){
+                this.queryBase();
+            },
+            searchRest(){
+                let self = this;
+                <#list allVueFtl.allJavaFtl.voFtl.javaFields as javaField>
+                self.search.${javaField.name} = '';
+                </#list>
+                this.queryBase();
             }
 
         }
