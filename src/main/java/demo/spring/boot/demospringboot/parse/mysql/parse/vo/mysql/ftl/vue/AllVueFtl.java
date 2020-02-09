@@ -15,4 +15,5 @@ public class AllVueFtl {
     private EditVueFtl editVueFtl;
     private ListVueFtl listVueFtl;
     private IndexJsFtl indexJsFtl;
+    private AddVueFtl addVueFtl;
 }

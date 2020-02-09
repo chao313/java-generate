@@ -50,6 +50,9 @@ public class GenerateFileVue {
         IndexJsFtl indexJsFtl = GenerateFileVue.getIndexJsFtl(allVueFtl);//Index.js界面
         allVueFtl.setIndexJsFtl(indexJsFtl);
 
+        AddVueFtl addVueFtl = GenerateFileVue.getAddVueFtl(allVueFtl, moduleName);//Add界面
+        allVueFtl.setAddVueFtl(addVueFtl);
+
         return allVueFtl;
 
     }
@@ -109,6 +112,7 @@ public class GenerateFileVue {
                 vo.setEditModulePath(moduleName + "Edit");
                 vo.setViewModulePath(moduleName + "View");
                 vo.setListModulePath(moduleName + "List");
+                vo.setAddModulePath(moduleName + "Add");
                 return vo;
             }
 
@@ -232,6 +236,32 @@ public class GenerateFileVue {
 
                 });
                 vo.setModules(modules);
+                return vo;
+            }
+
+            @Override
+            public AllVueFtl getAllVueFtl() {
+                return allVueFtl;
+            }
+        }.grenerate();
+
+        return ftl;
+    }
+
+    /**
+     * 获取ftl的操作
+     */
+    private static AddVueFtl getAddVueFtl(AllVueFtl allVueFtl, String moduleDirName) throws IOException, TemplateException {
+
+        AddVueFtl ftl = new GenerateVueUtil<AddVueFtl>() {
+            @Override
+            public AddVueFtl getFtlVo() {
+                AddVueFtl vo = new AddVueFtl();
+                vo.setDirPath("demoWeb/src/views" + "/" + moduleDirName);
+                vo.setFileName("Add.Vue");
+                vo.setModulePath(moduleDirName + "Edit");
+                vo.setJavaFields(allVueFtl.getAllJavaFtl().getVoFtl().getJavaFields());
+                vo.setPrimaryKeyJavaFields(allVueFtl.getAllJavaFtl().getVoFtl().getPrimaryKeyJavaFields());
                 return vo;
             }
 

@@ -7,6 +7,7 @@ public enum ChildModuleEnum {
     VIEW("View", "Update更新", "view", "true"),
     EDIT("Edit", "Edit编辑", "edit", "true"),
     LIST("List", "List列表", "list", "false"),
+    ADD("Add", "Add添加", "add", "true"),
     ;
 
     /**

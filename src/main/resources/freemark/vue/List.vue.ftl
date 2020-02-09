@@ -20,7 +20,7 @@
                     <el-button type="primary" class="el-button-search" @click="searchEvent">查询</el-button>
                 </el-form-item>
                 <el-form-item>
-                    <el-button type="primary" class="el-button-search" @click="insertZipManagerByRegistId">添加
+                    <el-button type="primary" class="el-button-search" @click="routerToAdd()">添加
                     </el-button>
                 </el-form-item>
             </el-form>
@@ -156,6 +156,7 @@
                                 message: '删除成功',
                                 duration: 2000
                             });
+                            self.queryBase();
                         } else {
                             self.$message({
                                 type: 'warning',
@@ -201,6 +202,9 @@
                 </#list>
                 //跳转携带参数
                 window.open("#/${allVueFtl.apiJsFtl.editModulePath}"+ "?"+queryStr, '_self');
+            },
+            routerToAdd() {
+                window.open("#/${allVueFtl.apiJsFtl.addModulePath}", '_self');
             }
 
         }

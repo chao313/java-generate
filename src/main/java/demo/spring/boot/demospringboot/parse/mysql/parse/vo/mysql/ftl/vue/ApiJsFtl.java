@@ -39,5 +39,6 @@ public class ApiJsFtl implements FtlVueInterface {
     private String EditModulePath;
     private String ViewModulePath;
     private String ListModulePath;
+    private String AddModulePath;
 
 }

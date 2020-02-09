@@ -83,26 +83,26 @@ public class GenerateVueController {
      * @return
      * @throws Exception
      */
-    @ApiOperation(value = "注意->这里的下载目前通过swagger-ui的url是不行的，但是通过url直接访问是可以的")
-    @GetMapping("/downloadVueDemoWeb")
-    public ResponseEntity<byte[]> downloadVueDemoWeb(@RequestParam(value = "dataBase") String dataBase,
-                                                     @RequestParam(value = "ptableName") String ptableName) throws Exception {
-
-        /**
-         *
-         */
-        String basePackage = demoMasterBasePackage;
-        AllJavaFtl allJavaFtl = GenerateFileJava.GenerateFile(dataBase, ptableName, basePackage);
-        String operateDir = String.valueOf(new Date().getTime());
-        String fileNameZip = operateDir + ".zip";
-        byte[] body = ZipUtils.createFilesAndZipMavenDemoMaster(Arrays.asList(allJavaFtl), fileNameZip, operateDir);
-
-        HttpHeaders headers = new HttpHeaders();//设置响应头
-        headers.add("Content-Disposition", "attachment;filename=" + fileNameZip);//下载的文件名称
-        HttpStatus statusCode = HttpStatus.OK;//设置响应吗
-        ResponseEntity<byte[]> response = new ResponseEntity<>(body, headers, statusCode);
-        return response;
-    }
+//    @ApiOperation(value = "注意->这里的下载目前通过swagger-ui的url是不行的，但是通过url直接访问是可以的")
+//    @GetMapping("/downloadVueDemoWeb")
+//    public ResponseEntity<byte[]> downloadVueDemoWeb(@RequestParam(value = "dataBase") String dataBase,
+//                                                     @RequestParam(value = "ptableName") String ptableName) throws Exception {
+//
+//        /**
+//         *
+//         */
+//        String basePackage = demoMasterBasePackage;
+//        AllJavaFtl allJavaFtl = GenerateFileJava.GenerateFile(dataBase, ptableName, basePackage);
+//        String operateDir = String.valueOf(new Date().getTime());
+//        String fileNameZip = operateDir + ".zip";
+//        byte[] body = ZipUtils.createFilesAndZipMavenDemoMaster(Arrays.asList(allJavaFtl), fileNameZip, operateDir);
+//
+//        HttpHeaders headers = new HttpHeaders();//设置响应头
+//        headers.add("Content-Disposition", "attachment;filename=" + fileNameZip);//下载的文件名称
+//        HttpStatus statusCode = HttpStatus.OK;//设置响应吗
+//        ResponseEntity<byte[]> response = new ResponseEntity<>(body, headers, statusCode);
+//        return response;
+//    }
 
     /**
      * 注意->这里的下载目前通过swagger-ui的url是不行的，但是通过url直接访问是可以的

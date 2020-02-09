@@ -390,6 +390,7 @@ public class ZipUtils {
             ftlJavaInterfaces.add(allVueFtl.getEditVueFtl());
             ftlJavaInterfaces.add(allVueFtl.getListVueFtl());
             ftlJavaInterfaces.add(allVueFtl.getViewVueFtl());
+            ftlJavaInterfaces.add(allVueFtl.getAddVueFtl());
 
             /**
              * 创建文件并写入数据
