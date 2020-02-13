@@ -3,6 +3,12 @@ server:
   port: 8000
   context-path: /demomaster
 
+management:
+  health:
+    redis:
+      enabled: false
+  security:
+    enabled: false
 
 spring:
   mvc:

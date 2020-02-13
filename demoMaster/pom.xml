@@ -26,6 +26,11 @@
     </properties>
 
     <dependencies>
+        <!--监控相关-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
         <!--
        提供mvc，aop依赖包
        -->

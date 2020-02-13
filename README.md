@@ -1,5 +1,4 @@
-# linked-parse
-1.解析
-
-#使用
-
+##注意
+访问首页地址为: http://localhost:<port>/juan/vue/index
+eg. http://localhost:8083/juan/vue/index
+https://127.0.0.1:8080/juan/swagger-ui.html#/
