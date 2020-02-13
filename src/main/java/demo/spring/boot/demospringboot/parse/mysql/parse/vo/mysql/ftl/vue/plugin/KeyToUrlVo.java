@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class KeyToUrlVo {
-    private String vueKey;//vue api.self使用的key
-    private String url;
-    private String comment;
+    private String vueKey;//vue api.self使用的key updateTPicByPrimaryKey
+    private String url; //TPicController/updateByPrimaryKey
+    private String comment;//根据主键更新TPic
 }

@@ -1,16 +1,15 @@
+var queryBase = "http://127.0.0.1:8000/demomaster/TTitleController/queryBase";
+
 var vue = new Vue({
     el: "#body",
     data: {
         alertError: "系统错误，请联系管理员！",
+        alertSuccess: "操作成功",
 
         titles: [{
             id: '',
             title: ''
         }],
-        alertSuccess: "操作成功",
-        image: [],
-        iframe_src: "",
-        docker_host: ""
 
     },
     created() {
@@ -19,7 +18,7 @@ var vue = new Vue({
     methods: {
         queryBase() {
             let self = this;
-            axios.post("http://127.0.0.1:8000/demomaster/TTitleController/queryBase", {})
+            axios.post(queryBase, {})
                 .then(function (response) {
                     let data = response.data;
                     console.log(data);
