@@ -137,7 +137,7 @@ var vue = new Vue({
                 ${javaField.name}:${javaField.name}<#if javaField_has_next>,</#if>
             </#list>
                   }
-             },function (response) {
+              }).then(function (response) {
                    let data = response.data;
                     console.log(data);
                     if (data.code == 0) {
@@ -146,18 +146,19 @@ var vue = new Vue({
                     } else {
                         alert(data.msg);
                     }
-              },
-              function (response) {
-                  //失败回调
-                  alert(this.alertErrorValue)
-              })},
+              }).catch(
+                    function (response) {
+                    //失败回调
+                     alert(this.alertErrorValue)
+              })
+            },
         </#if>
         <#if (key=="queryBase")>
             /*多条件查询${type}*/
             ${ftlVo.keyToKeyToUrlsAllMap[type][key].vueKey}() {
               let self = this;
-              axios.post(${ftlVo.keyToKeyToUrlsAllMap[type][key].vueKey}, self.${type}QueryBase
-              ,function (response) {
+              axios.post(${ftlVo.keyToKeyToUrlsAllMap[type][key].vueKey}, self.${type}QueryBase)
+              .then(function (response) {
                    let data = response.data;
                     console.log(data);
                     if (data.code == 0) {
@@ -166,7 +167,7 @@ var vue = new Vue({
                     } else {
                         alert(data.msg);
                     }
-              },
+              }).catch(
               function (response) {
                   //失败回调
                   alert(this.alertErrorValue)
@@ -176,8 +177,8 @@ var vue = new Vue({
             /*插入${type}*/
             ${ftlVo.keyToKeyToUrlsAllMap[type][key].vueKey}() {
               let self = this;
-              axios.post(${ftlVo.keyToKeyToUrlsAllMap[type][key].vueKey}, self.${type}Insert
-              ,function (response) {
+              axios.post(${ftlVo.keyToKeyToUrlsAllMap[type][key].vueKey}, self.${type}Insert)
+              .then(function (response) {
                    let data = response.data;
                     console.log(data);
                     if (data.code == 0) {
@@ -186,7 +187,7 @@ var vue = new Vue({
                     } else {
                          alert(data.msg);
                     }
-              },
+              }).catch(
               function (response) {
                   //失败回调
                   alert(this.alertErrorValue)
@@ -202,7 +203,7 @@ var vue = new Vue({
                 ${javaField.name}:${javaField.name}<#if javaField_has_next>,</#if>
             </#list>
                   }
-             },function (response) {
+             }).then(function (response) {
                    let data = response.data;
                     console.log(data);
                     if (data.code == 0) {
@@ -211,7 +212,7 @@ var vue = new Vue({
                     } else {
                          alert(data.msg);
                     }
-              },
+              }).catch(
               function (response) {
                   //失败回调
                   alert(this.alertErrorValue)
@@ -221,7 +222,8 @@ var vue = new Vue({
             /*主键更新${type}*/
             ${ftlVo.keyToKeyToUrlsAllMap[type][key].vueKey}() {
               let self = this;
-              axios.post(${ftlVo.keyToKeyToUrlsAllMap[type][key].vueKey}, self.${type}UpdateByPrimaryKey ,function (response) {
+              axios.post(${ftlVo.keyToKeyToUrlsAllMap[type][key].vueKey}, self.${type}UpdateByPrimaryKey)
+              .then(function (response) {
                    let data = response.data;
                     console.log(data);
                     if (data.code == 0) {
@@ -230,7 +232,7 @@ var vue = new Vue({
                     } else {
                          alert(data.msg);
                     }
-              },
+              }).catch(
               function (response) {
                   //失败回调
                   alert(this.alertErrorValue)
@@ -240,7 +242,8 @@ var vue = new Vue({
             /*多条件更新${type}*/
             ${ftlVo.keyToKeyToUrlsAllMap[type][key].vueKey}() {
               let self = this;
-              axios.post(${ftlVo.keyToKeyToUrlsAllMap[type][key].vueKey}, self.${type}UpdateBase ,function (response) {
+              axios.post(${ftlVo.keyToKeyToUrlsAllMap[type][key].vueKey}, self.${type}UpdateBase)
+              .then(function (response) {
                    let data = response.data;
                     console.log(data);
                     if (data.code == 0) {
@@ -249,7 +252,7 @@ var vue = new Vue({
                     } else {
                          alert(data.msg);
                     }
-              },
+              }).catch(
               function (response) {
                   //失败回调
                   alert(this.alertErrorValue)
