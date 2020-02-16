@@ -12,22 +12,64 @@ import Layout from '@/views/layout/Layout'
 //登陆界面
 const Login = r => require.ensure([], () => r(require('@/views/login/index')), 'login')
 
+const ResourceManagerList = r => require.ensure([], () => r(require('@/views/ResourceManager/List')), 'ResourceManagerList')
+const ResourceManagerAdd = r => require.ensure([], () => r(require('@/views/ResourceManager/Add')), 'ResourceManagerAdd')
+const ResourceManagerView = r => require.ensure([], () => r(require('@/views/ResourceManager/View')), 'ResourceManagerView')
+
 <#list ftlVo.modules as module>
 /* ${module.metaTitle} */
 const ${module.component} = r => require.ensure([], () => r(require('${module.realPath}')), '${module.component}')
 </#list>
 
 export const constantRouterMap = [
-  {
-    path: '',
-    component: Layout,
-    redirect: '/homepage',
-    name: 'HomePage',
-    meta: {
-      title: '配置管理'
+    {
+        path: '',
+        component: Layout,
+        redirect: '/ResourceManagerList',
+        name: 'resourceManager',
+        meta: {
+            title: '资源管理'
+        },
+        noDropdown: true,
+        children: [
+            {
+                path: 'ResourceManagerList',
+                component: ResourceManagerList,
+                name: 'ResourceManagerList',
+                meta: {
+                    title: '资源列表'
+                },
+                hidden: false
+            }, {
+                path: 'ResourceManagerAdd',
+                component: ResourceManagerAdd,
+                name: 'ResourceManagerAdd',
+                meta: {
+                    title: '资源添加'
+                },
+                hidden: false
+            },
+            {
+                path: 'ResourceManagerView',
+                component: ResourceManagerView,
+                name: 'ResourceManagerView',
+                meta: {
+                    title: '资源查看'
+                },
+                hidden: true
+            }
+        ]
     },
-    noDropdown: true,
-    children: [
+    {
+        path: '',
+        component: Layout,
+        redirect: '/homepage',
+        name: 'HomePage',
+        meta: {
+            title: '业务管理'
+        },
+        noDropdown: true,
+        children: [
 
 <#list ftlVo.modules as module>
       {
@@ -39,7 +81,7 @@ export const constantRouterMap = [
         },
         hidden: ${module.hidden}
       }
-<#if module_has_next>,</#if>
+    <#if module_has_next>,</#if>
 </#list>
     ]
   },

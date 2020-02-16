@@ -52,6 +52,23 @@ public class Swagger2Configuration {
                 ;
     }
 
+    @Bean
+    public Docket innerApi() {
+        return new Docket(DocumentationType.SWAGGER_2)
+                .select()
+                .apis(RequestHandlerSelectors
+                        .basePackage("demo.spring.boot.demospringboot.controller"))
+                .paths(PathSelectors.any())
+                .build()
+                .genericModelSubstitutes(DeferredResult.class)//异步http请求
+                .forCodeGeneration(true)
+                .pathMapping("/")
+                .apiInfo(apiInfo())
+                .useDefaultResponseMessages(false)
+                .groupName("innerApi")
+                ;
+    }
+
     /**
      * api描述信息
      *

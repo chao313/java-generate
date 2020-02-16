@@ -1,6 +1,6 @@
 <template>
   <div class="menu-wrapper">
-    <!--<h5 class="site_title">执法辅助系统</h5>-->
+    <!--<h5 class="site_title">后台辅助系统</h5>-->
 
     <div class="profile mt10 clearfix">
       <div class="profile_pic">

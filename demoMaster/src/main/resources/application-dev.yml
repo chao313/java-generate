@@ -11,6 +11,10 @@ management:
     enabled: false
 
 spring:
+  http:
+    multipart:
+      max-file-size: 300Mb
+      max-request-size: 300Mb
   mvc:
     favicon:
       enabled: true
@@ -39,7 +43,7 @@ spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
     #    url: jdbc:mysql://127.0.0.1:3306/information_schema
-    url: jdbc:mysql://127.0.0.1:3306/docker2
+    url: jdbc:mysql://127.0.0.1:3306/blog?useUnicode=true&characterEncoding=utf8
     username: root
     password: 123456
 #
@@ -57,6 +61,9 @@ resources:
   ## -- 如果配置，都可以只能访问指定路径下的
   ## http://localhost:8081/chao/static.txt
   static-locations: classpath:/static/,classpath:/public/
+
+
+
 
 
 

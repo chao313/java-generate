@@ -1,6 +1,6 @@
 <template>
   <div class="nav-menu">
-    <span class="nav-tit">辅助系统</span>
+    <span class="nav-tit">后台系统</span>
     <div class="right-menu">
       <el-button type="text" @click="ReleaseResources()">释放资源并注销</el-button>
       <el-dropdown class="avatar-container right-menu-item" trigger="click">
