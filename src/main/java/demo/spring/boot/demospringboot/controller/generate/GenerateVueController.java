@@ -138,7 +138,12 @@ public class GenerateVueController {
 
         String operateDir = String.valueOf(new Date().getTime());
         String fileNameZip = operateDir + ".zip";
-        byte[] body = ZipUtils.createFilesAndZipVueDemoWeb(allVueFtls, fileNameZip, operateDir);
+        ZipUtils.createFilesAndZipVueDemoWeb(allVueFtls, fileNameZip, operateDir);
+
+        /**
+         * 删除临时目录并返回压缩后的字节
+         */
+        byte[] body = ZipUtils.deleteAndReturnByte(fileNameZip, ZipUtils.tmpPathTarget, ZipUtils.tmpPath);
 
         HttpHeaders headers = new HttpHeaders();//设置响应头
         headers.add("Content-Disposition", "attachment;filename=" + fileNameZip);//下载的文件名称

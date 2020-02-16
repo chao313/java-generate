@@ -20,6 +20,10 @@ var vue = new Vue({
         alertError: "系统错误，请联系管理员！",
         alertSuccess: "操作成功",
 
+        BASE_URL:BASE_URL,
+
+        host:host,
+
         titles: [{
             id: '',
             title: ''

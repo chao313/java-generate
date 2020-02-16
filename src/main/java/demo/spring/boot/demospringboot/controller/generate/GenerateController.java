@@ -24,62 +24,22 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import static demo.spring.boot.demospringboot.controller.generate.GenerateJavaController.demoMasterBasePackage;
+
 /**
  * 2018/4/6    Created by   juan
  */
 
 @RestController
-@RequestMapping(value = "/generate/html")
-public class GenerateHtmlController {
+@RequestMapping(value = "/generate")
+public class GenerateController {
 
     private static Logger LOGGER =
-            LoggerFactory.getLogger(GenerateHtmlController.class);
-
-    public static final String demoMasterBasePackage = "demoHtml";//这里是作为package存在的
-    public static final String demoHtmlDirPath = "demoHtml/";//项目路径
-
-    private static final String tmpPath = "tmp/";
+            LoggerFactory.getLogger(GenerateController.class);
 
 
     /**
-     * 注意->这里的下载目前通过swagger-ui的url是不行的，但是通过url直接访问是可以的
-     * 这里兼容了多个table的情况
-     *
-     * @param dataBase
-     * @param ptableNames
-     * @return
-     * @throws Exception
-     */
-    @GetMapping("/generateDemoHtmlMoreTables")
-    public Response generateDemoHtmlMoreTables(
-            @ApiParam(example = "docker2") @RequestParam(value = "dataBase") String dataBase,
-            @ApiParam(example = "t_host,t_user") @RequestParam(value = "ptableNames") List<String> ptableNames) throws Exception {
-
-        Response response = new Response();
-        List<AllJavaFtl> allJavaFtls = new ArrayList<>();//存放所有的Java code -> controller
-        /**
-         * 这里由于是单个的 -> 现在分开
-         */
-        String basePackage = demoMasterBasePackage;
-        for (String ptableName : ptableNames) {
-            AllJavaFtl allJavaFtl = GenerateFileJava.GenerateFile(dataBase, ptableName, basePackage);
-            allJavaFtls.add(allJavaFtl);
-        }
-
-        List<AllVueFtl> allVueFtls = new ArrayList<>();
-        for (AllJavaFtl allJavaFtl : allJavaFtls) {
-            AllVueFtl allVueFtl = GenerateFileVue.GenerateFile(allJavaFtl, allJavaFtls);
-            allVueFtls.add(allVueFtl);
-        }
-        AllHtmlFtl allHtmlFtl = GenerateFileHtml.GenerateFile(allVueFtls);
-        response.setContent(allHtmlFtl);
-        return response;
-    }
-
-
-    /**
-     * 注意->这里的下载目前通过swagger-ui的url是不行的，但是通过url直接访问是可以的
-     * 这里兼容了多个table的情况
+     * 下载全部的前后端
      *
      * @param dataBase
      * @param ptableNames
@@ -87,8 +47,8 @@ public class GenerateHtmlController {
      * @throws Exception
      */
     @ApiOperation(value = "注意->这里的下载目前通过swagger-ui的url是不行的，但是通过url直接访问是可以的")
-    @GetMapping("/downloadDemoHtmlMoreTables")
-    public ResponseEntity<byte[]> downloadDemoHtmlMoreTables(
+    @GetMapping("/downloadAllMoreTables")
+    public ResponseEntity<byte[]> downloadAllMoreTables(
             @ApiParam(example = "docker2") @RequestParam(value = "dataBase") String dataBase,
             @ApiParam(example = "t_host,t_user") @RequestParam(value = "ptableNames") List<String> ptableNames) throws Exception {
 
@@ -112,6 +72,8 @@ public class GenerateHtmlController {
 
         String operateDir = String.valueOf(new Date().getTime());
         String fileNameZip = operateDir + ".zip";
+        ZipUtils.createFilesAndZipMavenDemoMaster(allJavaFtls, fileNameZip, operateDir);
+        ZipUtils.createFilesAndZipVueDemoWeb(allVueFtls, fileNameZip, operateDir);
         ZipUtils.createFilesAndZipDemoHtml(allHtmlFtl, fileNameZip, operateDir);
         /**
          * 删除临时目录并返回压缩后的字节

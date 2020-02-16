@@ -79,7 +79,7 @@ public class GenerateJavaController {
 
         AllJavaFtl allJavaFtl = GenerateFileJava.GenerateFile(dataBase, ptableName, basePackage);
         String fileNameZip = new Date().getTime() + ".zip";
-        byte[] body = ZipUtils.createFilesAndZipV2(allJavaFtl, fileNameZip);
+        byte[] body = ZipUtils.createFilesAndZip(allJavaFtl, fileNameZip);
 
         HttpHeaders headers = new HttpHeaders();//设置响应头
         headers.add("Content-Disposition", "attachment;filename=" + fileNameZip);//下载的文件名称
@@ -97,19 +97,20 @@ public class GenerateJavaController {
      * @return
      * @throws Exception
      */
-    @ApiOperation(value = "注意->这里的下载目前通过swagger-ui的url是不行的，但是通过url直接访问是可以的")
+    @ApiOperation(value = "单表下载", notes = "注意->这里的下载目前通过swagger-ui的url是不行的，但是通过url直接访问是可以的")
     @GetMapping("/downloadMavenDemoMaster")
     public ResponseEntity<byte[]> downloadMavenDemoMaster(@RequestParam(value = "dataBase") String dataBase,
                                                           @RequestParam(value = "ptableName") String ptableName) throws Exception {
-
-        /**
-         *
-         */
         String basePackage = demoMasterBasePackage;
         AllJavaFtl allJavaFtl = GenerateFileJava.GenerateFile(dataBase, ptableName, basePackage);
         String operateDir = String.valueOf(new Date().getTime());
         String fileNameZip = operateDir + ".zip";
-        byte[] body = ZipUtils.createFilesAndZipMavenDemoMaster(Arrays.asList(allJavaFtl), fileNameZip, operateDir);
+        ZipUtils.createFilesAndZipMavenDemoMaster(Arrays.asList(allJavaFtl), fileNameZip, operateDir);
+
+        /**
+         * 删除临时目录并返回压缩后的字节
+         */
+        byte[] body = ZipUtils.deleteAndReturnByte(fileNameZip, ZipUtils.tmpPathTarget, ZipUtils.tmpPath);
 
         HttpHeaders headers = new HttpHeaders();//设置响应头
         headers.add("Content-Disposition", "attachment;filename=" + fileNameZip);//下载的文件名称
@@ -127,15 +128,12 @@ public class GenerateJavaController {
      * @return
      * @throws Exception
      */
-    @ApiOperation(value = "注意->这里的下载目前通过swagger-ui的url是不行的，但是通过url直接访问是可以的")
+    @ApiOperation(value = "多表生成", notes = "注意->这里的下载目前通过swagger-ui的url是不行的，但是通过url直接访问是可以的")
     @GetMapping("/downloadMavenDemoMasterMoreTables")
     public ResponseEntity<byte[]> downloadMavenDemoMasterMoreTables(
             @ApiParam(example = "docker2") @RequestParam(value = "dataBase") String dataBase,
             @ApiParam(example = "t_host,t_user") @RequestParam(value = "ptableNames") List<String> ptableNames) throws Exception {
 
-        /**
-         *
-         */
         String basePackage = demoMasterBasePackage;
         List<AllJavaFtl> allJavaFtls = new ArrayList<>();
         for (String ptableName : ptableNames) {
@@ -144,7 +142,12 @@ public class GenerateJavaController {
         }
         String operateDir = String.valueOf(new Date().getTime());
         String fileNameZip = operateDir + ".zip";
-        byte[] body = ZipUtils.createFilesAndZipMavenDemoMaster(allJavaFtls, fileNameZip, operateDir);
+        ZipUtils.createFilesAndZipMavenDemoMaster(allJavaFtls, fileNameZip, operateDir);
+
+        /**
+         * 删除临时目录并返回压缩后的字节
+         */
+        byte[] body = ZipUtils.deleteAndReturnByte(fileNameZip, ZipUtils.tmpPathTarget, ZipUtils.tmpPath);
 
         HttpHeaders headers = new HttpHeaders();//设置响应头
         headers.add("Content-Disposition", "attachment;filename=" + fileNameZip);//下载的文件名称

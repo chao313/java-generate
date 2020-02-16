@@ -1,14 +1,12 @@
 package demo.spring.boot.demospringboot.util;
 
+import demo.spring.boot.demospringboot.controller.generate.GenerateHtmlController;
 import demo.spring.boot.demospringboot.controller.generate.GenerateJavaController;
 import demo.spring.boot.demospringboot.controller.generate.GenerateVueController;
-import demo.spring.boot.demospringboot.parse.mysql.parse.vo.AssociationJavaTable;
-import demo.spring.boot.demospringboot.parse.mysql.parse.vo.JavaTable;
-import demo.spring.boot.demospringboot.parse.mysql.parse.vo.mysql.ftl.FtlVueInterface;
+import demo.spring.boot.demospringboot.parse.mysql.parse.vo.mysql.ftl.html.AllHtmlFtl;
 import demo.spring.boot.demospringboot.parse.mysql.parse.vo.mysql.ftl.java.AllJavaFtl;
 import demo.spring.boot.demospringboot.parse.mysql.parse.vo.mysql.ftl.FtlJavaInterface;
 import demo.spring.boot.demospringboot.parse.mysql.parse.vo.mysql.ftl.vue.AllVueFtl;
-import org.apache.commons.lang3.StringUtils;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -19,8 +17,8 @@ import java.util.zip.ZipOutputStream;
 public class ZipUtils {
     private static final int BUFFER_SIZE = 2 * 1024;
 
-    private static final String tmpPath = "tmp/";
-    private static final String tmpPathTarget = "tmpTarget/";
+    public static final String tmpPath = "tmp/";
+    public static final String tmpPathTarget = "tmpTarget/";
 
     /**
      * 压缩成ZIP 方法1
@@ -137,159 +135,6 @@ public class ZipUtils {
         }
     }
 
-    public static InputStream createFilesAndZip(JavaTable javaTable, String zipFileName, String dirPath) throws IOException {
-        BufferedOutputStream voOutputStream = null;
-        BufferedOutputStream daoOutputStream = null;
-        BufferedOutputStream serviceOutputStream = null;
-        BufferedOutputStream serviceImplOutputStream = null;
-        BufferedOutputStream mapperFileOutputStream = null;
-
-        //创建文件夹
-        new File(tmpPath + javaTable.getBasePackagePath()).mkdirs();
-
-        File voFile = new File(tmpPath + javaTable.getClassVoPath());
-        voFile.createNewFile();
-        voOutputStream = new BufferedOutputStream(new FileOutputStream(voFile));
-        voOutputStream.write(javaTable.getClassVoStr().getBytes());
-        voOutputStream.flush();
-
-        File daoFile = new File(tmpPath + javaTable.getClassDaoPath());
-        daoFile.createNewFile();
-        daoOutputStream = new BufferedOutputStream(new FileOutputStream(daoFile));
-        daoOutputStream.write(javaTable.getClassDaoStr().getBytes());
-        daoOutputStream.flush();
-
-        File serviceFile = new File(tmpPath + javaTable.getClassServicePath());
-        serviceFile.createNewFile();
-        serviceOutputStream = new BufferedOutputStream(new FileOutputStream(serviceFile));
-        serviceOutputStream.write(javaTable.getClassServiceStr().getBytes());
-        serviceOutputStream.flush();
-
-        File serviceImplFile = new File(tmpPath + javaTable.getClassServiceImplPath());
-        serviceFile.createNewFile();
-        serviceImplOutputStream = new BufferedOutputStream(new FileOutputStream(serviceImplFile));
-        serviceImplOutputStream.write(javaTable.getClassServiceImplStr().getBytes());
-        serviceImplOutputStream.flush();
-
-        File mapperFile = new File(tmpPath + javaTable.getMapperPath());
-        mapperFile.createNewFile();
-        mapperFileOutputStream = new BufferedOutputStream(new FileOutputStream(mapperFile));
-        mapperFileOutputStream.write(javaTable.getMapperStr().getBytes());
-        mapperFileOutputStream.flush();
-
-        voOutputStream.close();
-        daoOutputStream.close();
-        serviceOutputStream.close();
-        serviceImplOutputStream.close();
-        mapperFileOutputStream.close();
-
-
-        File file = new File(tmpPath + zipFileName);
-        OutputStream outputStream = new FileOutputStream(file);
-        ZipUtils.toZip(tmpPath + dirPath, outputStream, true);
-        outputStream.flush();
-        outputStream.close();
-
-        InputStream inputStream = new FileInputStream(tmpPath + zipFileName);
-
-
-        voFile.delete();
-        daoFile.delete();
-        serviceFile.delete();
-        serviceImplFile.delete();
-        mapperFile.delete();
-        FileUtils.deleteDirectory(tmpPath + dirPath);
-        file.delete();
-
-        return inputStream;
-    }
-
-    /**
-     * 目前的生成方式 maven的项目
-     *
-     * @param allJavaFtls -> 包含多个从vo到controller
-     * @param zipFileName
-     * @param operateDir  -> 用于存放临时文件夹的目录
-     * @return
-     * @throws IOException
-     */
-    public static byte[] createFilesAndZipMavenDemoMaster(List<AllJavaFtl> allJavaFtls, String zipFileName, String operateDir) throws IOException {
-
-        // ---> demoMaster
-        String sourceMavenDirPath = GenerateJavaController.demoMasterDirPath;//maven项目地址的文件夹
-        // ---> tmp/1580899138501/demoMaster/
-        String targetOperateDirPath = tmpPath + operateDir + "/" + GenerateJavaController.demoMasterBasePackage + "/";//操作的目录
-        // ---> tmp/1580899138501/src/main/java/
-        String codeDirPath = targetOperateDirPath + "src/main/java/";//code存放的地址
-
-
-        /**
-         * 1.把maven项目复制到操作目录下
-         */
-        File sourceMavenDir = new File(sourceMavenDirPath);
-        sourceMavenDir.mkdirs();//创建文件夹
-        File targetOperateDir = new File(targetOperateDirPath);
-        org.apache.commons.io.FileUtils.copyDirectory(sourceMavenDir, targetOperateDir);//项目复制到目标文件夹下
-
-        for (AllJavaFtl allJavaFtl : allJavaFtls) {
-            /**
-             * 2.生成code
-             */
-
-            /**
-             * 所有的文件统一处理
-             */
-            List<FtlJavaInterface> ftlJavaInterfaces = new ArrayList<>();
-            ftlJavaInterfaces.add(allJavaFtl.getControllerFtl());
-            ftlJavaInterfaces.add(allJavaFtl.getServiceImplFtl());
-            ftlJavaInterfaces.add(allJavaFtl.getServiceFtl());
-            ftlJavaInterfaces.add(allJavaFtl.getDaoFtl());
-            ftlJavaInterfaces.add(allJavaFtl.getRequestUpdatePrimaryKeyFtl());
-            ftlJavaInterfaces.add(allJavaFtl.getRequestUpdateBaseFtl());
-            ftlJavaInterfaces.add(allJavaFtl.getVoNoPriFtl());
-            ftlJavaInterfaces.add(allJavaFtl.getVoPriFtl());
-            ftlJavaInterfaces.add(allJavaFtl.getVoFtl());
-            ftlJavaInterfaces.add(allJavaFtl.getMapperFtl());
-
-            /**
-             * 创建文件并写入数据
-             */
-            for (FtlJavaInterface ftlJavaInterface : ftlJavaInterfaces) {
-                BufferedOutputStream outputStream = null;
-                String dir = (codeDirPath + ftlJavaInterface.getPackageName()).replace(".", "/");
-                //创建文件夹
-                new File(dir).mkdirs();
-                File voFile = new File(dir + "/" + ftlJavaInterface.getFileName());
-                voFile.createNewFile();
-                outputStream = new BufferedOutputStream(new FileOutputStream(voFile));
-                outputStream.write(ftlJavaInterface.getFreeMarkStr().getBytes());
-                outputStream.flush();
-                outputStream.close();
-
-            }
-        }
-
-
-        String targetZip = tmpPathTarget + zipFileName;
-        new File(tmpPathTarget).mkdirs();
-        /**
-         * 打包压缩
-         */
-        File file = new File(targetZip);
-        OutputStream outputStream = new FileOutputStream(file);
-        ZipUtils.toZip(tmpPath, outputStream, true);
-        outputStream.flush();
-        outputStream.close();
-
-        byte[] bytes = org.apache.commons.io.FileUtils.readFileToByteArray(new File(targetZip));
-
-
-        FileUtils.deleteDirectory(tmpPath);
-        FileUtils.deleteDirectory(tmpPathTarget);
-
-        return bytes;
-    }
-
 
     /**
      * 目前的生成方式 - maven
@@ -299,7 +144,7 @@ public class ZipUtils {
      * @return
      * @throws IOException
      */
-    public static byte[] createFilesAndZipV2(AllJavaFtl allJavaFtl, String zipFileName) throws IOException {
+    public static byte[] createFilesAndZip(AllJavaFtl allJavaFtl, String zipFileName) throws IOException {
 
         /**
          * 所有的文件统一处理
@@ -350,6 +195,28 @@ public class ZipUtils {
     }
 
     /**
+     * 目前的生成方式 maven的项目
+     *
+     * @param allJavaFtls -> 包含多个从vo到controller
+     * @param zipFileName
+     * @param operateDir  -> 用于存放临时文件夹的目录
+     * @return
+     * @throws IOException
+     */
+    public static void createFilesAndZipMavenDemoMaster(List<AllJavaFtl> allJavaFtls, String zipFileName, String operateDir) throws IOException {
+
+        // ---> demoMaster
+        String sourceMavenDirPath = GenerateJavaController.demoMasterDirPath;//maven项目地址的文件夹
+        // ---> tmp/1580899138501/demoMaster/
+        String targetOperateDirPath = tmpPath + operateDir + "/" + GenerateJavaController.demoMasterBasePackage + "/";//操作的目录
+        // ---> tmp/1580899138501/src/main/java/
+        String codeDirPath = targetOperateDirPath + "src/main/java/";//code存放的地址
+
+        ZipUtilsJava.deal(allJavaFtls, sourceMavenDirPath, codeDirPath, targetOperateDirPath);
+    }
+
+
+    /**
      * 目前的生成方式 vue前端的项目
      *
      * @param allVueFtls  -> 包含多个从vue
@@ -358,7 +225,7 @@ public class ZipUtils {
      * @return
      * @throws IOException
      */
-    public static byte[] createFilesAndZipVueDemoWeb(List<AllVueFtl> allVueFtls, String zipFileName, String operateDir) throws IOException {
+    public static void createFilesAndZipVueDemoWeb(List<AllVueFtl> allVueFtls, String zipFileName, String operateDir) throws IOException {
 
         // ---> demoWeb
         String sourceVueWebDirPath = GenerateVueController.demoWebDirPath;//maven项目地址的文件夹
@@ -367,50 +234,36 @@ public class ZipUtils {
         // ---> tmp/1580899138501/demoWeb/
         String targetOperateDirPath = tmpPath + operateDir + "/" + GenerateVueController.demoWebDirPath + "/";//操作的目录
 
+        ZipUtilsVue.deal(allVueFtls, sourceVueWebDirPath, codeDirPath, targetOperateDirPath);
+    }
 
-        /**
-         * 1.把maven项目复制到操作目录下
-         */
-        File sourceVueWebDir = new File(sourceVueWebDirPath);
-        sourceVueWebDir.mkdirs();//创建文件夹
-        File targetOperateDir = new File(targetOperateDirPath);
-        org.apache.commons.io.FileUtils.copyDirectory(sourceVueWebDir, targetOperateDir);//项目复制到目标文件夹下
+    /**
+     * 目前的生成方式 vue前端的项目
+     *
+     * @param allHtmlFtl  -> 包含多个从vue
+     * @param zipFileName
+     * @param operateDir  -> 用于存放临时文件夹的目录
+     * @return
+     * @throws IOException
+     */
+    public static void createFilesAndZipDemoHtml(AllHtmlFtl allHtmlFtl, String zipFileName, String operateDir) throws IOException {
 
-        for (AllVueFtl allVueFtl : allVueFtls) {
-            /**
-             * 2.生成code
-             */
+        // ---> demoWeb
+        String sourceHtmlDirPath = GenerateHtmlController.demoHtmlDirPath;//maven项目地址的文件夹
+        // ---> tmp/1580899138501/
+        String codeDirPath = tmpPath + operateDir + "/";//code存放的地址
+        // ---> tmp/1580899138501/demoWeb/
+        String targetOperateDirPath = tmpPath + operateDir + "/" + GenerateHtmlController.demoHtmlDirPath + "/";//操作的目录
 
-            /**
-             * 所有的文件统一处理
-             */
-            List<FtlVueInterface> ftlJavaInterfaces = new ArrayList<>();
-            ftlJavaInterfaces.add(allVueFtl.getIndexJsFtl());
-            ftlJavaInterfaces.add(allVueFtl.getApiJsFtl());
-            ftlJavaInterfaces.add(allVueFtl.getEditVueFtl());
-            ftlJavaInterfaces.add(allVueFtl.getListVueFtl());
-            ftlJavaInterfaces.add(allVueFtl.getViewVueFtl());
-            ftlJavaInterfaces.add(allVueFtl.getAddVueFtl());
+        ZipUtilsHtml.deal(allHtmlFtl, sourceHtmlDirPath, codeDirPath, targetOperateDirPath);
 
-            /**
-             * 创建文件并写入数据
-             */
-            for (FtlVueInterface ftlVueInterface : ftlJavaInterfaces) {
-                BufferedOutputStream outputStream = null;
-                String dir = codeDirPath + ftlVueInterface.getDirPath();
-                //创建文件夹
-                new File(dir).mkdirs();
-                File voFile = new File(dir + "/" + ftlVueInterface.getFileName());
-                voFile.createNewFile();
-                outputStream = new BufferedOutputStream(new FileOutputStream(voFile));
-                outputStream.write(ftlVueInterface.getFreeMarkStr().getBytes());
-                outputStream.flush();
-                outputStream.close();
-
-            }
-        }
+    }
 
 
+    /**
+     * 删除临时目录并且返回字节
+     */
+    public static byte[] deleteAndReturnByte(String zipFileName, String tmpPathTarget, String tmpPath) throws IOException {
         String targetZip = tmpPathTarget + zipFileName;
         new File(tmpPathTarget).mkdirs();
         /**
@@ -427,6 +280,37 @@ public class ZipUtils {
 
         FileUtils.deleteDirectory(tmpPath);
         FileUtils.deleteDirectory(tmpPathTarget);
+
+        return bytes;
+    }
+
+
+    /**
+     * 生成全部的前后端
+     *
+     * @param allHtmlFtl  -> 包含多个从vue
+     * @param zipFileName
+     * @param operateDir  -> 用于存放临时文件夹的目录
+     * @return
+     * @throws IOException
+     */
+    public static byte[] createFilesAndZipAll(List<AllJavaFtl> allJavaFtls, List<AllVueFtl> allVueFtls, AllHtmlFtl allHtmlFtl, String zipFileName, String operateDir) throws IOException {
+
+        // ---> demoWeb
+        String sourceHtmlDirPath = GenerateHtmlController.demoHtmlDirPath;//maven项目地址的文件夹
+        // ---> tmp/1580899138501/
+        String codeDirPath = tmpPath + operateDir + "/";//code存放的地址
+        // ---> tmp/1580899138501/demoWeb/
+        String targetOperateDirPath = tmpPath + operateDir + "/" + GenerateHtmlController.demoHtmlDirPath + "/";//操作的目录
+
+
+        ZipUtilsHtml.deal(allHtmlFtl, sourceHtmlDirPath, codeDirPath, targetOperateDirPath);
+
+        /**
+         * 删除临时目录并且
+         */
+        byte[] bytes = ZipUtils.deleteAndReturnByte(zipFileName, ZipUtils.tmpPathTarget, ZipUtils.tmpPath);
+
 
         return bytes;
     }

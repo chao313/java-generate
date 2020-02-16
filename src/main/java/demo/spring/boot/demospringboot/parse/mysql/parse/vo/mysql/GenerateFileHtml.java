@@ -68,6 +68,7 @@ public class GenerateFileHtml {
                     });
                 });
 
+                vo.setDirPath("demoHtml/vueJs/");//data的位置
                 vo.setKeyToVoJavaFields(keyToVoJavaFields);
                 vo.setKeyToVoPrimaryKeyJavaFields(keyToVoPrimaryKeyJavaFields);
 
