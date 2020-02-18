@@ -4,6 +4,17 @@ var host = "http://127.0.0.1:8000/";
 /* 设置后台项目名称 */
 var BASE_URL = host+ '/${ftlVo.BASE_URL}';
 
+
+function queryUrlParam(name) {
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i"); // 匹配目标参数
+    var result = window.location.search.substr(1).match(reg); // 对querystring匹配目标参数
+    if (result != null) {
+        return decodeURIComponent(result[2]);
+    } else {
+        return null;
+    }
+}
+
 /*后台的URL*/
 <#list ftlVo.keyToKeyToUrlsAllMap?keys as type>
 
