@@ -225,6 +225,10 @@
                     <include>**/*.js</include>
                     <include>**/*.ico</include>
                     <include>**/*.png</include>
+                    <include>**/*.css</include>
+                    <include>**/*.ttf</include>
+                    <include>**/*.woff</include>
+                    <include>**/*.woff2</include>
                 </includes>
                 <filtering>true</filtering>
             </resource>
