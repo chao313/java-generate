@@ -3,6 +3,8 @@ package ${ftlVo.packageName};
 
 import java.util.List;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import demo.spring.boot.demospringboot.framework.Code;
 import demo.spring.boot.demospringboot.framework.Response;
 import ${allJavaFtl.voFtl.packageName}.${allJavaFtl.voFtl.className};
@@ -97,6 +99,39 @@ public class ${ftlVo.className} {
         }
         return response;
     }
+
+    /**
+      * 多条件查询语句,每个字段只要不为null就是查询条件
+      * 这里添加了分页插件，能够返回的数据包含页码，下一页... , 自动查询count
+      *
+      * @param query
+      * @param pageNum 页码 默认值为1
+      * @param pageSize 每页的size 默认值为10
+      * @return 成功和失败都返回Response，具体的结果在response的
+      * code   :状态码
+      * content:具体返回值
+      */
+    @PostMapping(value = "/queryBasePageHelper")
+    public Response queryBasePageHelper(@RequestBody TBlogVo query,
+                                        @RequestParam(value = "pageNum",defaultValue = "1",required = false) Integer pageNum,
+                                        @RequestParam(value = "pageSize",defaultValue = "10",required = false) Integer pageSize) {
+         Response response = new Response();
+         try {
+
+             PageHelper.startPage(pageNum, pageSize);
+             List<${allJavaFtl.voFtl.className}> result = service.queryBase(query);
+             PageInfo pageInfo = new PageInfo(result);
+             response.setCode(Code.System.OK);
+             response.setContent(pageInfo);
+             log.info("success pageInfo -> {} ", pageInfo);
+         } catch (Exception e) {
+             response.setCode(Code.System.FAIL);
+             response.setMsg(e.getMessage());
+             response.addException(e);
+             log.error("异常 -> {} ", e.getMessage(), e);
+         }
+         return response;
+     }
 
 
     /**
