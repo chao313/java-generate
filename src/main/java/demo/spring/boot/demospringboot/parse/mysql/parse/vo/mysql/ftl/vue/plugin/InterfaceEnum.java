@@ -10,7 +10,9 @@ public enum InterfaceEnum {
     updateBase("updateBase", "updateBase", "", "多条件更新"),
     queryBase("queryBase", "queryBase", "", "多条件查询"),
     inserts("inserts", "inserts", "", "批量插入"),
-    insert("insert", "insert", "", "单条插入");
+    insert("insert", "insert", "", "单条插入"),
+    QueryBasePageHelper("queryBasePageHelper", "queryBasePageHelper", "", "分页查询"),//注意这里是突然加入了分页查重，可能有问题
+    ;
 
     /**
      * 操作的接口
