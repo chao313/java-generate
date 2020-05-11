@@ -223,6 +223,7 @@
                     <include>**/*.txt</include>
                     <include>**/*.yml</include>
                     <include>**/*.html</include>
+                    <include>**/*.htm</include>
                     <include>**/*.js</include>
                     <include>**/*.ico</include>
                     <include>**/*.png</include>
