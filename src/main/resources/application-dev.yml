@@ -11,7 +11,6 @@ server:
 
 
 spring:
-
   mvc:
     favicon:
       enabled: true
@@ -29,10 +28,9 @@ spring:
     suffix: .html
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    #    url: jdbc:mysql://127.0.0.1:3306/information_schema
-    url: jdbc:mysql://127.0.0.1:3306/docker2?useUnicode=true&characterEncoding=utf8
-    username: root
-    password: 123456
+    url: jdbc:mysql://10.200.127.56:3306?useUnicode=true&characterEncoding=utf8
+    username: devsw
+    password: devsw
 #  @MapperScan(value = "demo.spring.boot.demospringboot.mybatis.mapper")
 mybatis:
   mapper-locations: classpath:mybatis/mapper/*Mapper.xml,classpath*:demo2/mapper/*Mapper.xml

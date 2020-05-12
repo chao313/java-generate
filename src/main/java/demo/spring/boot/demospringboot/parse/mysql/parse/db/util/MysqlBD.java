@@ -3,6 +3,8 @@ package demo.spring.boot.demospringboot.parse.mysql.parse.db.util;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import java.sql.*;
 import java.util.UUID;
@@ -19,20 +21,37 @@ import java.util.function.Function;
  */
 
 @Slf4j
+@Component
 public class MysqlBD {
 
     //数据库连接URL，当前连接的是当前项目的dbdir:下的mydb.mv.db
-    private static final String JDBC_URL = "jdbc:mysql://127.0.0.1:3306/dzr";
+    private static String JDBC_URL;//jdbc:mysql://127.0.0.1:3306/dzr
+    //账号
+    private static String USER;//root
+    //密码
+    private static String PASSWORD;//123456
+    //连接数据库时使用的驱动类
+    private static String DRIVER_CLASS;//com.mysql.jdbc.Driver
 
-    //数据库连接URL，当前连接的是当前项目的dbdir:下的mydb.mv.db
-//    private static final String JDBC_URL = "jdbc:mysql://139.198.176.43:3333/inspect";
-    //自定义账号
-    private static final String USER = "root";
-    //自定义密码
-    private static final String PASSWORD = "123456";
-    //连接H2数据库时使用的驱动类
-    private static final String DRIVER_CLASS = "com.mysql.jdbc.Driver";
+    @Value("${spring.datasource.url}")
+    public void setJdbcUrl(String JDBC_URL) {
+        MysqlBD.JDBC_URL = JDBC_URL;
+    }
 
+    @Value("${spring.datasource.username}")
+    public void setUSER(String USER) {
+        MysqlBD.USER = USER;
+    }
+
+    @Value("${spring.datasource.password}")
+    public void setPASSWORD(String PASSWORD) {
+        MysqlBD.PASSWORD = PASSWORD;
+    }
+
+    @Value("${spring.datasource.driver-class-name}")
+    public void setDriverClass(String DRIVER_CLASS) {
+        MysqlBD.DRIVER_CLASS = DRIVER_CLASS;
+    }
 
     public static MysqlBD h2BD;
 
