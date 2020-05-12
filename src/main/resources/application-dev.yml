@@ -10,18 +10,11 @@ server:
 
 
 
-
 spring:
 
   mvc:
     favicon:
       enabled: true
-  ## thymeleaf的默认配置
-  #spring.thymeleaf.prefix=classpath:/templates/
-  #spring.thymeleaf.suffix=.html
-  #spring.thymeleaf.mode=HTML5
-  #spring.thymeleaf.encoding=UTF-8
-  #spring.thymeleaf.content-type=text/html
   thymeleaf:
     prefix: classpath:/templates/
     suffix: .html
@@ -29,37 +22,17 @@ spring:
     content-type: text/html
     mode: HTML5
     cache: false
-  ## freemarker
-  #spring.freemarker.allow-request-override=false
-  #spring.freemarker.cache=true
-  #spring.freemarker.check-template-location=true
-  #spring.freemarker.charset=UTF-8
-  #spring.freemarker.content-type=text/html
-  #spring.freemarker.expose-request-attributes=false
-  #spring.freemarker.expose-session-attributes=false
-  #spring.freemarker.expose-spring-macro-helpers=false
   freemarker:
     charset: UTF-8
     content-type: text/html
     cache: false
     suffix: .html
-
-  #  ##数据sql
-  #     datasource:
-  #       driver-class-name: com.mysql.jdbc.Driver
-  #       url: jdbc:mysql://127.0.0.1:3306/information_schema
-  #       username: root
-  #       password: 123456
-  ##数据sql
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-#    url: jdbc:mysql://127.0.0.1:3306/information_schema
+    #    url: jdbc:mysql://127.0.0.1:3306/information_schema
     url: jdbc:mysql://127.0.0.1:3306/docker2?useUnicode=true&characterEncoding=utf8
     username: root
     password: 123456
-#
-#  可以在application 上面加注解
-#  配合使用
 #  @MapperScan(value = "demo.spring.boot.demospringboot.mybatis.mapper")
 mybatis:
   mapper-locations: classpath:mybatis/mapper/*Mapper.xml,classpath*:demo2/mapper/*Mapper.xml
@@ -74,32 +47,6 @@ resources:
   ## http://localhost:8081/chao/public.txt
   static-locations: classpath:/static/,classpath:/public/
 
-
-
-
-
-
-#
-#security:
-#  user:
-#    name: name            #默认的用户名
-#    password: password    #默认的密码
-#    role: role            #默认角色
-#  require-ssl: false
-#  enable-csrf: false
-#  basic:
-#    enabled: true
-#    realm: Spring
-#    path: # /**
-#    authorize-mode: none
-#  filter-order: 0
-#  headers:
-#    xss: true
-#    cache: true
-#    frame: true
-#    content-type: true
-#    hsts: all
-#  sessions: stateless
 management:
   shell:
     auth:
@@ -109,21 +56,10 @@ management:
           password: root
     ssh:
       port: 2001
-  #  port: 8888
-  #  context-path: /management
   health:
     redis:
       enabled: false
   security:
     enabled: false
 
-
-#endpoints:
-##  enabled: false
-#  beans:
-#    enabled: true
-#  shutdown:
-#    enabled: true
-
-#  ignored: #
 

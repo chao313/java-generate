@@ -1,5 +1,6 @@
 package demo.spring.boot.demospringboot;
 
+import lombok.extern.slf4j.Slf4j;
 import org.mybatis.spring.annotation.MapperScan;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,13 +17,11 @@ import java.nio.charset.Charset;
 @SpringBootApplication
 @ComponentScan(value = {"demo.spring.boot", "demo2"})
 @MapperScan(value = {"demo.spring.boot.demospringboot.mybatis.dao", "demo2.dao"})//mybatis
+@Slf4j
 public class Application implements ApplicationRunner {
-
-    private static Logger logger = LoggerFactory.getLogger(Application.class);
 
 
     public static void main(String[] args) {
-        Application.test();
         SpringApplication.run(Application.class, args);
     }
 
@@ -35,24 +34,8 @@ public class Application implements ApplicationRunner {
      */
     @Bean
     public StringHttpMessageConverter stringHttpMessageConverter() {
-        //StringHttpMessageConverter converter  = mysql StringHttpMessageConverter(Charset.forName("ISO-8859-1"));
         StringHttpMessageConverter converter = new StringHttpMessageConverter(Charset.forName("UTF-8"));
         return converter;
-    }
-
-    public static void test() {
-//        InetSocketTransportAddress inetSocketTransportAddress = null;
-//        try {
-//            inetSocketTransportAddress = mysql InetSocketTransportAddress(InetAddress.getByName("127.0.0.1"), 9301);
-//        } catch (UnknownHostException e) {
-//            e.printStackTrace();
-//        }
-//        Settings settings = Settings.settingsBuilder().put("cluster.name","elasticsearch").build();
-//        TransportClient transportClient = TransportClient.builder().settings(settings).build().addTransportAddress(inetSocketTransportAddress);
-//        GetResponse getFields = transportClient.prepareGet("index", "type", "document").get();
-//        logger.info("getFields", getFields);
-//        transportClient.close();
-
     }
 
     @Override

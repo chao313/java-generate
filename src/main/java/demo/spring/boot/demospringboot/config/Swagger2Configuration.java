@@ -63,6 +63,7 @@ public class Swagger2Configuration {
                 .pathMapping("/")// 在这里可以设置请求的统一前缀；默认请求都是以 / 根路径开始，如果我们的应用不是部署在根路径，比如以/platform（应用名）部署，则可以通过一下方式设置请求的统一前缀。
                 .apiInfo(apiInfo())
                 .useDefaultResponseMessages(false)//使用默认的响应信息true：默认响应信息将会回到全局的响应信息中；false:不加到全局的响应信息中
+                .groupName("main")
                 ;
     }
 

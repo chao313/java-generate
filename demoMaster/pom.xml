@@ -44,13 +44,6 @@
             <artifactId>spring-boot-starter-test</artifactId>
         </dependency>
         <!--
-		注意jpa，数据持久配置
-		-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jpa</artifactId>
-        </dependency>
-        <!--
         mysql的依赖
         -->
         <dependency>
