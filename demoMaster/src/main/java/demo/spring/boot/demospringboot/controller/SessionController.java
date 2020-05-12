@@ -40,7 +40,7 @@ public class SessionController {
         Response<Boolean> response = new Response();
         try {
             Response<UserDetail> userDetailResponse = sessionService.login(userName, password);
-            if (response.getContent() != null) {
+            if (userDetailResponse.getContent() != null) {
                 session.setAttribute(Constant.SESSION_USER, userDetailResponse.getContent());
                 session.setAttribute(Constant.SESSION_USER_ID, userDetailResponse.getContent().getId());
                 response.setCode(Code.System.OK);

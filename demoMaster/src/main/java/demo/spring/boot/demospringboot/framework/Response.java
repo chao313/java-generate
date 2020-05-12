@@ -29,7 +29,6 @@ public class Response<T> {
         this.content = content;
     }
 
-
     public String getCode() {
         return code;
     }
@@ -72,5 +71,9 @@ public class Response<T> {
 
     public static Response OK() {
         return new Response(Code.System.OK, "", true);
+    }
+
+    public static <T> Response OK(T t) {
+        return new Response(Code.System.OK, "", t);
     }
 }
