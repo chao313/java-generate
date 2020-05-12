@@ -112,7 +112,7 @@ public class ${ftlVo.className} {
       * content:具体返回值
       */
     @PostMapping(value = "/queryBasePageHelper")
-    public Response queryBasePageHelper(@RequestBody TBlogVo query,
+    public Response queryBasePageHelper(@RequestBody ${allJavaFtl.voFtl.className} query,
                                         @RequestParam(value = "pageNum",defaultValue = "1",required = false) Integer pageNum,
                                         @RequestParam(value = "pageSize",defaultValue = "10",required = false) Integer pageSize) {
          Response response = new Response();
