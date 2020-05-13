@@ -25,4 +25,11 @@ public interface UserDetail {
     String getId();
 
 
+    /**
+     * 获取用户角色
+     * @return
+     */
+    String getRole();
+
+
 }

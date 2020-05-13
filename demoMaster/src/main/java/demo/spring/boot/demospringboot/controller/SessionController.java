@@ -43,6 +43,8 @@ public class SessionController {
             if (userDetailResponse.getContent() != null) {
                 session.setAttribute(Constant.SESSION_USER, userDetailResponse.getContent());
                 session.setAttribute(Constant.SESSION_USER_ID, userDetailResponse.getContent().getId());
+                session.setAttribute(Constant.SESSION_USER_ROLE, userDetailResponse.getContent().getRole());
+                session.setAttribute(Constant.SESSION_USER_NAME, userDetailResponse.getContent().getUsername());
                 response.setCode(Code.System.OK);
                 response.setContent(true);
             } else {
@@ -71,6 +73,7 @@ public class SessionController {
         try {
             session.removeAttribute(Constant.SESSION_USER);
             session.removeAttribute(Constant.SESSION_USER_ID);
+            session.removeAttribute(Constant.SESSION_USER_ROLE);
             response.setCode(Code.System.OK);
             response.setContent(true);
             log.info("success result -> {} ", response);
@@ -84,7 +87,7 @@ public class SessionController {
     }
 
     /**
-     * 登出
+     * 获取用户的id
      *
      * @return
      */
@@ -99,6 +102,69 @@ public class SessionController {
             } else {
                 response.setCode(Code.System.FAIL);
                 response.setMsg("当前用户未登陆");
+            }
+            log.info("success result -> {} ", response);
+        } catch (Exception e) {
+            response.setCode(Code.System.FAIL);
+            response.setMsg(e.getMessage());
+            response.addException(e);
+            log.error("异常 -> {} ", e.getMessage(), e);
+        }
+        return response;
+    }
+
+    /**
+     * 获取用户的UserName
+     *
+     * @return
+     */
+    @GetMapping("/getUserName")
+    public Response<String> getUserName() {
+        Response<String> response = new Response();
+        try {
+            String userName = sessionService.getUserName();
+            if (StringUtils.isNotBlank(userName)) {
+                response.setCode(Code.System.OK);
+                response.setContent(userName);
+            } else {
+                response.setCode(Code.System.FAIL);
+                response.setMsg("当前用户未登陆");
+            }
+            log.info("success result -> {} ", response);
+        } catch (Exception e) {
+            response.setCode(Code.System.FAIL);
+            response.setMsg(e.getMessage());
+            response.addException(e);
+            log.error("异常 -> {} ", e.getMessage(), e);
+        }
+        return response;
+    }
+
+
+    /**
+     * 登陆(管理员登陆)
+     *
+     * @param userName
+     * @param password
+     * @return
+     */
+    @GetMapping("/admin/login")
+    public Response<Boolean> adminLogin(@RequestParam(value = "userName") String userName,
+                                        @RequestParam(value = "password") String password) {
+        Response<Boolean> response = new Response();
+        try {
+            Response<UserDetail> userDetailResponse = sessionService.login(userName, password);
+            if (userDetailResponse.getContent() != null) {
+                session.setAttribute(Constant.SESSION_USER, userDetailResponse.getContent());
+                session.setAttribute(Constant.SESSION_USER_ID, userDetailResponse.getContent().getId());
+                session.setAttribute(Constant.SESSION_USER_ROLE, userDetailResponse.getContent().getRole());
+                session.setAttribute(Constant.SESSION_USER_NAME, userDetailResponse.getContent().getUsername());
+                response.setCode(Code.System.OK);
+                response.setContent(true);
+            } else {
+                response.setCode(Code.System.FAIL);
+                response.setContent(false);
+                response.setMsg(userDetailResponse.getMsg());
             }
             log.info("success result -> {} ", response);
         } catch (Exception e) {
