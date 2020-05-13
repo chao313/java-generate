@@ -11,6 +11,9 @@ Vue.use(Router)
 import Layout from '@/views/layout/Layout'
 //登陆界面
 const Login = r => require.ensure([], () => r(require('@/views/login/index')), 'login')
+const AdminLogin = r => require.ensure([], () => r(require('@/views/login/AdminIndex')), 'AdminLogin')
+const ForgetPassword = r => require.ensure([], () => r(require('@/views/login/ForgetPassword')), 'ForgetPassword')
+
 
 const ResourceManagerList = r => require.ensure([], () => r(require('@/views/ResourceManager/List')), 'ResourceManagerList')
 const ResourceManagerAdd = r => require.ensure([], () => r(require('@/views/ResourceManager/Add')), 'ResourceManagerAdd')
@@ -89,6 +92,16 @@ export const constantRouterMap = [
     path: '/login',
     component: Login,
     hidden: true
+  },
+  {
+      path: '/AdminLogin',
+      component: AdminLogin,
+      hidden: false
+  },
+  {
+      path: '/ForgetPassword',
+      component: ForgetPassword,
+      hidden: false
   }
 ]
 export const routerMap = {

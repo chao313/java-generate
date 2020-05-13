@@ -2,6 +2,16 @@
 const BASE_URL = '/${ftlVo.BASE_URL}';
 export default {
 
+    /** Session操作 */
+    "login": BASE_URL + '/SessionController/login',
+    "adminLogin": BASE_URL + '/SessionController/admin/login',
+    /* 登出 */
+    "loginOut": BASE_URL + '/SessionController/loginOut',
+    /* 获取用户的id */
+    "getUserId": BASE_URL + '/SessionController/getUserId',
+    /* 获取用户的Name */
+    "getUserName": BASE_URL + '/SessionController/getUserName',
+
 
     /*后台的URL*/
     /** 资源管理 */

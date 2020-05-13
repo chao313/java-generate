@@ -2,17 +2,12 @@
   <div class="nav-menu">
     <span class="nav-tit">后台系统</span>
     <div class="right-menu">
-      <el-button type="text" @click="ReleaseResources()">释放资源并注销</el-button>
+      <el-button type="text" @click="logOut()">注销</el-button>
       <el-dropdown class="avatar-container right-menu-item" trigger="click">
-        <span class="avatar-btn">{{userInfo.userName}}<img class="ml5"
-                                                           src="../../../assets/images/arrow-down1.png"></span>
+        <span class="avatar-btn">{{userName}}<img class="ml5"
+                                                  src="../../../assets/images/arrow-down1.png"></span>
         <el-dropdown-menu slot="dropdown">
-          <router-link to="/">
-            <el-dropdown-item>
-              首页
-            </el-dropdown-item>
-          </router-link>
-          <router-link to="/accountMgt">
+          <router-link to="/ForgetPassword">
             <el-dropdown-item divided>
               修改密码
             </el-dropdown-item>
@@ -27,85 +22,102 @@
 </template>
 
 <script>
-  export default {
-    data() {
-      return {
-        userInfo: {}
-      }
-    },
-    created() {
-      let self = this;
-      self.$store.dispatch('GetUserInfo').then(res => {
-        self.userInfo = res.data;
-      })
-      window.onbeforeunload = function (e) {
-        var e = window.event || e;
-        self.DoLogout();
-      }
-    },
+    export default {
+        data() {
+            return {
+                userInfo: {},
+                userName: '1',
+                userId: '',
+            }
+        },
+        created() {
+            let self = this;
+            self.getUserName();
+            self.getUserId();
+        },
 
-    methods: {
-      logOut() {
-        let self = this;
-        self.$http.get(self.api.userLogoff, {
-          params: {}
-        }, function (response) {
-          if (response.result) {
-            self.$store.dispatch('LogOut');
-            self.$message({
-              type: 'success',
-              message: '注销成功，页面即将跳转至登录页',
-              duration: 1000,
-              onClose: function () {
-                location.reload();
-              }
-            });
-          } else {
-            self.$message({
-              type: 'error',
-              message: '注销失败',
-              duration: 1000
-            });
-          }
+        methods: {
+            logOut() {
+                console.info("注销")
+                let self = this;
+                self.$http.get(self.api.loginOut, {
+                    params: {}
+                }, function (response) {
+                    if (response.code == '0') {
+                        self.$message({
+                            type: 'success',
+                            message: '注销成功，页面即将跳转至登录页',
+                            duration: 1000,
+                            onClose: function () {
+                                location.reload();
+                            }
+                        });
+                    } else {
+                        self.$message({
+                            type: 'error',
+                            message: '注销失败',
+                            duration: 1000
+                        });
+                    }
 
-        }, function (response) {
-        })
-      },
-      ReleaseResources() {
-        this.logOut();
-      },
-      DoLogout() {
-        let g_imosActivePlayer = document.all.h3c_IMOS_ActiveX;
-        try {
-          if (g_imosActivePlayer === undefined) {
-            if (!g_imosActivePlayer) {
-              //alert("未安装控件，请先安装后再使用本页面");
-              return;
+                }, function (response) {
+                })
+            },
+            getUserName() {
+                let self = this;
+                self.$http.get(self.api.getUserName, {}, function (response) {
+                        if (response.code == '0') {
+                            self.userName = response.content;
+                        } else {
+                            MessageBox({
+                                title: '系统提示',
+                                message: '错误码: ' + response.code + '<br/>' + '错误信息: ' + response.msg,
+                                confirmButtonText: '确定',
+                                closeOnPressEscape: false,
+                                showCancelButton: false,
+                                dangerouslyUseHTMLString: true
+                            })
+                        }
+                    }, function (response) {
+                        //失败回调
+                        self.$message({
+                            type: 'warning',
+                            message: '请求异常',
+                            duration: 1000
+                        });
+                    }
+                )
+
+            },
+            getUserId() {
+                let self = this;
+                self.$http.get(self.api.getUserId, {}, function (response) {
+                        if (response.code == '0') {
+                            self.userId = response.content;
+                        } else {
+                            MessageBox({
+                                title: '系统提示',
+                                message: '错误码: ' + response.code + '<br/>' + '错误信息: ' + response.msg,
+                                confirmButtonText: '确定',
+                                closeOnPressEscape: false,
+                                showCancelButton: false,
+                                dangerouslyUseHTMLString: true
+                            })
+                        }
+                    }, function (response) {
+                        //失败回调
+                        self.$message({
+                            type: 'warning',
+                            message: '请求异常',
+                            duration: 1000
+                        });
+                    }
+                )
+
             }
-            var flag = g_imosActivePlayer.IMOSAX_UnregOCX();
-            if (0 != flag) {
-              alert("IMOSAX_UnregOCX Error:" + flag);
-              return;
-            }
-          } else {
-            if (!g_imosActivePlayer) {
-              alert("未安装控件，请先安装后再使用本页面");
-              return;
-            }
-            var flag = g_imosActivePlayer.IMOSAX_UnregOCX();
-            if (0 != flag) {
-              alert("IMOSAX_UnregOCX Error:" + flag);
-              return;
-            }
-          }
-        } catch (e) {
-          window.console && console.log("变量未声明，");
+
         }
-
-
-      },
     }
-  }
 </script>
 
 <style rel="stylesheet/scss" lang="scss">
