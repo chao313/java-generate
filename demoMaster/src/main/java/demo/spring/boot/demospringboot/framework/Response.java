@@ -76,4 +76,12 @@ public class Response<T> {
     public static <T> Response OK(T t) {
         return new Response(Code.System.OK, "", t);
     }
+
+    public static Response Fail() {
+        return new Response(Code.System.FAIL, "", false);
+    }
+
+    public static <T> Response Fail(String msg) {
+        return new Response(Code.System.FAIL, msg, null);
+    }
 }

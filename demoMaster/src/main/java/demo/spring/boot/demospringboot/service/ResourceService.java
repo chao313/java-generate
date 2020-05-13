@@ -78,6 +78,20 @@ public class ResourceService {
     }
 
     /**
+     * 添加文件(指定的root路径)
+     *
+     * @param fileName
+     * @return
+     * @throws IOException
+     */
+    public boolean addFile(byte[] bytes, String fileName, String rootPath) throws IOException {
+        File file = new File(rootPath + "/" + fileName);
+        FileUtils.write(file, String.valueOf(bytes), "UTF-8");
+        FileUtils.writeByteArrayToFile(file, bytes);
+        return true;
+    }
+
+    /**
      * 获取所有的文件
      *
      * @throws IOException

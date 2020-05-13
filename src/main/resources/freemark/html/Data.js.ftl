@@ -326,7 +326,7 @@ var vue = new Vue({
                    let data = response.data;
                     console.log(data);
                     if (data.code == 0) {
-                        self.$set(self.${type}QueryBasePageHelperResult，sub,data.content);
+                        self.$set(self.${type}QueryBasePageHelperResult,sub,data.content);
                         console.log(self.${type}QueryBasePageHelperResult);
                     } else {
                         alert(data.msg);

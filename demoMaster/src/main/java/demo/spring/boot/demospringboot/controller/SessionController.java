@@ -48,7 +48,7 @@ public class SessionController {
                 response.setCode(Code.System.OK);
                 response.setContent(true);
             } else {
-                response.setCode(Code.System.FAIL);
+                response.setCode(Code.System.OK);
                 response.setContent(false);
                 response.setMsg(userDetailResponse.getMsg());
             }
@@ -78,7 +78,7 @@ public class SessionController {
             response.setContent(true);
             log.info("success result -> {} ", response);
         } catch (Exception e) {
-            response.setCode(Code.System.FAIL);
+            response.setCode(Code.System.OK);
             response.setMsg(e.getMessage());
             response.addException(e);
             log.error("异常 -> {} ", e.getMessage(), e);
@@ -100,7 +100,7 @@ public class SessionController {
                 response.setCode(Code.System.OK);
                 response.setContent(userId);
             } else {
-                response.setCode(Code.System.FAIL);
+                response.setCode(Code.System.OK);
                 response.setMsg("当前用户未登陆");
             }
             log.info("success result -> {} ", response);
@@ -127,7 +127,7 @@ public class SessionController {
                 response.setCode(Code.System.OK);
                 response.setContent(userName);
             } else {
-                response.setCode(Code.System.FAIL);
+                response.setCode(Code.System.OK);
                 response.setMsg("当前用户未登陆");
             }
             log.info("success result -> {} ", response);
@@ -162,7 +162,7 @@ public class SessionController {
                 response.setCode(Code.System.OK);
                 response.setContent(true);
             } else {
-                response.setCode(Code.System.FAIL);
+                response.setCode(Code.System.OK);
                 response.setContent(false);
                 response.setMsg(userDetailResponse.getMsg());
             }
