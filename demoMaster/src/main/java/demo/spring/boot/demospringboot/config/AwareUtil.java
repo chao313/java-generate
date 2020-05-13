@@ -1,4 +1,4 @@
-package demo.kafka.config;
+package demo.spring.boot.demospringboot.config;
 
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanFactory;
