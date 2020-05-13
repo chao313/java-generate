@@ -62,9 +62,15 @@
                     <pre>{{jsonData}}</pre>
                 </div>
             </div>
-            <div class="mt20" v-show="total > 0">
-                <el-pagination background @current-change="handleCurrentChange" :current-page.sync="currentPage"
-                               :page-size="pageSize" layout="total,prev, pager, next" :total="total">
+            <div class="mt10">
+                <!--/** */:page-size 数一页的数量！！！-->
+                <el-pagination v-show="pageInfo.list.length > 0"
+                               background
+                               @current-change="handleCurrentChange"
+                               :current-page.sync="pageInfo.pageNum"
+                               :page-size="pageInfo.pageSize"
+                               layout="total, prev, pager, next, jumper"
+                               :total="pageInfo.total">
                 </el-pagination>
             </div>
 
@@ -102,10 +108,33 @@
                 jsonData: '',
                 search:{
                   <#list allVueFtl.allJavaFtl.voFtl.javaFields as javaField>
-                  ${javaField.name}:''<#if javaField_has_next>,</#if>
+                  ${javaField.name}:'',
                   </#list>
-                }
-            }
+                  pageNum: 1,
+                  pageSize: 10
+                },
+                pageInfo: {
+                "endRow": 10,
+                "firstPage": 1,
+                "hasNextPage": true,
+                "hasPreviousPage": false,
+                "isFirstPage": true,
+                "isLastPage": false,
+                "lastPage": 8,
+                "list": [],
+                "navigatePages": 8,
+                "navigatepageNums": [1, 2, 3, 4, 5, 6, 7, 8],
+                "nextPage": 2,
+                "orderBy": "",
+                "pageNum": 1,
+                "pageSize": 10,
+                "pages": 1810,
+                "prePage": 0,
+                "size": 10,
+                "startRow": 1,
+                "total": 0
+             }
+           }
         },
         mounted() {
             let self = this;
@@ -125,11 +154,12 @@
                 </#list>
                 var paramsJson = {};
                 params.forEach((value, key) => paramsJson[key] = value);
-                self.$http.post(self.api.${allVueFtl.apiJsFtl.keyToKeyToUrls["queryBase"].vueKey},
+                self.$http.post(self.api.${allVueFtl.apiJsFtl.keyToKeyToUrls["queryBasePageHelper"].vueKey}+ "?pageNum=" + self.search.pageNum + "&pageSize=" + self.search.pageSize,
                 paramsJson,{
 
                 },function (response) {
-                    self.dataList = response.content;
+                   self.pageInfo = response.content;
+                   self.dataList = response.content.list;
                 }, function (response) {
                     //失败回调
                     self.$message({
@@ -222,6 +252,12 @@
                 self.search.${javaField.name} = '';
                 </#list>
                 this.queryBase();
+            },
+            handleCurrentChange(currentChange) {
+                let self = this;
+                self.search.pageNum = self.pageInfo.pageNum;
+                self.search.pageSize = self.pageInfo.pageSize;
+                self.searchEvent();
             }
 
         }
