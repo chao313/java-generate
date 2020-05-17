@@ -1,6 +1,8 @@
 package demo.spring.boot.demospringboot.service;
 
 import demo.spring.boot.demospringboot.config.Constant;
+import demo.spring.boot.demospringboot.enums.ApproveStatus;
+import demo.spring.boot.demospringboot.enums.BlackStatus;
 import demo.spring.boot.demospringboot.enums.Roles;
 import demo.spring.boot.demospringboot.framework.Response;
 import demo.spring.boot.demospringboot.framework.UserDetail;
@@ -36,6 +38,15 @@ public class SessionService {
      */
     public Response<UserDetail> login(String userName, String password) {
         TUserVo tUserVo = tUserService.queryByPrimaryKey(userName, password);
+        if (BlackStatus.IN_BLACK.equals(tUserVo.getBlackListUser())) {
+            return Response.Fail("账号已经被拉入黑名单,请联系管理员!!!");
+        }
+        if (ApproveStatus.WATTING.equals(tUserVo.getApproveStatus())) {
+            return Response.Fail("账号在审核中,请联系管理员!!!");
+        }
+        if (ApproveStatus.NOTPASSED.equals(tUserVo.getApproveStatus())) {
+            return Response.Fail("账号审核不通过,请联系管理员!!!");
+        }
         if (null != tUserVo) {
             /**代表登录成功*/
             return Response.OK(new UserDetail() {
