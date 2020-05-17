@@ -24,6 +24,10 @@ var getCheckCode = BASE_URL + '/EmailController/getCheckCode';
 /* 验证验证码url */
 var validCheckCode = BASE_URL + '/EmailController/validCheckCode';
 
+/* 密码找回url */
+var forgetPassword = BASE_URL + '/EmailController/forgetPassword';
+
+
 function uuid() {
     var s = [];
     var hexDigits = "0123456789abcdef";
