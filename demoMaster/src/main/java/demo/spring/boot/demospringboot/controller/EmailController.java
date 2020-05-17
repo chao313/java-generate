@@ -3,12 +3,15 @@ package demo.spring.boot.demospringboot.controller;
 import demo.spring.boot.demospringboot.framework.Response;
 import demo.spring.boot.demospringboot.service.MailService;
 import demo.spring.boot.demospringboot.service.SessionService;
+import demomaster.service.TUserService;
+import demomaster.vo.TUserVo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -24,6 +27,9 @@ public class EmailController {
 
     @Autowired
     private SessionService sessionService;
+
+    @Autowired
+    private TUserService tUserService;
 
     /**
      * 发送验证码
@@ -65,6 +71,35 @@ public class EmailController {
                 response = Response.OK(true);
             } else {
                 response = Response.OK(false);
+            }
+        } catch (Exception e) {
+            log.info("验证码验证异常:{}", e.toString(), e);
+            response = Response.Fail(e.getMessage());
+        }
+        return response;
+    }
+
+    /**
+     * 验证找回密码
+     *
+     * @return
+     */
+    @RequestMapping("forgetPassword")
+    @ResponseBody
+    public Response forgetPassword(String email, String prefix) {
+        Response response = new Response();
+        try {
+            TUserVo query = new TUserVo();
+            query.setEmail(email);
+            List<TUserVo> tUserVos = tUserService.queryBase(query);
+            if (tUserVos.size() == 0) {
+                response = Response.Fail("此邮箱没有用户绑定!");
+            } else {
+                tUserVos.forEach(tUserVo -> {
+                    String message = "您的账号为:" + tUserVo.getName() + ",您的密码为:" + tUserVo.getPassword();
+                    mailService.sendSimpleMail(prefix, email, "密码找回", message);
+                });
+                response = Response.OK(true);
             }
         } catch (Exception e) {
             log.info("验证码验证异常:{}", e.toString(), e);
