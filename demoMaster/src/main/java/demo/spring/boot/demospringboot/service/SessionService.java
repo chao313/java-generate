@@ -38,13 +38,13 @@ public class SessionService {
      */
     public Response<UserDetail> login(String userName, String password) {
         TUserVo tUserVo = tUserService.queryByPrimaryKey(userName, password);
-        if (BlackStatus.IN_BLACK.equals(tUserVo.getBlackListUser())) {
+        if (BlackStatus.IN_BLACK.getValue() == tUserVo.getBlackListUser()) {
             return Response.Fail("账号已经被拉入黑名单,请联系管理员!!!");
         }
-        if (ApproveStatus.WATTING.equals(tUserVo.getApproveStatus())) {
+        if (ApproveStatus.WATTING.getValue() == tUserVo.getApproveStatus()) {
             return Response.Fail("账号在审核中,请联系管理员!!!");
         }
-        if (ApproveStatus.NOTPASSED.equals(tUserVo.getApproveStatus())) {
+        if (ApproveStatus.NOTPASSED.getValue() == tUserVo.getApproveStatus()) {
             return Response.Fail("账号审核不通过,请联系管理员!!!");
         }
         if (null != tUserVo) {
