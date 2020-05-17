@@ -6,11 +6,14 @@ import demo.spring.boot.demospringboot.enums.BlackStatus;
 import demo.spring.boot.demospringboot.enums.Roles;
 import demo.spring.boot.demospringboot.framework.Response;
 import demo.spring.boot.demospringboot.framework.UserDetail;
+import demo.spring.boot.demospringboot.util.EncryptUtil;
 import demomaster.service.TUserService;
 import demomaster.vo.TUserVo;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.codec.digest.Md5Crypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import sun.security.provider.MD5;
 
 import javax.servlet.http.HttpSession;
 
@@ -37,7 +40,7 @@ public class SessionService {
      * @return
      */
     public Response<UserDetail> login(String userName, String password) {
-        TUserVo tUserVo = tUserService.queryByPrimaryKey(userName, password);
+        TUserVo tUserVo = tUserService.queryByPrimaryKey(userName);
         if (BlackStatus.IN_BLACK.getValue() == tUserVo.getBlackListUser()) {
             return Response.Fail("账号已经被拉入黑名单,请联系管理员!!!");
         }
@@ -47,17 +50,18 @@ public class SessionService {
         if (ApproveStatus.NOTPASSED.getValue() == tUserVo.getApproveStatus()) {
             return Response.Fail("账号审核不通过,请联系管理员!!!");
         }
-        if (null != tUserVo) {
+        String passwd = EncryptUtil.getInstance().Base64Encode(password);//取出加密的数据
+        if (null != tUserVo && tUserVo.getPassword().equalsIgnoreCase(passwd)) {
             /**代表登录成功*/
             return Response.OK(new UserDetail() {
                 @Override
                 public String getPassword() {
-                    return tUserVo.getName();
+                    return tUserVo.getPassword();
                 }
 
                 @Override
                 public String getUsername() {
-                    return tUserVo.getPassword();
+                    return tUserVo.getName();
                 }
 
                 @Override

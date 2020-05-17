@@ -3,6 +3,7 @@ package demo.spring.boot.demospringboot.controller;
 import demo.spring.boot.demospringboot.framework.Response;
 import demo.spring.boot.demospringboot.service.MailService;
 import demo.spring.boot.demospringboot.service.SessionService;
+import demo.spring.boot.demospringboot.util.EncryptUtil;
 import demomaster.service.TUserService;
 import demomaster.vo.TUserVo;
 import lombok.extern.slf4j.Slf4j;
@@ -96,7 +97,7 @@ public class EmailController {
                 response = Response.Fail("此邮箱没有用户绑定!");
             } else {
                 tUserVos.forEach(tUserVo -> {
-                    String message = "您的账号为:" + tUserVo.getName() + ",您的密码为:" + tUserVo.getPassword();
+                    String message = "您的账号为:" + tUserVo.getName() + ",您的密码为:" + EncryptUtil.getInstance().Base64Decode(tUserVo.getPassword());//取出加密的数据;
                     mailService.sendSimpleMail(prefix, email, "密码找回", message);
                 });
                 response = Response.OK(true);

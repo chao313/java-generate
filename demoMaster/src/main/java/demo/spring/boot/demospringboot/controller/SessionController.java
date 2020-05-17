@@ -74,6 +74,7 @@ public class SessionController {
             session.removeAttribute(Constant.SESSION_USER);
             session.removeAttribute(Constant.SESSION_USER_ID);
             session.removeAttribute(Constant.SESSION_USER_ROLE);
+            session.removeAttribute(Constant.SESSION_USER_NAME);
             response.setCode(Code.System.OK);
             response.setContent(true);
             log.info("success result -> {} ", response);
