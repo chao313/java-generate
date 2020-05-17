@@ -21,6 +21,9 @@ var uploadFile = BASE_URL + '/EditorController/uploadFile';
 /* 获取验证码url */
 var getCheckCode = BASE_URL + '/EmailController/getCheckCode';
 
+/* 验证验证码url */
+var validCheckCode = BASE_URL + '/EmailController/validCheckCode';
+
 function uuid() {
     var s = [];
     var hexDigits = "0123456789abcdef";

@@ -137,4 +137,28 @@ public class SessionService {
             return sessionUserName.toString();
         }
     }
+
+    /**
+     * 获取存放当前的注册验证码
+     *
+     * @return
+     */
+    public void putCheckCode(String checkCode) {
+        session.setAttribute(Constant.EMAIL_REGISTER_CODE, checkCode);
+    }
+
+    /**
+     * 获取当前的验证码
+     *
+     * @return
+     */
+    public String getCheckCode() {
+        Object sessionCheckCode = session.getAttribute(Constant.EMAIL_REGISTER_CODE);
+        if (null == sessionCheckCode) {
+            return null;
+
+        } else {
+            return sessionCheckCode.toString();
+        }
+    }
 }
