@@ -41,8 +41,11 @@ public class ZipUtilsJava {
             ftlJavaInterfaces.add(allJavaFtl.getServiceImplFtl());
             ftlJavaInterfaces.add(allJavaFtl.getServiceFtl());
             ftlJavaInterfaces.add(allJavaFtl.getDaoFtl());
-            ftlJavaInterfaces.add(allJavaFtl.getRequestUpdatePrimaryKeyFtl());
-            ftlJavaInterfaces.add(allJavaFtl.getRequestUpdateBaseFtl());
+            /**
+             * 移除两种文件 -> 后期可能回退
+             */
+//            ftlJavaInterfaces.add(allJavaFtl.getRequestUpdatePrimaryKeyFtl());
+//            ftlJavaInterfaces.add(allJavaFtl.getRequestUpdateBaseFtl());
             ftlJavaInterfaces.add(allJavaFtl.getVoNoPriFtl());
             ftlJavaInterfaces.add(allJavaFtl.getVoPriFtl());
             ftlJavaInterfaces.add(allJavaFtl.getVoFtl());

@@ -19,7 +19,6 @@ public class ${ftlVo.className} {
     private ${allJavaFtl.voPriFtl.className} target;
 
 
-
     public ${allJavaFtl.voNoPriFtl.className} getSource() {
         return source;
     }

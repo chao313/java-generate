@@ -24,19 +24,19 @@ public class ${ftlVo.className} {
     <#if field.dbType == 'year'>
     @ApiModelProperty(example = "1970")
     <#elseif field.dbType == 'time'>
-    @JsonFormat(pattern = "HH:mm:ss")
+    @JsonFormat(pattern = "HH:mm:ss", timezone = "GMT+8")
     @DateTimeFormat(pattern = "HH:mm:ss")
     @ApiModelProperty(dataType = "date", example = "12:12:12")
     <#elseif field.dbType == 'date'>
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @ApiModelProperty(dataType = "date", example = "1970-01-01")
     <#elseif field.dbType == 'datetime'>
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @ApiModelProperty(dataType = "date", example = "1970-01-01 12:12:12")
     <#elseif field.dbType == 'timestamp'>
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @ApiModelProperty(dataType = "date", example = "1970-01-01 12:12:12")
     </#if>

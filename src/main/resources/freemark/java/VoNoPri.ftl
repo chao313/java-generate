@@ -3,6 +3,9 @@ package ${ftlVo.packageName};
 <#list ftlVo.javaFieldTypes as type><#if type = "Timestamp" >import java.sql.Timestamp;
 </#if><#if type = "Time" >import java.sql.Time;
 </#if><#if type = "Date" >import java.util.Date;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import io.swagger.annotations.ApiModelProperty;
+import org.springframework.format.annotation.DateTimeFormat;
 </#if></#list>
 
 /**
@@ -21,6 +24,25 @@ public class ${ftlVo.className} {
 
 <#list ftlVo.javaFields as field>
     <#if field.isPRI=false>
+        <#if field.dbType == 'year'>
+    @ApiModelProperty(example = "1970")
+        <#elseif field.dbType == 'time'>
+    @JsonFormat(pattern = "HH:mm:ss", timezone = "GMT+8")
+    @DateTimeFormat(pattern = "HH:mm:ss")
+    @ApiModelProperty(dataType = "date", example = "12:12:12")
+        <#elseif field.dbType == 'date'>
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @ApiModelProperty(dataType = "date", example = "1970-01-01")
+        <#elseif field.dbType == 'datetime'>
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @ApiModelProperty(dataType = "date", example = "1970-01-01 12:12:12")
+        <#elseif field.dbType == 'timestamp'>
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @ApiModelProperty(dataType = "date", example = "1970-01-01 12:12:12")
+        </#if>
     private ${field.type} ${field.name}; <#if field.comment?? && field.comment !=""> // ${field.comment} </#if>
     </#if>
 </#list>

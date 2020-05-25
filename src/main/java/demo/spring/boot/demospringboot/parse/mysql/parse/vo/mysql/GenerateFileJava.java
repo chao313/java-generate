@@ -80,6 +80,7 @@ public class GenerateFileJava {
             javaField.setComment(primaryKeyMysqlField.getComment());
             javaField.setName(CamelUtils.toLowerCaseFirstOne(CamelUtils.underline2Camel(primaryKeyMysqlField.getName())));
             javaField.setType(TypeMap.getTypeMap().get(primaryKeyMysqlField.getType()));
+            javaField.setDbType(primaryKeyMysqlField.getType());
             javaField.setIsNotNull(primaryKeyMysqlField.getIsNotNull());
             javaField.setIsPRI(primaryKeyMysqlField.getIsPRI());
             primaryKeyJavaFields.add(javaField);

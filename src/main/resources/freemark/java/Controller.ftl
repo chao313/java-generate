@@ -7,15 +7,16 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import demo.spring.boot.demospringboot.framework.Code;
 import demo.spring.boot.demospringboot.framework.Response;
+import demo.spring.boot.demospringboot.framework.RequestUpdate;
 import ${allJavaFtl.voFtl.packageName}.${allJavaFtl.voFtl.className};
 import ${allJavaFtl.serviceFtl.packageName}.${allJavaFtl.serviceFtl.className};
-import ${allJavaFtl.requestUpdateBaseFtl.packageName}.${allJavaFtl.requestUpdateBaseFtl.className};
-import ${allJavaFtl.requestUpdatePrimaryKeyFtl.packageName}.${allJavaFtl.requestUpdatePrimaryKeyFtl.className};
+import ${allJavaFtl.voNoPriFtl.packageName}.${allJavaFtl.voNoPriFtl.className};
+import ${allJavaFtl.voPriFtl.packageName}.${allJavaFtl.voPriFtl.className};
 <#list ftlVo.javaFieldTypes as type><#if type = "Timestamp" >import java.sql.Timestamp;
 </#if><#if type = "Time" >import java.sql.Time;
 </#if><#if type = "Date" >import java.util.Date;
 </#if></#list>
-
+import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -150,7 +151,7 @@ public class ${ftlVo.className} {
      * content:具体返回值
      */
     @PostMapping(value = "/updateBase")
-    public Response updateBase(@RequestBody ${allJavaFtl.requestUpdateBaseFtl.className} update) {
+    public Response updateBase(@RequestBody RequestUpdate<${allJavaFtl.voFtl.className},${allJavaFtl.voFtl.className}> update) {
         Response response = new Response();
         try {
             Boolean result = service.updateBase(update.getSource(), update.getTarget());
@@ -178,7 +179,7 @@ public class ${ftlVo.className} {
      * content:具体返回值
      */
     @PostMapping(value = "/updateBaseIncludeNull")
-    public Response updateBaseIncludeNull(@RequestBody ${allJavaFtl.requestUpdateBaseFtl.className} update) {
+    public Response updateBaseIncludeNull(@RequestBody RequestUpdate<${allJavaFtl.voFtl.className},${allJavaFtl.voFtl.className}> update) {
         Response response = new Response();
         try {
             Boolean result = service.updateBaseIncludeNull(update.getSource(), update.getTarget());
@@ -234,7 +235,20 @@ public class ${ftlVo.className} {
      * content:具体返回值
      */
     @GetMapping(value = "/queryByPrimaryKey")
-    public Response queryByPrimaryKey(<#list ftlVo.primaryKeyJavaFields as field>${field.type} ${field.name}<#if field_has_next>, </#if></#list>) {
+    public Response queryByPrimaryKey(<#list ftlVo.primaryKeyJavaFields as field>
+    <#if field.dbType == 'year'>
+            @ApiParam(value = "${field.name}", defaultValue = "1970")
+    <#elseif field.dbType == 'time'>
+            @ApiParam(value = "${field.name}", defaultValue = "12:12:12")
+    <#elseif field.dbType == 'date'>
+            @ApiParam(value = "${field.name}", defaultValue = "1970-01-01")
+    <#elseif field.dbType == 'datetime'>
+            @ApiParam(value = "${field.name}", defaultValue = "1970-01-01 12:12:12")
+    <#elseif field.dbType == 'timestamp'>
+            @ApiParam(value = "${field.name}", defaultValue = "1970-01-01 12:12:12")
+    </#if>
+            @RequestParam ${field.type} ${field.name}<#if field_has_next>, </#if></#list>
+    ) {
         Response response = new Response();
         try {
             ${allJavaFtl.voFtl.className} result = service.queryByPrimaryKey(<#list ftlVo.primaryKeyJavaFields as field>${field.name}<#if field_has_next>, </#if></#list>);
@@ -262,7 +276,20 @@ public class ${ftlVo.className} {
      * content:具体返回值
      */
     @GetMapping(value = "/deleteByPrimaryKey")
-    public Response deleteByPrimaryKey(<#list ftlVo.primaryKeyJavaFields as field>${field.type} ${field.name}<#if field_has_next>, </#if></#list>) {
+    public Response deleteByPrimaryKey(<#list ftlVo.primaryKeyJavaFields as field>
+    <#if field.dbType == 'year'>
+            @ApiParam(value = "${field.name}", defaultValue = "1970")
+    <#elseif field.dbType == 'time'>
+            @ApiParam(value = "${field.name}", defaultValue = "12:12:12")
+    <#elseif field.dbType == 'date'>
+            @ApiParam(value = "${field.name}", defaultValue = "1970-01-01")
+    <#elseif field.dbType == 'datetime'>
+            @ApiParam(value = "${field.name}", defaultValue = "1970-01-01 12:12:12")
+    <#elseif field.dbType == 'timestamp'>
+            @ApiParam(value = "${field.name}", defaultValue = "1970-01-01 12:12:12")
+    </#if>
+           @RequestParam ${field.type} ${field.name}<#if field_has_next>, </#if></#list>
+     ) {
         Response response = new Response();
         try {
             Boolean result = service.deleteByPrimaryKey(<#list ftlVo.primaryKeyJavaFields as field>${field.name}<#if field_has_next>, </#if></#list>);
@@ -290,7 +317,7 @@ public class ${ftlVo.className} {
      * content:具体返回值
      */
     @PostMapping(value = "/updateByPrimaryKey")
-    public Response updateByPrimaryKey(@RequestBody ${allJavaFtl.requestUpdatePrimaryKeyFtl.className} update) {
+    public Response updateByPrimaryKey(@RequestBody RequestUpdate<${allJavaFtl.voNoPriFtl.className},${allJavaFtl.voPriFtl.className}> update) {
         Response response = new Response();
         try {
             Boolean result = service.updateByPrimaryKey(update.getSource(), update.getTarget());
