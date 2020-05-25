@@ -12,6 +12,10 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
+import java.sql.Date;
+import java.sql.Time;
+import java.sql.Timestamp;
+
 /**
  * Created by hwc on 2017/1/16.
  */
@@ -32,6 +36,8 @@ public class Swagger2Configuration {
                 .apiInfo(apiInfo())
                 .useDefaultResponseMessages(false)
                 .groupName("demoMaster")
+                .directModelSubstitute(Timestamp.class, Date.class)
+                .directModelSubstitute(Time.class, Date.class)
                 ;
     }
 
