@@ -56,12 +56,13 @@ public class TypeMap {
         typeMap.put("mediumblob", "byte[]");
         typeMap.put("longblob", "byte[]");
 
-        //blob
-        typeMap.put("date", "Date");
-        typeMap.put("time", "Time");
-        typeMap.put("datetime", "Timestamp");
-        typeMap.put("timestamp", "Timestamp");
-        typeMap.put("year", "Date");
+        //日期
+//        typeMap.put("year", "Date"); //yyyy
+        typeMap.put("year", "Integer"); //yyyy 这里使用int可以，使用日期好像不行
+        typeMap.put("time", "Time"); //HH:mm:ss  是真实的 java.sql.Time
+        typeMap.put("date", "Date"); //yyyy-MM-dd
+        typeMap.put("datetime", "Timestamp"); //yyyy-MM-dd HH:mm:ss
+        typeMap.put("timestamp", "Timestamp");//yyyy-MM-dd HH:mm:ss
 
         //...
     }

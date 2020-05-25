@@ -11,6 +11,10 @@ import ${allJavaFtl.voFtl.packageName}.${allJavaFtl.voFtl.className};
 import ${allJavaFtl.serviceFtl.packageName}.${allJavaFtl.serviceFtl.className};
 import ${allJavaFtl.requestUpdateBaseFtl.packageName}.${allJavaFtl.requestUpdateBaseFtl.className};
 import ${allJavaFtl.requestUpdatePrimaryKeyFtl.packageName}.${allJavaFtl.requestUpdatePrimaryKeyFtl.className};
+<#list ftlVo.javaFieldTypes as type><#if type = "Timestamp" >import java.sql.Timestamp;
+</#if><#if type = "Time" >import java.sql.Time;
+</#if><#if type = "Date" >import java.util.Date;
+</#if></#list>
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

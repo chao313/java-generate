@@ -3,7 +3,6 @@ package demo.spring.boot.demospringboot.controller.generate;
 import demo.spring.boot.demospringboot.config.DemoEventListenter;
 import demo.spring.boot.demospringboot.framework.Code;
 import demo.spring.boot.demospringboot.framework.Response;
-import demo.spring.boot.demospringboot.out.DemoBean;
 import demo.spring.boot.demospringboot.service.WebDriverCookieService;
 import demo.spring.boot.demospringboot.service.WebDriverService;
 import org.slf4j.Logger;
@@ -20,8 +19,6 @@ import java.util.List;
 @RequestMapping(value = "/linkedin")
 public class LinkedinController {
 
-    @Autowired
-    private DemoBean.BeanVo beanVo;
 
     private static Logger LOGGER = LoggerFactory.getLogger(LinkedinController.class);
 
@@ -40,17 +37,6 @@ public class LinkedinController {
          */
         applicationContext.publishEvent(demoEvent);
         return Response.OK();
-    }
-
-
-    @GetMapping("/beanVo")
-    public Response beanVo() {
-        Response response = new Response<>();
-        LOGGER.info("beanVo:{}", beanVo);
-        response.setCode(Code.System.OK);
-        response.setContent(beanVo);
-        return response;
-
     }
 
 

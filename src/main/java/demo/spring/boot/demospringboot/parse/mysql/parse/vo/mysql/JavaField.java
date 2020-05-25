@@ -7,7 +7,8 @@ import lombok.ToString;
 @Data
 public class JavaField {
     private String name;
-    private String type;
+    private String dbType;//数据库中的类型
+    private String type;//java的字段类型
     private String comment;
     private Boolean isNotNull;
     private Boolean isPRI;
