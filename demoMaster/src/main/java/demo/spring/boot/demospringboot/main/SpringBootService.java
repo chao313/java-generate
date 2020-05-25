@@ -1,4 +1,4 @@
-package demo.spring.boot.demospringboot.main;
+package demo.spring.boot.demospringboot.runner;
 
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
