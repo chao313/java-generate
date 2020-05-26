@@ -9,4 +9,7 @@
         <!-- 打印查询语句 -->
         <setting name="logImpl" value="STDOUT_LOGGING"/>
     </settings>
+    <plugins>
+        <plugin interceptor="demo.spring.boot.demospringboot.config.MybatisInterceptor"></plugin>
+    </plugins>
 </configuration>
