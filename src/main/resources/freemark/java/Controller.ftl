@@ -8,10 +8,12 @@ import com.github.pagehelper.PageInfo;
 import demo.spring.boot.demospringboot.framework.Code;
 import demo.spring.boot.demospringboot.framework.Response;
 import demo.spring.boot.demospringboot.framework.RequestUpdate;
+import org.apache.commons.lang3.StringUtils;
 import ${allJavaFtl.voFtl.packageName}.${allJavaFtl.voFtl.className};
 import ${allJavaFtl.serviceFtl.packageName}.${allJavaFtl.serviceFtl.className};
 import ${allJavaFtl.voNoPriFtl.packageName}.${allJavaFtl.voNoPriFtl.className};
 import ${allJavaFtl.voPriFtl.packageName}.${allJavaFtl.voPriFtl.className};
+import ${allJavaFtl.multiTermVoFtl.packageName}.${allJavaFtl.multiTermVoFtl.className};
 <#list ftlVo.javaFieldTypes as type><#if type = "Timestamp" >import java.sql.Timestamp;
 </#if><#if type = "Time" >import java.sql.Time;
 </#if><#if type = "Date" >import java.util.Date;
@@ -119,11 +121,14 @@ public class ${ftlVo.className} {
     @PostMapping(value = "/queryBasePageHelper")
     public Response queryBasePageHelper(@RequestBody ${allJavaFtl.voFtl.className} query,
                                         @RequestParam(value = "pageNum",defaultValue = "1",required = false) Integer pageNum,
-                                        @RequestParam(value = "pageSize",defaultValue = "10",required = false) Integer pageSize) {
+                                        @RequestParam(value = "pageSize",defaultValue = "10",required = false) Integer pageSize,
+                                        @RequestParam(value = "order", required = false) String order) {
          Response response = new Response();
          try {
-
              PageHelper.startPage(pageNum, pageSize);
+             if (StringUtils.isNotBlank(order)) {
+                 PageHelper.orderBy(order);
+             }
              List<${allJavaFtl.voFtl.className}> result = service.queryBase(query);
              PageInfo pageInfo = new PageInfo(result);
              response.setCode(Code.System.OK);
@@ -137,6 +142,42 @@ public class ${ftlVo.className} {
          }
          return response;
      }
+
+    /**
+      * 多条件查询语句,每个字段只要不为null就是查询条件(这里是多维条件,包含like,not like)
+      * 这里添加了分页插件，能够返回的数据包含页码，下一页... , 自动查询count
+      *
+      * @param query
+      * @param pageNum 页码 默认值为1
+      * @param pageSize 每页的size 默认值为10
+      * @return 成功和失败都返回Response，具体的结果在response的
+      * code   :状态码
+      * content:具体返回值
+      */
+    @PostMapping(value = "/queryMultiTermPageHelper")
+    public Response queryMultiTermPageHelper(@RequestBody ${allJavaFtl.multiTermVoFtl.className} query,
+                                             @RequestParam(value = "pageNum", defaultValue = "1", required = false) Integer pageNum,
+                                             @RequestParam(value = "pageSize", defaultValue = "10", required = false) Integer pageSize,
+                                             @RequestParam(value = "order", required = false) String order) {
+         Response response = new Response();
+         try {
+             PageHelper.startPage(pageNum, pageSize);
+             if (StringUtils.isNotBlank(order)) {
+                 PageHelper.orderBy(order);
+             }
+             List<TQuestionsVo> result = service.queryMultiTerm(query);
+             PageInfo pageInfo = new PageInfo(result);
+             response.setCode(Code.System.OK);
+             response.setContent(pageInfo);
+             log.info("success pageInfo -> {} ", pageInfo);
+         } catch (Exception e) {
+             response.setCode(Code.System.FAIL);
+             response.setMsg(e.getMessage());
+             response.addException(e);
+             log.error("异常 -> {} ", e.getMessage(), e);
+         }
+         return response;
+    }
 
 
     /**

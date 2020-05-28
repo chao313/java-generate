@@ -106,6 +106,8 @@ public class GenerateFileJava {
         AllJavaFtl allJavaFtl = new AllJavaFtl();
         VoFtl voFtl = GenerateFileJava.getVoFtl(table, basePackage, classNamePrefix, mysqlFields, primaryKeyMysqlFields, javaFields, primaryKeyJavaFields, javaFieldTypes);
         allJavaFtl.setVoFtl(voFtl);
+        MultiTermVoFtl multiTermVoFtl = GenerateFileJava.getMultiTermVoFtl(table, basePackage, classNamePrefix, mysqlFields, primaryKeyMysqlFields, javaFields, primaryKeyJavaFields, javaFieldTypes);
+        allJavaFtl.setMultiTermVoFtl(multiTermVoFtl);
         VoPriFtl voPriFtl = GenerateFileJava.getVoPriFtl(table, basePackage, classNamePrefix, javaFields, javaFieldTypes);
         allJavaFtl.setVoPriFtl(voPriFtl);
         VoNoPriFtl voNoPriFtl = GenerateFileJava.getVoNoPriFtl(table, basePackage, classNamePrefix, javaFields, javaFieldTypes);
@@ -174,6 +176,52 @@ public class GenerateFileJava {
 
         return voFtl;
     }
+    /**
+     * @param table
+     * @param basePackage
+     * @param classNamePrefix
+     * @param mysqlFields
+     * @param primaryKeyMysqlFields
+     * @param javaFields
+     * @param primaryKeyJavaFields
+     * @param javaFieldTypes
+     * @return
+     */
+    private static MultiTermVoFtl getMultiTermVoFtl(Table table,
+                                  String basePackage,
+                                  String classNamePrefix,
+                                  List<MysqlField> mysqlFields,
+                                  List<MysqlField> primaryKeyMysqlFields,
+                                  List<JavaField> javaFields,
+                                  List<JavaField> primaryKeyJavaFields,
+                                  Set<String> javaFieldTypes
+    ) throws IOException, TemplateException {
+        MultiTermVoFtl voFtl = new GenerateJavaUtil<MultiTermVoFtl>() {
+            @Override
+            public MultiTermVoFtl getFtlVo() {
+                MultiTermVoFtl vo = new MultiTermVoFtl();
+                vo.setTable(table);
+                vo.setPackageName(basePackage.toLowerCase() + "." + vo.getDir());
+                vo.setClassName(classNamePrefix + "MultiTermVo");
+                vo.setMysqlFields(mysqlFields);
+                vo.setPrimaryKeyMysqlFields(primaryKeyMysqlFields);
+                vo.setJavaFields(javaFields);
+                vo.setPrimaryKeyJavaFields(primaryKeyJavaFields);
+                vo.setJavaFieldTypes(javaFieldTypes);
+                //使用之前提取的className直接加上.java
+                vo.setFileName(vo.getClassName() + ".java");
+                return vo;
+            }
+
+            @Override
+            public AllJavaFtl getAllJavaFtl() {
+                return null;
+            }
+        }.grenerate();
+
+        return voFtl;
+    }
+
 
     /**
      * 主键vo

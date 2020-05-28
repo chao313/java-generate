@@ -43,12 +43,14 @@ public class ZipUtilsJava {
             ftlJavaInterfaces.add(allJavaFtl.getDaoFtl());
             /**
              * 移除两种文件 -> 后期可能回退
+             * 控制生成文化的地方
              */
 //            ftlJavaInterfaces.add(allJavaFtl.getRequestUpdatePrimaryKeyFtl());
 //            ftlJavaInterfaces.add(allJavaFtl.getRequestUpdateBaseFtl());
             ftlJavaInterfaces.add(allJavaFtl.getVoNoPriFtl());
             ftlJavaInterfaces.add(allJavaFtl.getVoPriFtl());
             ftlJavaInterfaces.add(allJavaFtl.getVoFtl());
+            ftlJavaInterfaces.add(allJavaFtl.getMultiTermVoFtl());
             ftlJavaInterfaces.add(allJavaFtl.getMapperFtl());
 
             /**

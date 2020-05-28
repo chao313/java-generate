@@ -55,6 +55,67 @@
         </where>
     </select>
 
+     <select id="queryMultiTerm" resultMap="resultMap"
+             resultType="${allJavaFtl.voFtl.packageName}.${allJavaFtl.voFtl.className}"
+             parameterType="${allJavaFtl.multiTermVoFtl.packageName}.${allJavaFtl.multiTermVoFtl.className}">
+        SELECT
+      <#list ftlVo.mysqlFields as field>
+        `${field.name}`<#if field_has_next>,</#if>
+      </#list>
+        FROM `${ftlVo.table.tableName}`
+        <where>
+            1 = 1
+        <#list ftlVo.mysqlAndJavaFields as mysqlAndJavaField>
+            <if test="${mysqlAndJavaField.javaField.name} != null">
+                 <if test="${mysqlAndJavaField.javaField.name}._in != null">
+                     AND `${mysqlAndJavaField.mysqlField.name}` in
+                     <foreach collection="${mysqlAndJavaField.mysqlField.name}._in" item="item" separator="," open="(" close=")">
+                         <#noparse>#{item}</#noparse>
+                     </foreach>
+                 </if>
+                 <if test="${mysqlAndJavaField.javaField.name}._notIn != null">
+                     AND `${mysqlAndJavaField.mysqlField.name}`  not in
+                     <foreach collection="${mysqlAndJavaField.mysqlField.name}._notIn" item="item" separator="," open="(" close=")">
+                         <#noparse>#{item}</#noparse>
+                     </foreach>
+                 </if>
+                 <if test="${mysqlAndJavaField.javaField.name}._like != null">
+                     <foreach collection="${mysqlAndJavaField.mysqlField.name}._like" item="item">
+                       AND `${mysqlAndJavaField.mysqlField.name}` like <#noparse>#{item}</#noparse>
+                     </foreach>
+                 </if>
+                 <if test="${mysqlAndJavaField.javaField.name}._notLike != null">
+                     <foreach collection="${mysqlAndJavaField.mysqlField.name}._notLike" item="item">
+                       AND `${mysqlAndJavaField.mysqlField.name}` not like <#noparse>#{item}</#noparse>
+                     </foreach>
+                 </if>
+                 <if test="${mysqlAndJavaField.javaField.name}._regex != null">
+                     <foreach collection="${mysqlAndJavaField.mysqlField.name}._regex" item="item">
+                       AND `${mysqlAndJavaField.mysqlField.name}` REGEXP <#noparse>#{item}</#noparse>
+                     </foreach>
+                 </if>
+                 <if test="${mysqlAndJavaField.javaField.name}._regex != null">
+                     <foreach collection="${mysqlAndJavaField.mysqlField.name}._regex" item="item">
+                       AND `${mysqlAndJavaField.mysqlField.name}` not REGEXP <#noparse>#{item}</#noparse>
+                     </foreach>
+                 </if>
+                 <if test="${mysqlAndJavaField.javaField.name}._lt != null">
+                      AND `${mysqlAndJavaField.mysqlField.name}` <![CDATA[ < ]]>  <#noparse>#</#noparse>{${mysqlAndJavaField.mysqlField.name}._lt}
+                 </if>
+                  <if test="${mysqlAndJavaField.javaField.name}._le != null">
+                      AND `${mysqlAndJavaField.mysqlField.name}` <![CDATA[ <= ]]>  <#noparse>#</#noparse>{{${mysqlAndJavaField.mysqlField.name}._lt}
+                 </if>
+                  <if test="${mysqlAndJavaField.javaField.name}._gt != null">
+                      AND `${mysqlAndJavaField.mysqlField.name}` <![CDATA[ > ]]>  <#noparse>#</#noparse>{{${mysqlAndJavaField.mysqlField.name}._lt}
+                 </if>
+                  <if test="${mysqlAndJavaField.javaField.name}._ge != null">
+                      AND `${mysqlAndJavaField.mysqlField.name}` <![CDATA[ >= ]]>  <#noparse>#</#noparse>{{${mysqlAndJavaField.mysqlField.name}._lt}
+                 </if>
+            </if>
+        </#list>
+        </where>
+        </select>
+
     <update id="updateBase"
             parameterType="${allJavaFtl.voFtl.packageName}.${allJavaFtl.voFtl.className}">
         UPDATE `${ftlVo.table.tableName}`

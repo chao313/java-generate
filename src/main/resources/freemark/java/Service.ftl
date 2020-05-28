@@ -6,6 +6,7 @@ import java.util.List;
 import ${allJavaFtl.voFtl.packageName}.${allJavaFtl.voFtl.className};
 import ${allJavaFtl.voPriFtl.packageName}.${allJavaFtl.voPriFtl.className};
 import ${allJavaFtl.voNoPriFtl.packageName}.${allJavaFtl.voNoPriFtl.className};
+import ${allJavaFtl.multiTermVoFtl.packageName}.${allJavaFtl.multiTermVoFtl.className};
 
 <#list ftlVo.javaFieldTypes as fieldType><#if fieldType = "Timestamp" >import java.sql.Timestamp;
 </#if><#if fieldType = "Time" >import java.sql.Time;
@@ -41,6 +42,10 @@ public interface ${ftlVo.className} {
      */
     List<${allJavaFtl.voFtl.className}> queryBase(${allJavaFtl.voFtl.className} query);
 
+    /**
+     * 查询base 多维条件
+     */
+    List<${allJavaFtl.voFtl.className}> queryMultiTerm(${allJavaFtl.multiTermVoFtl.className} query);
 
     /**
      * update base (exclude value is null or "")

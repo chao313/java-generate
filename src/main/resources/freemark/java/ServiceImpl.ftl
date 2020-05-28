@@ -10,6 +10,7 @@ import ${allJavaFtl.daoFtl.packageName}.${allJavaFtl.daoFtl.className};
 import ${allJavaFtl.serviceFtl.packageName}.${allJavaFtl.serviceFtl.className};
 import ${allJavaFtl.voPriFtl.packageName}.${allJavaFtl.voPriFtl.className};
 import ${allJavaFtl.voNoPriFtl.packageName}.${allJavaFtl.voNoPriFtl.className};
+import ${allJavaFtl.multiTermVoFtl.packageName}.${allJavaFtl.multiTermVoFtl.className};
 
 <#list ftlVo.javaFieldTypes as type><#if type = "Timestamp" >import java.sql.Timestamp;
 </#if><#if type = "Time" >import java.sql.Time;
@@ -60,6 +61,16 @@ public class ${ftlVo.className} implements ${allJavaFtl.serviceFtl.className} {
     public List<${allJavaFtl.voFtl.className}> queryBase(${allJavaFtl.voFtl.className} query) {
 
         return dao.queryBase(query);
+
+    }
+
+    /**
+     * 查询base 多维条件
+     */
+    @Override
+    public List<${allJavaFtl.voFtl.className}> queryMultiTerm(${allJavaFtl.multiTermVoFtl.className} query) {
+
+        return dao.queryMultiTerm(query);
 
     }
 

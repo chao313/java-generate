@@ -5,6 +5,7 @@ import lombok.Data;
 @Data
 public class AllJavaFtl {
     private VoFtl voFtl;
+    private MultiTermVoFtl multiTermVoFtl;
     private VoPriFtl voPriFtl;
     private VoNoPriFtl voNoPriFtl;
     private RequestUpdateBaseFtl requestUpdateBaseFtl;
