@@ -3,10 +3,17 @@ package ${ftlVo.packageName};
 <#list ftlVo.javaFieldTypes as type><#if type = "Timestamp" >import java.sql.Timestamp;
 </#if><#if type = "Time" >import java.sql.Time;
 </#if><#if type = "Date" >import java.util.Date;
+</#if></#list>
+<#list ftlVo.javaFields as field>
+    <#if field.isPRI == true>
+        <#if field.dbType == 'time' ||  field.dbType == 'Date' || field.dbType == 'datetime' || field.dbType == 'timestamp' >
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;
 import org.springframework.format.annotation.DateTimeFormat;
-</#if></#list>
+            <#break>
+        </#if>
+    </#if>
+</#list>
 
 /**
  * 这里属性是主键字段

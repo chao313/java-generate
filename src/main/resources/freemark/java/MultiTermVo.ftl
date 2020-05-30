@@ -8,6 +8,7 @@ import demo.spring.boot.demospringboot.framework.MultiTerm;
 import io.swagger.annotations.ApiModelProperty;
 import org.springframework.format.annotation.DateTimeFormat;
 </#if></#list>
+import demo.spring.boot.demospringboot.framework.MultiTerm;
 
 /**
  * 表名称      :${ftlVo.table.tableName}

@@ -165,7 +165,7 @@ public class ${ftlVo.className} {
              if (StringUtils.isNotBlank(order)) {
                  PageHelper.orderBy(order);
              }
-             List<TQuestionsVo> result = service.queryMultiTerm(query);
+             List<${allJavaFtl.voFtl.className}> result = service.queryMultiTerm(query);
              PageInfo pageInfo = new PageInfo(result);
              response.setCode(Code.System.OK);
              response.setContent(pageInfo);
