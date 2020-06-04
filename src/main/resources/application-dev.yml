@@ -26,11 +26,16 @@ spring:
     content-type: text/html
     cache: false
     suffix: .html
+  #  datasource:
+  #      driver-class-name: com.mysql.jdbc.Driver
+  #      url: jdbc:mysql://10.200.127.56:3306?useUnicode=true&characterEncoding=utf8
+  #      username: devsw
+  #      password: devsw
   datasource:
-      driver-class-name: com.mysql.jdbc.Driver
-      url: jdbc:mysql://10.200.127.56:3306?useUnicode=true&characterEncoding=utf8
-      username: devsw
-      password: devsw
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/work_ui?useUnicode=true&characterEncoding=utf8
+    username: root
+    password: 123456
 #  datasource:
 #    driver-class-name: com.mysql.jdbc.Driver
 #    url: jdbc:mysql://172.17.0.1:3306?useUnicode=true&characterEncoding=utf8
@@ -39,7 +44,7 @@ spring:
 
 #  @MapperScan(value = "demo.spring.boot.demospringboot.mybatis.mapper")
 mybatis:
-  mapper-locations: classpath:mybatis/mapper/*Mapper.xml,classpath*:demo2/mapper/*Mapper.xml
+  mapper-locations: classpath:mybatis/mapper/*Mapper.xml,classpath*:demomaster/mapper/*Mapper.xml
   config-location: classpath:mybatis/config/mybatis-config.xml
 
   ##静态资源

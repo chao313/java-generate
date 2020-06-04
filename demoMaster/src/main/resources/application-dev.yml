@@ -42,7 +42,7 @@ spring:
   ##数据sql
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/online_questions?useUnicode=true&characterEncoding=utf8
+    url: jdbc:mysql://127.0.0.1:3306/test?useUnicode=true&characterEncoding=utf8
     username: root
     password: 123456
 #

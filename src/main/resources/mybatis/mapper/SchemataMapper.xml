@@ -12,7 +12,7 @@
 
     <insert id="insert"
             parameterType="demo.spring.boot.demospringboot.mybatis.vo.SchemataVo">
-        INSERT INTO `SCHEMATA`(
+        INSERT INTO `information_schema`.`SCHEMATA`(
         `CATALOG_NAME` ,
         `SCHEMA_NAME` ,
         `DEFAULT_CHARACTER_SET_NAME` ,
@@ -29,7 +29,7 @@
 
     <insert id="inserts"
             parameterType="java.util.List">
-        INSERT INTO `SCHEMATA`(
+        INSERT INTO `information_schema`.`SCHEMATA`(
         `CATALOG_NAME`,
         `SCHEMA_NAME`,
         `DEFAULT_CHARACTER_SET_NAME`,
@@ -56,7 +56,7 @@
         `DEFAULT_CHARACTER_SET_NAME`,
         `DEFAULT_COLLATION_NAME`,
         `SQL_PATH`
-        FROM `SCHEMATA`
+        FROM `information_schema`.`SCHEMATA`
         <where>
             1 = 1
             <if test="catalogName != null">
@@ -86,7 +86,7 @@
         `DEFAULT_CHARACTER_SET_NAME`,
         `DEFAULT_COLLATION_NAME`,
         `SQL_PATH`
-        FROM `SCHEMATA`
+        FROM `information_schema`.`SCHEMATA`
         <where>
             1 = 1
             <if test="catalogName != null">
@@ -324,7 +324,7 @@
 
     <update id="updateBase"
             parameterType="demo.spring.boot.demospringboot.mybatis.vo.SchemataVo">
-        UPDATE `SCHEMATA`
+        UPDATE `information_schema`.`SCHEMATA`
         <set>
             <if test="source.catalogName != null">
                 `CATALOG_NAME` = #{source.catalogName},
@@ -364,7 +364,7 @@
 
     <update id="updateBaseIncludeNull"
             parameterType="demo.spring.boot.demospringboot.mybatis.vo.SchemataVo">
-        UPDATE `SCHEMATA`
+        UPDATE `information_schema`.`SCHEMATA`
         <set>
             `CATALOG_NAME` = #{source.catalogName},
             `SCHEMA_NAME` = #{source.schemaName},
@@ -394,7 +394,7 @@
 
     <delete id="deleteBase"
             parameterType="demo.spring.boot.demospringboot.mybatis.vo.SchemataVo">
-        DELETE FROM `SCHEMATA`
+        DELETE FROM `information_schema`.`SCHEMATA`
         <where>
             1 =1
             <if test="catalogName != null">

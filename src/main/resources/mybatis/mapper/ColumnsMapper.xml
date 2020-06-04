@@ -28,7 +28,7 @@
 
     <insert id="insert"
             parameterType="demo.spring.boot.demospringboot.mybatis.vo.ColumnsVo">
-        INSERT INTO `COLUMNS`(
+        INSERT INTO `information_schema`.`COLUMNS`(
         `TABLE_CATALOG` ,
         `TABLE_SCHEMA` ,
         `TABLE_NAME` ,
@@ -77,7 +77,7 @@
 
     <insert id="inserts"
             parameterType="java.util.List">
-        INSERT INTO `COLUMNS`(
+        INSERT INTO `information_schema`.`COLUMNS`(
         `TABLE_CATALOG`,
         `TABLE_SCHEMA`,
         `TABLE_NAME`,
@@ -152,7 +152,7 @@
         `PRIVILEGES`,
         `COLUMN_COMMENT`,
         `GENERATION_EXPRESSION`
-        FROM `COLUMNS`
+        FROM `information_schema`.`COLUMNS`
         <where>
             1 = 1
             <if test="tableCatalog != null">
@@ -246,7 +246,7 @@
         `PRIVILEGES`,
         `COLUMN_COMMENT`,
         `GENERATION_EXPRESSION`
-        FROM `COLUMNS`
+        FROM `information_schema`.`COLUMNS`
         <where>
             1 = 1
             <if test="tableCatalog != null">
@@ -1220,7 +1220,7 @@
 
     <update id="updateBase"
             parameterType="demo.spring.boot.demospringboot.mybatis.vo.ColumnsVo">
-        UPDATE `COLUMNS`
+        UPDATE `information_schema`.`COLUMNS`
         <set>
             <if test="source.tableCatalog != null">
                 `TABLE_CATALOG` = #{source.tableCatalog},
@@ -1356,7 +1356,7 @@
 
     <update id="updateBaseIncludeNull"
             parameterType="demo.spring.boot.demospringboot.mybatis.vo.ColumnsVo">
-        UPDATE `COLUMNS`
+        UPDATE `information_schema`.`COLUMNS`
         <set>
             `TABLE_CATALOG` = #{source.tableCatalog},
             `TABLE_SCHEMA` = #{source.tableSchema},
@@ -1450,7 +1450,7 @@
 
     <delete id="deleteBase"
             parameterType="demo.spring.boot.demospringboot.mybatis.vo.ColumnsVo">
-        DELETE FROM `COLUMNS`
+        DELETE FROM `information_schema`.`COLUMNS`
         <where>
             1 =1
             <if test="tableCatalog != null">

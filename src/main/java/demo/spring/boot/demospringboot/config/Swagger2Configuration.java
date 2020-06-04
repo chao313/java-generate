@@ -12,18 +12,23 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
+import java.sql.Date;
+import java.sql.Time;
+import java.sql.Timestamp;
+
 /**
  * Created by tang.cheng on 2017/1/16.
  */
 @Configuration
 @EnableSwagger2
 public class Swagger2Configuration {
+
     @Bean
     public Docket demoApi() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
                 .apis(RequestHandlerSelectors
-                        .basePackage("demo2"))
+                        .basePackage("demomaster"))
                 .paths(PathSelectors.any())
                 .build()
                 .genericModelSubstitutes(DeferredResult.class)//异步http请求
@@ -31,25 +36,28 @@ public class Swagger2Configuration {
                 .pathMapping("/")
                 .apiInfo(apiInfo())
                 .useDefaultResponseMessages(false)
-                .groupName("demo")
+                .groupName("demoMaster")
+                .directModelSubstitute(Timestamp.class, Date.class)
+                .directModelSubstitute(Time.class, Date.class)
                 ;
     }
-    @Bean
-    public Docket actuateApi() {
-        return new Docket(DocumentationType.SWAGGER_2)
-                .select()
-                .apis(RequestHandlerSelectors
-                        .basePackage("org.springframework.boot.actuate"))
-                .paths(PathSelectors.any())
-                .build()
-                .genericModelSubstitutes(DeferredResult.class)//异步http请求
-                .forCodeGeneration(true)
-                .pathMapping("/")
-                .apiInfo(apiInfo())
-                .useDefaultResponseMessages(false)
-                .groupName("actuate")
-                ;
-    }
+
+//    @Bean
+//    public Docket actuateApi() {
+//        return new Docket(DocumentationType.SWAGGER_2)
+//                .select()
+//                .apis(RequestHandlerSelectors
+//                        .basePackage("org.springframework.boot.actuate"))
+//                .paths(PathSelectors.any())
+//                .build()
+//                .genericModelSubstitutes(DeferredResult.class)//异步http请求
+//                .forCodeGeneration(true)
+//                .pathMapping("/")
+//                .apiInfo(apiInfo())
+//                .useDefaultResponseMessages(false)
+//                .groupName("actuate")
+//                ;
+//    }
 
     @Bean
     public Docket createRestApi() {
