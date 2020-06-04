@@ -1,11 +1,11 @@
-package demo.spring.boot.demospringboot.mybatis.service;
+package demo.spring.boot.demospringboot.mybatis.dao;
 
 
 import demo.spring.boot.demospringboot.mybatis.vo.ColumnsMultiTermVo;
 import demo.spring.boot.demospringboot.mybatis.vo.ColumnsVo;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
-
 
 /**
  * 表名称      :COLUMNS
@@ -17,19 +17,17 @@ import java.util.List;
  * 字符集      :utf8_general_ci
  * 表注释      :
  */
-public interface ColumnsService {
+public interface ColumnsDAO {
 
     /**
      * insert
      */
-    boolean insert(ColumnsVo vo);
-
+    int insert(ColumnsVo vo);
 
     /**
      * insert vos 批量插入
      */
-    boolean insert(List<ColumnsVo> vos);
-
+    int inserts(@Param(value = "vos") List<ColumnsVo> vos);
 
     /**
      * 查询base
@@ -44,17 +42,17 @@ public interface ColumnsService {
     /**
      * update base (exclude value is null or "")
      */
-    boolean updateBase(ColumnsVo source, ColumnsVo target);
+    int updateBase(@Param(value = "source") ColumnsVo source, @Param(value = "target") ColumnsVo target);
+
 
     /**
      * update base (include value is null or "")
      */
-    boolean updateBaseIncludeNull(ColumnsVo source, ColumnsVo target);
+    int updateBaseIncludeNull(@Param(value = "source") ColumnsVo source, @Param(value = "target") ColumnsVo target);
 
     /**
      * 删除base
      */
-    boolean deleteBase(ColumnsVo vo);
-
+    int deleteBase(ColumnsVo vo);
 
 }

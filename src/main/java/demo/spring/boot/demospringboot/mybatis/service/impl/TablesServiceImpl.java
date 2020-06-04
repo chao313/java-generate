@@ -1,100 +1,99 @@
 package demo.spring.boot.demospringboot.mybatis.service.impl;
 
-import java.util.List;
 
-import demo.spring.boot.demospringboot.mybatis.dao.TablesDao;
+import demo.spring.boot.demospringboot.mybatis.dao.TablesDAO;
 import demo.spring.boot.demospringboot.mybatis.service.TablesService;
+import demo.spring.boot.demospringboot.mybatis.vo.TablesMultiTermVo;
 import demo.spring.boot.demospringboot.mybatis.vo.TablesVo;
-import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 
 /**
- * 对应的表名   :Tables
+ * 表名称      :TABLES
  * 表类型      :SYSTEM VIEW
  * 表引擎      :MEMORY
  * 表版本      :10
  * 行格式      :Fixed
- * 表创建时间   :2018-12-29
- * 表字符集    :utf8_general_ci
+ * 表创建      :2020-5-30
+ * 字符集      :utf8_general_ci
  * 表注释      :
  */
 @Service
 public class TablesServiceImpl implements TablesService {
 
-     @Autowired
-     private TablesDao dao;
+    @Autowired
+    private TablesDAO dao;
 
     /**
-     *  insert
+     * insert
      */
-     @Override
-     public boolean insert(TablesVo vo){
+    @Override
+    public boolean insert(TablesVo vo) {
 
-           return dao.insert(vo) > 0 ? true : false;
-     }
+        return dao.insert(vo) > 0 ? true : false;
 
+    }
 
     /**
-     *  update all field by PrimaryKey
-     *  会更新指定主键的所有非主键字段(字段包括null)
+     * insert vos 批量插入
      */
-     @Override
-     public boolean updateAllFieldByPrimaryKey(TablesVo vo){
+    @Override
+    public boolean insert(List<TablesVo> vos) {
 
-          return dao.updateAllFieldByPrimaryKey(vo) > 0 ? true : false;
-     }
+        return dao.inserts(vos) > 0 ? true : false;
 
-
-    /**
-     *  update all field by PrimaryKey
-     *  会更新指定主键的所有非主键字段(字段非null)
-     */
-     @Override
-     public boolean updateBaseFieldByPrimaryKey(TablesVo vo){
-
-         return dao.updateBaseFieldByPrimaryKey(vo) > 0 ? true : false;
-
-     }
-
-
-    /**
-     *  根据PrimaryKey查询
-     */
-     @Override
-     public TablesVo queryByPrimaryKey(){
-
-        return dao.queryByPrimaryKey();
-
-     }
+    }
 
     /**
      * 查询base
      */
-     @Override
-     public List<TablesVo> queryBase(TablesVo query){
+    @Override
+    public List<TablesVo> queryBase(TablesVo query) {
 
         return dao.queryBase(query);
 
-     }
+    }
 
     /**
-     *  根据PrimaryKey删除
+     * 查询base 多维条件
      */
-     @Override
-     public boolean deleteByPrimaryKey(){
+    @Override
+    public List<TablesVo> queryMultiTerm(TablesMultiTermVo query) {
 
-       return dao.deleteByPrimaryKey() > 0 ? true : false;
+        return dao.queryMultiTerm(query);
 
-     }
+    }
+
+    /**
+     * update base (exclude value is null or "")
+     */
+    @Override
+    public boolean updateBase(TablesVo source, TablesVo target) {
+
+        return dao.updateBase(source, target) > 0 ? true : false;
+
+    }
+
+    /**
+     * update base (include value is null or "")
+     */
+    @Override
+    public boolean updateBaseIncludeNull(TablesVo source, TablesVo target) {
+
+        return dao.updateBaseIncludeNull(source, target) > 0 ? true : false;
+
+    }
 
     /**
      * 删除base
      */
     @Override
-    public boolean deleteBase(TablesVo vo){
+    public boolean deleteBase(TablesVo vo) {
 
-       return dao.deleteBase(vo) > 0 ? true : false;
+        return dao.deleteBase(vo) > 0 ? true : false;
 
     }
 

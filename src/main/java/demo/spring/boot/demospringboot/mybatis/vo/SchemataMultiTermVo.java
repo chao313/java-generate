@@ -1,5 +1,6 @@
 package demo.spring.boot.demospringboot.mybatis.vo;
 
+import demo.spring.boot.demospringboot.framework.MultiTerm;
 
 /**
  * 表名称      :SCHEMATA
@@ -11,79 +12,74 @@ package demo.spring.boot.demospringboot.mybatis.vo;
  * 字符集      :utf8_general_ci
  * 表注释      :
  */
-public class SchemataVo {
+public class SchemataMultiTermVo {
 
-    private String catalogName; //目录名称
-    private String schemaName; //库名
-    private String defaultCharacterSetName; //默认字符集
-    private String defaultCollationName; //默认排序规则
-    private String sqlPath; //路径
+    private MultiTerm<String> catalogName; 
+    private MultiTerm<String> schemaName; 
+    private MultiTerm<String> defaultCharacterSetName; 
+    private MultiTerm<String> defaultCollationName; 
+    private MultiTerm<String> sqlPath; 
 
 
-    public String getCatalogName() {
+    public MultiTerm<String> getCatalogName() {
 
         return catalogName;
 
     }
 
-    public void setCatalogName(String catalogName) {
+    public void setCatalogName(MultiTerm<String> catalogName) {
 
         this.catalogName = catalogName;
 
     }
-
-    public String getSchemaName() {
+    public MultiTerm<String> getSchemaName() {
 
         return schemaName;
 
     }
 
-    public void setSchemaName(String schemaName) {
+    public void setSchemaName(MultiTerm<String> schemaName) {
 
         this.schemaName = schemaName;
 
     }
-
-    public String getDefaultCharacterSetName() {
+    public MultiTerm<String> getDefaultCharacterSetName() {
 
         return defaultCharacterSetName;
 
     }
 
-    public void setDefaultCharacterSetName(String defaultCharacterSetName) {
+    public void setDefaultCharacterSetName(MultiTerm<String> defaultCharacterSetName) {
 
         this.defaultCharacterSetName = defaultCharacterSetName;
 
     }
-
-    public String getDefaultCollationName() {
+    public MultiTerm<String> getDefaultCollationName() {
 
         return defaultCollationName;
 
     }
 
-    public void setDefaultCollationName(String defaultCollationName) {
+    public void setDefaultCollationName(MultiTerm<String> defaultCollationName) {
 
         this.defaultCollationName = defaultCollationName;
 
     }
-
-    public String getSqlPath() {
+    public MultiTerm<String> getSqlPath() {
 
         return sqlPath;
 
     }
 
-    public void setSqlPath(String sqlPath) {
+    public void setSqlPath(MultiTerm<String> sqlPath) {
 
         this.sqlPath = sqlPath;
 
     }
 
-
     @Override
     public String toString() {
-        return "SchemataVo{" +
+        return "SchemataMultiTermVo{" +
                 ", catalogName '" + catalogName + '\'' +
                 ", schemaName '" + schemaName + '\'' +
                 ", defaultCharacterSetName '" + defaultCharacterSetName + '\'' +

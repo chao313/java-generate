@@ -1,7 +1,9 @@
-package demo.spring.boot.demospringboot.mybatis.vo;
+package demo.spring.boot.demospringboot.mybatis.vo.plugin;
 
 
 /**
+ * 这里属性是非主键字段
+ *
  * 表名称      :COLUMNS
  * 表类型      :SYSTEM VIEW
  * 表引擎      :InnoDB
@@ -11,29 +13,29 @@ package demo.spring.boot.demospringboot.mybatis.vo;
  * 字符集      :utf8_general_ci
  * 表注释      :
  */
-public class ColumnsVo {
+public class ColumnsNoPriVo {
 
-    private String tableCatalog; //表目录
-    private String tableSchema; //库名
-    private String tableName; //表名
-    private String columnName; //列名
-    private Long ordinalPosition; //字段标识
-    private String columnDefault; //字段默认值
-    private String isNullable; //是否允许为空
-    private String dataType; //数据类型
-    private Long characterMaximumLength;//以字符为单位的最大长度
-    private Long characterOctetLength;//以字节为单位的最大长度
-    private Long numericPrecision;
-    private Long numericScale;
-    private Long datetimePrecision;
-    private String characterSetName;
-    private String collationName;
-    private String columnType;//列类型 varchar(256)
-    private String columnKey;//如果Key是PRI,  那么该列是主键的组成部分 | 如果Key是UNI,  那么该列是一个唯一值索引的第一列(前导列),并别不能含有空值(NULL) | 如果Key是MUL,  那么该列的值可以重复, 该列是一个非唯一索引的前导列(第一列)或者是一个唯一性索引的组成部分但是可以含有空值NULL
-    private String extra;
-    private String privileges;
-    private String columnComment;//列注释
-    private String generationExpression;
+    private String tableCatalog; 
+    private String tableSchema; 
+    private String tableName; 
+    private String columnName; 
+    private Long ordinalPosition; 
+    private String columnDefault; 
+    private String isNullable; 
+    private String dataType; 
+    private Long characterMaximumLength; 
+    private Long characterOctetLength; 
+    private Long numericPrecision; 
+    private Long numericScale; 
+    private Long datetimePrecision; 
+    private String characterSetName; 
+    private String collationName; 
+    private String columnType; 
+    private String columnKey; 
+    private String extra; 
+    private String privileges; 
+    private String columnComment; 
+    private String generationExpression; 
 
 
     public String getTableCatalog() {
@@ -47,7 +49,6 @@ public class ColumnsVo {
         this.tableCatalog = tableCatalog;
 
     }
-
     public String getTableSchema() {
 
         return tableSchema;
@@ -59,7 +60,6 @@ public class ColumnsVo {
         this.tableSchema = tableSchema;
 
     }
-
     public String getTableName() {
 
         return tableName;
@@ -71,7 +71,6 @@ public class ColumnsVo {
         this.tableName = tableName;
 
     }
-
     public String getColumnName() {
 
         return columnName;
@@ -83,7 +82,6 @@ public class ColumnsVo {
         this.columnName = columnName;
 
     }
-
     public Long getOrdinalPosition() {
 
         return ordinalPosition;
@@ -95,7 +93,6 @@ public class ColumnsVo {
         this.ordinalPosition = ordinalPosition;
 
     }
-
     public String getColumnDefault() {
 
         return columnDefault;
@@ -107,7 +104,6 @@ public class ColumnsVo {
         this.columnDefault = columnDefault;
 
     }
-
     public String getIsNullable() {
 
         return isNullable;
@@ -119,7 +115,6 @@ public class ColumnsVo {
         this.isNullable = isNullable;
 
     }
-
     public String getDataType() {
 
         return dataType;
@@ -131,7 +126,6 @@ public class ColumnsVo {
         this.dataType = dataType;
 
     }
-
     public Long getCharacterMaximumLength() {
 
         return characterMaximumLength;
@@ -143,7 +137,6 @@ public class ColumnsVo {
         this.characterMaximumLength = characterMaximumLength;
 
     }
-
     public Long getCharacterOctetLength() {
 
         return characterOctetLength;
@@ -155,7 +148,6 @@ public class ColumnsVo {
         this.characterOctetLength = characterOctetLength;
 
     }
-
     public Long getNumericPrecision() {
 
         return numericPrecision;
@@ -167,7 +159,6 @@ public class ColumnsVo {
         this.numericPrecision = numericPrecision;
 
     }
-
     public Long getNumericScale() {
 
         return numericScale;
@@ -179,7 +170,6 @@ public class ColumnsVo {
         this.numericScale = numericScale;
 
     }
-
     public Long getDatetimePrecision() {
 
         return datetimePrecision;
@@ -191,7 +181,6 @@ public class ColumnsVo {
         this.datetimePrecision = datetimePrecision;
 
     }
-
     public String getCharacterSetName() {
 
         return characterSetName;
@@ -203,7 +192,6 @@ public class ColumnsVo {
         this.characterSetName = characterSetName;
 
     }
-
     public String getCollationName() {
 
         return collationName;
@@ -215,7 +203,6 @@ public class ColumnsVo {
         this.collationName = collationName;
 
     }
-
     public String getColumnType() {
 
         return columnType;
@@ -227,7 +214,6 @@ public class ColumnsVo {
         this.columnType = columnType;
 
     }
-
     public String getColumnKey() {
 
         return columnKey;
@@ -239,7 +225,6 @@ public class ColumnsVo {
         this.columnKey = columnKey;
 
     }
-
     public String getExtra() {
 
         return extra;
@@ -251,7 +236,6 @@ public class ColumnsVo {
         this.extra = extra;
 
     }
-
     public String getPrivileges() {
 
         return privileges;
@@ -263,7 +247,6 @@ public class ColumnsVo {
         this.privileges = privileges;
 
     }
-
     public String getColumnComment() {
 
         return columnComment;
@@ -275,7 +258,6 @@ public class ColumnsVo {
         this.columnComment = columnComment;
 
     }
-
     public String getGenerationExpression() {
 
         return generationExpression;
@@ -288,10 +270,9 @@ public class ColumnsVo {
 
     }
 
-
     @Override
     public String toString() {
-        return "ColumnsVo{" +
+        return "ColumnsNoPriVo{" +
                 ", tableCatalog '" + tableCatalog + '\'' +
                 ", tableSchema '" + tableSchema + '\'' +
                 ", tableName '" + tableName + '\'' +

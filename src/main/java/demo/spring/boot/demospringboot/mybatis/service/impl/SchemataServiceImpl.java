@@ -1,100 +1,99 @@
 package demo.spring.boot.demospringboot.mybatis.service.impl;
 
-import java.util.List;
 
-import demo.spring.boot.demospringboot.mybatis.dao.SchemataDao;
+import demo.spring.boot.demospringboot.mybatis.dao.SchemataDAO;
 import demo.spring.boot.demospringboot.mybatis.service.SchemataService;
+import demo.spring.boot.demospringboot.mybatis.vo.SchemataMultiTermVo;
 import demo.spring.boot.demospringboot.mybatis.vo.SchemataVo;
-import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 
 /**
- * 对应的表名   :Schemata
+ * 表名称      :SCHEMATA
  * 表类型      :SYSTEM VIEW
  * 表引擎      :MEMORY
  * 表版本      :10
  * 行格式      :Fixed
- * 表创建时间   :2018-12-29
- * 表字符集    :utf8_general_ci
+ * 表创建      :2020-5-30
+ * 字符集      :utf8_general_ci
  * 表注释      :
  */
 @Service
 public class SchemataServiceImpl implements SchemataService {
 
-     @Autowired
-     private SchemataDao dao;
+    @Autowired
+    private SchemataDAO dao;
 
     /**
-     *  insert
+     * insert
      */
-     @Override
-     public boolean insert(SchemataVo vo){
+    @Override
+    public boolean insert(SchemataVo vo) {
 
-           return dao.insert(vo) > 0 ? true : false;
-     }
+        return dao.insert(vo) > 0 ? true : false;
 
+    }
 
     /**
-     *  update all field by PrimaryKey
-     *  会更新指定主键的所有非主键字段(字段包括null)
+     * insert vos 批量插入
      */
-     @Override
-     public boolean updateAllFieldByPrimaryKey(SchemataVo vo){
+    @Override
+    public boolean insert(List<SchemataVo> vos) {
 
-          return dao.updateAllFieldByPrimaryKey(vo) > 0 ? true : false;
-     }
+        return dao.inserts(vos) > 0 ? true : false;
 
-
-    /**
-     *  update all field by PrimaryKey
-     *  会更新指定主键的所有非主键字段(字段非null)
-     */
-     @Override
-     public boolean updateBaseFieldByPrimaryKey(SchemataVo vo){
-
-         return dao.updateBaseFieldByPrimaryKey(vo) > 0 ? true : false;
-
-     }
-
-
-    /**
-     *  根据PrimaryKey查询
-     */
-     @Override
-     public SchemataVo queryByPrimaryKey(){
-
-        return dao.queryByPrimaryKey();
-
-     }
+    }
 
     /**
      * 查询base
      */
-     @Override
-     public List<SchemataVo> queryBase(SchemataVo query){
+    @Override
+    public List<SchemataVo> queryBase(SchemataVo query) {
 
         return dao.queryBase(query);
 
-     }
+    }
 
     /**
-     *  根据PrimaryKey删除
+     * 查询base 多维条件
      */
-     @Override
-     public boolean deleteByPrimaryKey(){
+    @Override
+    public List<SchemataVo> queryMultiTerm(SchemataMultiTermVo query) {
 
-       return dao.deleteByPrimaryKey() > 0 ? true : false;
+        return dao.queryMultiTerm(query);
 
-     }
+    }
+
+    /**
+     * update base (exclude value is null or "")
+     */
+    @Override
+    public boolean updateBase(SchemataVo source, SchemataVo target) {
+
+        return dao.updateBase(source, target) > 0 ? true : false;
+
+    }
+
+    /**
+     * update base (include value is null or "")
+     */
+    @Override
+    public boolean updateBaseIncludeNull(SchemataVo source, SchemataVo target) {
+
+        return dao.updateBaseIncludeNull(source, target) > 0 ? true : false;
+
+    }
 
     /**
      * 删除base
      */
     @Override
-    public boolean deleteBase(SchemataVo vo){
+    public boolean deleteBase(SchemataVo vo) {
 
-       return dao.deleteBase(vo) > 0 ? true : false;
+        return dao.deleteBase(vo) > 0 ? true : false;
 
     }
 

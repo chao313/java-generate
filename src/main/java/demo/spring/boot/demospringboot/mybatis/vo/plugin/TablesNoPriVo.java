@@ -1,4 +1,4 @@
-package demo.spring.boot.demospringboot.mybatis.vo;
+package demo.spring.boot.demospringboot.mybatis.vo.plugin;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;
@@ -6,8 +6,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.sql.Timestamp;
 
-
 /**
+ * 这里属性是非主键字段
+ *
  * 表名称      :TABLES
  * 表类型      :SYSTEM VIEW
  * 表引擎      :MEMORY
@@ -17,38 +18,38 @@ import java.sql.Timestamp;
  * 字符集      :utf8_general_ci
  * 表注释      :
  */
-public class TablesVo {
+public class TablesNoPriVo {
 
-    private String tableCatalog; //表目录
-    private String tableSchema; //表所在的库名
-    private String tableName; //表名
-    private String tableType; //表类型(普通表|视图)
-    private String engine; //表引擎
-    private Long version; //表版本
-    private String rowFormat;
-    private Long tableRows;
-    private Long avgRowLength;
-    private Long dataLength;
-    private Long maxDataLength;
-    private Long indexLength;
-    private Long dataFree;
-    private Long autoIncrement;
+    private String tableCatalog; 
+    private String tableSchema; 
+    private String tableName; 
+    private String tableType; 
+    private String engine; 
+    private Long version; 
+    private String rowFormat; 
+    private Long tableRows; 
+    private Long avgRowLength; 
+    private Long dataLength; 
+    private Long maxDataLength; 
+    private Long indexLength; 
+    private Long dataFree; 
+    private Long autoIncrement; 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @ApiModelProperty(dataType = "date", example = "1970-01-01 12:12:12")
-    private Timestamp createTime;
+    private Timestamp createTime; 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @ApiModelProperty(dataType = "date", example = "1970-01-01 12:12:12")
-    private Timestamp updateTime;
+    private Timestamp updateTime; 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @ApiModelProperty(dataType = "date", example = "1970-01-01 12:12:12")
-    private Timestamp checkTime;
-    private String tableCollation;
-    private Long checksum;
-    private String createOptions;
-    private String tableComment; //表注释
+    private Timestamp checkTime; 
+    private String tableCollation; 
+    private Long checksum; 
+    private String createOptions; 
+    private String tableComment; 
 
 
     public String getTableCatalog() {
@@ -62,7 +63,6 @@ public class TablesVo {
         this.tableCatalog = tableCatalog;
 
     }
-
     public String getTableSchema() {
 
         return tableSchema;
@@ -74,7 +74,6 @@ public class TablesVo {
         this.tableSchema = tableSchema;
 
     }
-
     public String getTableName() {
 
         return tableName;
@@ -86,7 +85,6 @@ public class TablesVo {
         this.tableName = tableName;
 
     }
-
     public String getTableType() {
 
         return tableType;
@@ -98,7 +96,6 @@ public class TablesVo {
         this.tableType = tableType;
 
     }
-
     public String getEngine() {
 
         return engine;
@@ -110,7 +107,6 @@ public class TablesVo {
         this.engine = engine;
 
     }
-
     public Long getVersion() {
 
         return version;
@@ -122,7 +118,6 @@ public class TablesVo {
         this.version = version;
 
     }
-
     public String getRowFormat() {
 
         return rowFormat;
@@ -134,7 +129,6 @@ public class TablesVo {
         this.rowFormat = rowFormat;
 
     }
-
     public Long getTableRows() {
 
         return tableRows;
@@ -146,7 +140,6 @@ public class TablesVo {
         this.tableRows = tableRows;
 
     }
-
     public Long getAvgRowLength() {
 
         return avgRowLength;
@@ -158,7 +151,6 @@ public class TablesVo {
         this.avgRowLength = avgRowLength;
 
     }
-
     public Long getDataLength() {
 
         return dataLength;
@@ -170,7 +162,6 @@ public class TablesVo {
         this.dataLength = dataLength;
 
     }
-
     public Long getMaxDataLength() {
 
         return maxDataLength;
@@ -182,7 +173,6 @@ public class TablesVo {
         this.maxDataLength = maxDataLength;
 
     }
-
     public Long getIndexLength() {
 
         return indexLength;
@@ -194,7 +184,6 @@ public class TablesVo {
         this.indexLength = indexLength;
 
     }
-
     public Long getDataFree() {
 
         return dataFree;
@@ -206,7 +195,6 @@ public class TablesVo {
         this.dataFree = dataFree;
 
     }
-
     public Long getAutoIncrement() {
 
         return autoIncrement;
@@ -218,7 +206,6 @@ public class TablesVo {
         this.autoIncrement = autoIncrement;
 
     }
-
     public Timestamp getCreateTime() {
 
         return createTime;
@@ -230,7 +217,6 @@ public class TablesVo {
         this.createTime = createTime;
 
     }
-
     public Timestamp getUpdateTime() {
 
         return updateTime;
@@ -242,7 +228,6 @@ public class TablesVo {
         this.updateTime = updateTime;
 
     }
-
     public Timestamp getCheckTime() {
 
         return checkTime;
@@ -254,7 +239,6 @@ public class TablesVo {
         this.checkTime = checkTime;
 
     }
-
     public String getTableCollation() {
 
         return tableCollation;
@@ -266,7 +250,6 @@ public class TablesVo {
         this.tableCollation = tableCollation;
 
     }
-
     public Long getChecksum() {
 
         return checksum;
@@ -278,7 +261,6 @@ public class TablesVo {
         this.checksum = checksum;
 
     }
-
     public String getCreateOptions() {
 
         return createOptions;
@@ -290,7 +272,6 @@ public class TablesVo {
         this.createOptions = createOptions;
 
     }
-
     public String getTableComment() {
 
         return tableComment;
@@ -303,10 +284,9 @@ public class TablesVo {
 
     }
 
-
     @Override
     public String toString() {
-        return "TablesVo{" +
+        return "TablesNoPriVo{" +
                 ", tableCatalog '" + tableCatalog + '\'' +
                 ", tableSchema '" + tableSchema + '\'' +
                 ", tableName '" + tableName + '\'' +

@@ -1,7 +1,9 @@
-package demo.spring.boot.demospringboot.mybatis.vo;
+package demo.spring.boot.demospringboot.mybatis.vo.plugin;
 
 
 /**
+ * 这里属性是非主键字段
+ *
  * 表名称      :SCHEMATA
  * 表类型      :SYSTEM VIEW
  * 表引擎      :MEMORY
@@ -11,13 +13,13 @@ package demo.spring.boot.demospringboot.mybatis.vo;
  * 字符集      :utf8_general_ci
  * 表注释      :
  */
-public class SchemataVo {
+public class SchemataNoPriVo {
 
-    private String catalogName; //目录名称
-    private String schemaName; //库名
-    private String defaultCharacterSetName; //默认字符集
-    private String defaultCollationName; //默认排序规则
-    private String sqlPath; //路径
+    private String catalogName; 
+    private String schemaName; 
+    private String defaultCharacterSetName; 
+    private String defaultCollationName; 
+    private String sqlPath; 
 
 
     public String getCatalogName() {
@@ -31,7 +33,6 @@ public class SchemataVo {
         this.catalogName = catalogName;
 
     }
-
     public String getSchemaName() {
 
         return schemaName;
@@ -43,7 +44,6 @@ public class SchemataVo {
         this.schemaName = schemaName;
 
     }
-
     public String getDefaultCharacterSetName() {
 
         return defaultCharacterSetName;
@@ -55,7 +55,6 @@ public class SchemataVo {
         this.defaultCharacterSetName = defaultCharacterSetName;
 
     }
-
     public String getDefaultCollationName() {
 
         return defaultCollationName;
@@ -67,7 +66,6 @@ public class SchemataVo {
         this.defaultCollationName = defaultCollationName;
 
     }
-
     public String getSqlPath() {
 
         return sqlPath;
@@ -80,10 +78,9 @@ public class SchemataVo {
 
     }
 
-
     @Override
     public String toString() {
-        return "SchemataVo{" +
+        return "SchemataNoPriVo{" +
                 ", catalogName '" + catalogName + '\'' +
                 ", schemaName '" + schemaName + '\'' +
                 ", defaultCharacterSetName '" + defaultCharacterSetName + '\'' +
