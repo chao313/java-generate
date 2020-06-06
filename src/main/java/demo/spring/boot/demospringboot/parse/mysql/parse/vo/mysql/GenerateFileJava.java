@@ -1,9 +1,10 @@
 package demo.spring.boot.demospringboot.parse.mysql.parse.vo.mysql;
 
 import demo.spring.boot.demospringboot.parse.mysql.parse.db.DBInfo;
-import demo.spring.boot.demospringboot.parse.mysql.parse.util.CamelUtils;
+import demo.spring.boot.demospringboot.util.CamelUtils;
 import demo.spring.boot.demospringboot.parse.mysql.parse.vo.MysqlTable;
 import demo.spring.boot.demospringboot.parse.mysql.parse.vo.mysql.ftl.java.*;
+import demo.spring.boot.demospringboot.util.TypeMap;
 import freemarker.template.TemplateException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;

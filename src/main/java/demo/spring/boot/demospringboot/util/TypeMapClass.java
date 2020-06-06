@@ -1,4 +1,4 @@
-package demo.spring.boot.demospringboot.parse.mysql.parse.db.util;
+package demo.spring.boot.demospringboot.util;
 
 /**
  * 整数类型：BIT、TINY INT、SMALL INT、MEDIUM INT、 INT、 BIG INT
@@ -24,7 +24,7 @@ import java.util.*;
  * 其他类型暂时留作下一版本
  */
 
-public class ChangeType {
+public class TypeMapClass {
 
     private final static Map<String, Class> typeMap = new HashMap<>();
 
@@ -60,11 +60,11 @@ public class ChangeType {
         typeMap.put("longblob", byte[].class);
 
         //blob
-        typeMap.put("date", Date.class);
+        typeMap.put("year", Integer.class);//yyyy 这里使用int可以，使用日期好像不行
         typeMap.put("time", Time.class);
+        typeMap.put("date", Date.class);
         typeMap.put("datetime", Timestamp.class);
         typeMap.put("timestamp", Timestamp.class);
-        typeMap.put("year", Date.class);
 
         //...
     }
@@ -77,7 +77,7 @@ public class ChangeType {
         List<String> resultCode = new ArrayList<>();
         fields.forEach(field -> {
             String result = "";
-            result += ChangeType.getTypeMap().get(field.getType()).getSimpleName() + field.getName() + ";";
+            result += TypeMapClass.getTypeMap().get(field.getType()).getSimpleName() + field.getName() + ";";
             resultCode.add(result);
         });
         return resultCode;

@@ -1,4 +1,4 @@
-package demo.spring.boot.demospringboot.parse.mysql.parse.vo.mysql;
+package demo.spring.boot.demospringboot.util;
 
 /**
  * 整数类型：BIT、TINY INT、SMALL INT、MEDIUM INT、 INT、 BIG INT

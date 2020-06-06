@@ -238,6 +238,7 @@
                 <includes>
                     <include>**/*.properties</include>
                     <include>**/*.xml</include>
+                    <include>**/*.ftl</include>
                     <include>**/*.md</include>
                     <include>**/*.txt</include>
                     <include>**/*.yml</include>

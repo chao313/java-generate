@@ -1,4 +1,4 @@
-package demo.spring.boot.demospringboot.parse.mysql.parse.util;
+package demo.spring.boot.demospringboot.util;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

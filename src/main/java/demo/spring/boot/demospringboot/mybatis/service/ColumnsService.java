@@ -56,5 +56,4 @@ public interface ColumnsService {
      */
     boolean deleteBase(ColumnsVo vo);
 
-
 }

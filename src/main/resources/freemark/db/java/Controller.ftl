@@ -1,4 +1,4 @@
-package demomaster.controller;
+package ${ftlVo.packageName};
 
 
 import java.util.List;
@@ -9,23 +9,27 @@ import demo.spring.boot.demospringboot.framework.Code;
 import demo.spring.boot.demospringboot.framework.Response;
 import demo.spring.boot.demospringboot.framework.RequestUpdate;
 import org.apache.commons.lang3.StringUtils;
-import demomaster.vo.TMulltiTermVoVo;
-import demomaster.service.TMulltiTermVoService;
-import demomaster.vo.plugin.TMulltiTermVoNoPriVo;
-import demomaster.vo.plugin.TMulltiTermVoPriVo;
-import demomaster.vo.TMulltiTermVoMultiTermVo;
+import ${allJavaFtl.voFtl.packageName}.${allJavaFtl.voFtl.className};
+import ${allJavaFtl.serviceFtl.packageName}.${allJavaFtl.serviceFtl.className};
+import ${allJavaFtl.voNoPriFtl.packageName}.${allJavaFtl.voNoPriFtl.className};
+import ${allJavaFtl.voPriFtl.packageName}.${allJavaFtl.voPriFtl.className};
+import ${allJavaFtl.multiTermVoFtl.packageName}.${allJavaFtl.multiTermVoFtl.className};
+<#list ftlVo.javaFieldTypes as type><#if type = "Timestamp" >import java.sql.Timestamp;
+</#if><#if type = "Time" >import java.sql.Time;
+</#if><#if type = "Date" >import java.util.Date;
+</#if></#list>
 import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(value = "/TMulltiTermVoController")
+@RequestMapping(value = "/${ftlVo.className}")
 @Slf4j
-public class TMulltiTermVoController {
+public class ${ftlVo.className} {
 
     @Autowired
-    private TMulltiTermVoService service;
+    private ${allJavaFtl.serviceFtl.className} service;
 
     /**
      * 插入一条记录: 请求体是json
@@ -36,7 +40,7 @@ public class TMulltiTermVoController {
      * content:具体返回值
      */
     @PostMapping(value = "/insert")
-    public Response insert(@RequestBody TMulltiTermVoVo vo) {
+    public Response insert(@RequestBody ${allJavaFtl.voFtl.className} vo) {
        Response response = new Response();
         try {
             Boolean result = service.insert(vo);
@@ -61,7 +65,7 @@ public class TMulltiTermVoController {
      * content:具体返回值
      */
     @PostMapping(value = "/inserts")
-    public Response insert(@RequestBody List<TMulltiTermVoVo> vos) {
+    public Response insert(@RequestBody List<${allJavaFtl.voFtl.className}> vos) {
         Response response = new Response();
         try {
             Boolean result = service.insert(vos);
@@ -87,10 +91,10 @@ public class TMulltiTermVoController {
      * content:具体返回值
      */
     @PostMapping(value = "/queryBase")
-    public Response queryBase(@RequestBody TMulltiTermVoVo query) {
+    public Response queryBase(@RequestBody ${allJavaFtl.voFtl.className} query) {
         Response response = new Response();
         try {
-            List<TMulltiTermVoVo> result = service.queryBase(query);
+            List<${allJavaFtl.voFtl.className}> result = service.queryBase(query);
             response.setCode(Code.System.OK);
             response.setContent(result);
             log.info("success result -> {} ", result);
@@ -115,7 +119,7 @@ public class TMulltiTermVoController {
       * content:具体返回值
       */
     @PostMapping(value = "/queryBasePageHelper")
-    public Response queryBasePageHelper(@RequestBody TMulltiTermVoVo query,
+    public Response queryBasePageHelper(@RequestBody ${allJavaFtl.voFtl.className} query,
                                         @RequestParam(value = "pageNum",defaultValue = "1",required = false) Integer pageNum,
                                         @RequestParam(value = "pageSize",defaultValue = "10",required = false) Integer pageSize,
                                         @RequestParam(value = "order", required = false) String order) {
@@ -125,7 +129,7 @@ public class TMulltiTermVoController {
              if (StringUtils.isNotBlank(order)) {
                  PageHelper.orderBy(order);
              }
-             List<TMulltiTermVoVo> result = service.queryBase(query);
+             List<${allJavaFtl.voFtl.className}> result = service.queryBase(query);
              PageInfo pageInfo = new PageInfo(result);
              response.setCode(Code.System.OK);
              response.setContent(pageInfo);
@@ -151,7 +155,7 @@ public class TMulltiTermVoController {
       * content:具体返回值
       */
     @PostMapping(value = "/queryMultiTermPageHelper")
-    public Response queryMultiTermPageHelper(@RequestBody TMulltiTermVoMultiTermVo query,
+    public Response queryMultiTermPageHelper(@RequestBody ${allJavaFtl.multiTermVoFtl.className} query,
                                              @RequestParam(value = "pageNum", defaultValue = "1", required = false) Integer pageNum,
                                              @RequestParam(value = "pageSize", defaultValue = "10", required = false) Integer pageSize,
                                              @RequestParam(value = "order", required = false) String order) {
@@ -161,7 +165,7 @@ public class TMulltiTermVoController {
              if (StringUtils.isNotBlank(order)) {
                  PageHelper.orderBy(order);
              }
-             List<TMulltiTermVoVo> result = service.queryMultiTerm(query);
+             List<${allJavaFtl.voFtl.className}> result = service.queryMultiTerm(query);
              PageInfo pageInfo = new PageInfo(result);
              response.setCode(Code.System.OK);
              response.setContent(pageInfo);
@@ -188,7 +192,7 @@ public class TMulltiTermVoController {
      * content:具体返回值
      */
     @PostMapping(value = "/updateBase")
-    public Response updateBase(@RequestBody RequestUpdate<TMulltiTermVoVo,TMulltiTermVoVo> update) {
+    public Response updateBase(@RequestBody RequestUpdate<${allJavaFtl.voFtl.className},${allJavaFtl.voFtl.className}> update) {
         Response response = new Response();
         try {
             Boolean result = service.updateBase(update.getSource(), update.getTarget());
@@ -216,7 +220,7 @@ public class TMulltiTermVoController {
      * content:具体返回值
      */
     @PostMapping(value = "/updateBaseIncludeNull")
-    public Response updateBaseIncludeNull(@RequestBody RequestUpdate<TMulltiTermVoVo,TMulltiTermVoVo> update) {
+    public Response updateBaseIncludeNull(@RequestBody RequestUpdate<${allJavaFtl.voFtl.className},${allJavaFtl.voFtl.className}> update) {
         Response response = new Response();
         try {
             Boolean result = service.updateBaseIncludeNull(update.getSource(), update.getTarget());
@@ -242,7 +246,7 @@ public class TMulltiTermVoController {
      * content:具体返回值
      */
     @PostMapping(value = "/deleteBase")
-    public Response deleteBase(@RequestBody TMulltiTermVoVo vo) {
+    public Response deleteBase(@RequestBody ${allJavaFtl.voFtl.className} vo) {
         Response response = new Response();
         try {
             Boolean result = service.deleteBase(vo);
@@ -258,27 +262,37 @@ public class TMulltiTermVoController {
         return response;
     }
 
+<#if ftlVo.primaryKeyJavaFields?? && (ftlVo.primaryKeyJavaFields?size>0) >
 
 
     /**
      * 主键查询语句,
      * 因为是主键 -> 查询返回的是一条记录
      *
-     * @param dbName
-     * @param dbTableName
-     * 
+     * <#list ftlVo.primaryKeyJavaFields as field>@param ${field.name}
+     * </#list>
      * @return 成功和失败都返回Response，具体的结果在response的
      * code   :状态码
      * content:具体返回值
      */
     @GetMapping(value = "/queryByPrimaryKey")
-    public Response queryByPrimaryKey(
-            @RequestParam String dbName, 
-            @RequestParam String dbTableName
+    public Response queryByPrimaryKey(<#list ftlVo.primaryKeyJavaFields as field>
+    <#if field.dbType == 'year'>
+            @ApiParam(value = "${field.name}", defaultValue = "1970")
+    <#elseif field.dbType == 'time'>
+            @ApiParam(value = "${field.name}", defaultValue = "12:12:12")
+    <#elseif field.dbType == 'date'>
+            @ApiParam(value = "${field.name}", defaultValue = "1970-01-01")
+    <#elseif field.dbType == 'datetime'>
+            @ApiParam(value = "${field.name}", defaultValue = "1970-01-01 12:12:12")
+    <#elseif field.dbType == 'timestamp'>
+            @ApiParam(value = "${field.name}", defaultValue = "1970-01-01 12:12:12")
+    </#if>
+            @RequestParam ${field.type} ${field.name}<#if field_has_next>, </#if></#list>
     ) {
         Response response = new Response();
         try {
-            TMulltiTermVoVo result = service.queryByPrimaryKey(dbName, dbTableName);
+            ${allJavaFtl.voFtl.className} result = service.queryByPrimaryKey(<#list ftlVo.primaryKeyJavaFields as field>${field.name}<#if field_has_next>, </#if></#list>);
             response.setCode(Code.System.OK);
             response.setContent(result);
             log.info("success result -> {} ", result);
@@ -296,21 +310,30 @@ public class TMulltiTermVoController {
      * 主键删除语句,
      * 因为是主键 -> 删除的是一条记录
      *
-     * @param dbName
-     * @param dbTableName
-     * 
+     * <#list ftlVo.primaryKeyJavaFields as field>@param ${field.name}
+     * </#list>
      * @return 成功和失败都返回Response，具体的结果在response的
      * code   :状态码
      * content:具体返回值
      */
     @GetMapping(value = "/deleteByPrimaryKey")
-    public Response deleteByPrimaryKey(
-           @RequestParam String dbName, 
-           @RequestParam String dbTableName
+    public Response deleteByPrimaryKey(<#list ftlVo.primaryKeyJavaFields as field>
+    <#if field.dbType == 'year'>
+            @ApiParam(value = "${field.name}", defaultValue = "1970")
+    <#elseif field.dbType == 'time'>
+            @ApiParam(value = "${field.name}", defaultValue = "12:12:12")
+    <#elseif field.dbType == 'date'>
+            @ApiParam(value = "${field.name}", defaultValue = "1970-01-01")
+    <#elseif field.dbType == 'datetime'>
+            @ApiParam(value = "${field.name}", defaultValue = "1970-01-01 12:12:12")
+    <#elseif field.dbType == 'timestamp'>
+            @ApiParam(value = "${field.name}", defaultValue = "1970-01-01 12:12:12")
+    </#if>
+           @RequestParam ${field.type} ${field.name}<#if field_has_next>, </#if></#list>
      ) {
         Response response = new Response();
         try {
-            Boolean result = service.deleteByPrimaryKey(dbName, dbTableName);
+            Boolean result = service.deleteByPrimaryKey(<#list ftlVo.primaryKeyJavaFields as field>${field.name}<#if field_has_next>, </#if></#list>);
             response.setCode(Code.System.OK);
             response.setContent(result);
             log.info("success result -> {} ", result);
@@ -328,15 +351,14 @@ public class TMulltiTermVoController {
      *
      * @param update.source 只包含非主键的字段
      * @param update.target 只包含主键的字段
-     * @param dbName
-     * @param dbTableName
-     * 
+     * <#list ftlVo.primaryKeyJavaFields as field>@param ${field.name}
+     * </#list>
      * @return 成功和失败都返回Response，具体的结果在response的
      * code   :状态码
      * content:具体返回值
      */
     @PostMapping(value = "/updateByPrimaryKey")
-    public Response updateByPrimaryKey(@RequestBody RequestUpdate<TMulltiTermVoNoPriVo,TMulltiTermVoPriVo> update) {
+    public Response updateByPrimaryKey(@RequestBody RequestUpdate<${allJavaFtl.voNoPriFtl.className},${allJavaFtl.voPriFtl.className}> update) {
         Response response = new Response();
         try {
             Boolean result = service.updateByPrimaryKey(update.getSource(), update.getTarget());
@@ -351,4 +373,5 @@ public class TMulltiTermVoController {
         }
         return response;
     }
+</#if>
 }
