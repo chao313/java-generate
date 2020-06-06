@@ -8,7 +8,7 @@ import demo.spring.boot.demospringboot.framework.MultiTerm;
  * 表引擎      :InnoDB
  * 表版本      :10
  * 行格式      :Compact
- * 表创建      :2020-6-5
+ * 表创建      :2020-6-6
  * 字符集      :utf8_bin
  * 表注释      :
  */
@@ -22,6 +22,7 @@ public class TDaoMultiTermVo {
     private MultiTerm<String> fileName;  // 文件名
     private MultiTerm<String> freemarkPath;  // freemark路径
     private MultiTerm<String> freemarkContent;  // freemark内容
+    private MultiTerm<String> freemarkValue;  // freemark生成结果
     private MultiTerm<String> imports;  // vo 需要注入的类型 ,逗号分隔
 
 
@@ -113,6 +114,17 @@ public class TDaoMultiTermVo {
         this.freemarkContent = freemarkContent;
 
     }
+    public MultiTerm<String> getFreemarkValue() {
+
+        return freemarkValue;
+
+    }
+
+    public void setFreemarkValue(MultiTerm<String> freemarkValue) {
+
+        this.freemarkValue = freemarkValue;
+
+    }
     public MultiTerm<String> getImports() {
 
         return imports;
@@ -136,6 +148,7 @@ public class TDaoMultiTermVo {
                 ", fileName '" + fileName + '\'' +
                 ", freemarkPath '" + freemarkPath + '\'' +
                 ", freemarkContent '" + freemarkContent + '\'' +
+                ", freemarkValue '" + freemarkValue + '\'' +
                 ", imports '" + imports + '\'' +
                 '}';
     }

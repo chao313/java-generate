@@ -15,7 +15,7 @@ import demomaster.vo.TFieldMultiTermVo;
  * 表引擎      :InnoDB
  * 表版本      :10
  * 行格式      :Compact
- * 表创建      :2020-6-5
+ * 表创建      :2020-6-6
  * 字符集      :utf8_bin
  * 表注释      :
  */
@@ -66,7 +66,7 @@ public interface TFieldService {
      * dbTableName : 表名<p>
      * fieldName : 字段名称
      */
-     TFieldVo queryByPrimaryKey(String dbName, String dbTableName, String fieldName);
+     TFieldVo queryByPrimaryKey(String dbName,String dbTableName,String fieldName);
 
     /**
      * 根据PrimaryKey删除
@@ -79,7 +79,7 @@ public interface TFieldService {
      * @param fieldName
      * 
      */
-    boolean deleteByPrimaryKey(String dbName, String dbTableName, String fieldName);
+    boolean deleteByPrimaryKey(String dbName,String dbTableName,String fieldName);
 
     /**
      * 根据PrimaryKey更新，会根据主键去更新其他的值(空值不覆盖有值) -> 主键不更新
@@ -92,7 +92,7 @@ public interface TFieldService {
      * @param fieldName
      * 
      */
-    boolean updateByPrimaryKey(TFieldNoPriVo source, TFieldPriVo target);
+    boolean updateByPrimaryKey(TFieldNoPriVo source,TFieldPriVo target);
 
 
 

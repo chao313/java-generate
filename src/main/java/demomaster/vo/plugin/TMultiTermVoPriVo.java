@@ -4,16 +4,16 @@ package demomaster.vo.plugin;
 /**
  * 这里属性是主键字段
  *
- * 表名称      :t_mullti_term_vo
+ * 表名称      :t_multi_term_vo
  * 表类型      :BASE TABLE
  * 表引擎      :InnoDB
  * 表版本      :10
  * 行格式      :Compact
- * 表创建      :2020-6-5
+ * 表创建      :2020-6-6
  * 字符集      :utf8_bin
  * 表注释      :
  */
-public class TMulltiTermVoPriVo {
+public class TMultiTermVoPriVo {
 
     private String dbName;  // 库名 
     private String dbTableName;  // 表名 
@@ -44,7 +44,7 @@ public class TMulltiTermVoPriVo {
 
     @Override
     public String toString() {
-        return "TMulltiTermVoPriVo{" +
+        return "TMultiTermVoPriVo{" +
                 ", dbName '" + dbName + '\'' +
                 ", dbTableName '" + dbTableName + '\'' +
                 '}';

@@ -15,7 +15,7 @@ import demomaster.vo.TServiceImplMultiTermVo;
  * 表引擎      :InnoDB
  * 表版本      :10
  * 行格式      :Compact
- * 表创建      :2020-6-5
+ * 表创建      :2020-6-6
  * 字符集      :utf8_bin
  * 表注释      :
  */
@@ -65,7 +65,7 @@ public interface TServiceImplService {
      * dbName : 库名<p>
      * dbTableName : 表名
      */
-     TServiceImplVo queryByPrimaryKey(String dbName, String dbTableName);
+     TServiceImplVo queryByPrimaryKey(String dbName,String dbTableName);
 
     /**
      * 根据PrimaryKey删除
@@ -76,7 +76,7 @@ public interface TServiceImplService {
      * @param dbTableName
      * 
      */
-    boolean deleteByPrimaryKey(String dbName, String dbTableName);
+    boolean deleteByPrimaryKey(String dbName,String dbTableName);
 
     /**
      * 根据PrimaryKey更新，会根据主键去更新其他的值(空值不覆盖有值) -> 主键不更新
@@ -87,7 +87,7 @@ public interface TServiceImplService {
      * @param dbTableName
      * 
      */
-    boolean updateByPrimaryKey(TServiceImplNoPriVo source, TServiceImplPriVo target);
+    boolean updateByPrimaryKey(TServiceImplNoPriVo source,TServiceImplPriVo target);
 
 
 

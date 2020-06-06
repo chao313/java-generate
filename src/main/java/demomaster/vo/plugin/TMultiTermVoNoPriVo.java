@@ -1,54 +1,29 @@
-package demomaster.vo;
-
-
+package demomaster.vo.plugin;
 
 
 /**
- * 表名称      :t_mullti_term_vo
+ * 这里属性是非主键字段
+ *
+ * 表名称      :t_multi_term_vo
  * 表类型      :BASE TABLE
  * 表引擎      :InnoDB
  * 表版本      :10
  * 行格式      :Compact
- * 表创建      :2020-6-5
+ * 表创建      :2020-6-6
  * 字符集      :utf8_bin
  * 表注释      :
  */
-public class TMulltiTermVoVo {
+public class TMultiTermVoNoPriVo {
 
-    private String dbName;  // 库名 
-    private String dbTableName;  // 表名 
     private String dbTableComment;  // 表注释 
     private String packageName;  // 包名 
     private String className;  // 类名 
     private String fileName;  // 文件名 
     private String freemarkPath;  // freemark路径 
     private String freemarkContent;  // freemark内容 
+    private String freemarkValue;  // freemark生成结果 
     private String imports;  // 需要注入的类型 ,逗号分隔 
 
-
-    public String getDbName() {
-
-        return dbName;
-
-    }
-
-    public void setDbName(String dbName) {
-
-        this.dbName = dbName;
-
-    }
-
-    public String getDbTableName() {
-
-        return dbTableName;
-
-    }
-
-    public void setDbTableName(String dbTableName) {
-
-        this.dbTableName = dbTableName;
-
-    }
 
     public String getDbTableComment() {
 
@@ -61,7 +36,6 @@ public class TMulltiTermVoVo {
         this.dbTableComment = dbTableComment;
 
     }
-
     public String getPackageName() {
 
         return packageName;
@@ -73,7 +47,6 @@ public class TMulltiTermVoVo {
         this.packageName = packageName;
 
     }
-
     public String getClassName() {
 
         return className;
@@ -85,7 +58,6 @@ public class TMulltiTermVoVo {
         this.className = className;
 
     }
-
     public String getFileName() {
 
         return fileName;
@@ -97,7 +69,6 @@ public class TMulltiTermVoVo {
         this.fileName = fileName;
 
     }
-
     public String getFreemarkPath() {
 
         return freemarkPath;
@@ -109,7 +80,6 @@ public class TMulltiTermVoVo {
         this.freemarkPath = freemarkPath;
 
     }
-
     public String getFreemarkContent() {
 
         return freemarkContent;
@@ -121,7 +91,17 @@ public class TMulltiTermVoVo {
         this.freemarkContent = freemarkContent;
 
     }
+    public String getFreemarkValue() {
 
+        return freemarkValue;
+
+    }
+
+    public void setFreemarkValue(String freemarkValue) {
+
+        this.freemarkValue = freemarkValue;
+
+    }
     public String getImports() {
 
         return imports;
@@ -134,18 +114,16 @@ public class TMulltiTermVoVo {
 
     }
 
-
     @Override
     public String toString() {
-        return "TMulltiTermVoVo{" +
-                ", dbName '" + dbName + '\'' +
-                ", dbTableName '" + dbTableName + '\'' +
+        return "TMultiTermVoNoPriVo{" +
                 ", dbTableComment '" + dbTableComment + '\'' +
                 ", packageName '" + packageName + '\'' +
                 ", className '" + className + '\'' +
                 ", fileName '" + fileName + '\'' +
                 ", freemarkPath '" + freemarkPath + '\'' +
                 ", freemarkContent '" + freemarkContent + '\'' +
+                ", freemarkValue '" + freemarkValue + '\'' +
                 ", imports '" + imports + '\'' +
                 '}';
     }

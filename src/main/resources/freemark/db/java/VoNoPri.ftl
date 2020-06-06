@@ -1,83 +1,58 @@
-package ${ftlVo.packageName};
+package ${vo.packageName};
 
-<#list ftlVo.javaFieldTypes as type><#if type = "Timestamp" >import java.sql.Timestamp;
-</#if><#if type = "Time" >import java.sql.Time;
-</#if><#if type = "Date" >import java.util.Date;
-</#if></#list>
-<#list ftlVo.javaFields as field>
-    <#if field.isPRI == false>
-        <#if field.dbType == 'time' ||  field.dbType == 'Date' || field.dbType == 'datetime' || field.dbType == 'timestamp' >
-import com.fasterxml.jackson.annotation.JsonFormat;
-import io.swagger.annotations.ApiModelProperty;
-import org.springframework.format.annotation.DateTimeFormat;
-            <#break>
-        </#if>
-    </#if>
-</#list>
+${vo.imports}
 
 /**
- * 这里属性是非主键字段
- *
- * 表名称      :${ftlVo.table.tableName}
- * 表类型      :${ftlVo.table.tableType}
- * 表引擎      :${ftlVo.table.engine}
- * 表版本      :${ftlVo.table.version}
- * 行格式      :${ftlVo.table.rowFormat}
- * 表创建      :${ftlVo.table.createTime}
- * 字符集      :${ftlVo.table.tableCollation}
- * 表注释      :${ftlVo.table.tableComment}
+ * 库名称      :${vo.dbName}
+ * 表类型      :${vo.dbTableName}
+ * 表注释      :${vo.dbTableComment}
  */
-public class ${ftlVo.className} {
+public class ${vo.className} {
 
-<#list ftlVo.javaFields as field>
-    <#if field.isPRI=false>
-        <#if field.dbType == 'year'>
+<#list tFieldVos as fieldVo>
+    <#if fieldVo.fieldType == 'year'>
     @ApiModelProperty(example = "1970")
-        <#elseif field.dbType == 'time'>
+    <#elseif fieldVo.fieldType == 'time'>
     @JsonFormat(pattern = "HH:mm:ss", timezone = "GMT+8")
     @DateTimeFormat(pattern = "HH:mm:ss")
     @ApiModelProperty(dataType = "date", example = "12:12:12")
-        <#elseif field.dbType == 'date'>
+    <#elseif fieldVo.fieldType == 'date'>
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @ApiModelProperty(dataType = "date", example = "1970-01-01")
-        <#elseif field.dbType == 'datetime'>
+    <#elseif fieldVo.fieldType == 'datetime'>
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @ApiModelProperty(dataType = "date", example = "1970-01-01 12:12:12")
-        <#elseif field.dbType == 'timestamp'>
+    <#elseif fieldVo.fieldType == 'timestamp'>
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @ApiModelProperty(dataType = "date", example = "1970-01-01 12:12:12")
-        </#if>
-    private ${field.type} ${field.name}; <#if field.comment?? && field.comment !=""> // ${field.comment} </#if>
     </#if>
+    private ${fieldVo.fieldJavaType} ${fieldVo.fieldJavaName}; <#if fieldVo.fieldComment?? && fieldVo.fieldComment !=""> // ${fieldVo.fieldComment} </#if>
 </#list>
 
+<#list tFieldVos as fieldVo>
 
-<#list ftlVo.javaFields as field>
-    <#if field.isPRI=false>
-    public ${field.type} get${field.name?cap_first}() {
+    public ${fieldVo.fieldJavaType} get${fieldVo.fieldJavaName?cap_first}() {
 
-        return ${field.name};
+        return ${fieldVo.fieldJavaName};
+
+    }
+
+    public void set${fieldVo.fieldJavaName?cap_first}(${fieldVo.fieldJavaType} ${fieldVo.fieldJavaName}) {
+
+        this.${fieldVo.fieldJavaName} = ${fieldVo.fieldJavaName};
 
     }
 
-    public void set${field.name?cap_first}(${field.type} ${field.name}) {
-
-        this.${field.name} = ${field.name};
-
-    }
-    </#if>
 </#list>
 
     @Override
     public String toString() {
-        return "${ftlVo.className}{" +
-<#list ftlVo.javaFields as field>
-    <#if field.isPRI=false>
-                ", ${field.name} '" + ${field.name} +<#if field.type = 'String' > '\'' +</#if>
-    </#if>
+        return "${vo.className}{" +
+<#list tFieldVos as fieldVo>
+                ", ${fieldVo.fieldJavaName} '" + ${fieldVo.fieldJavaName} +<#if fieldVo.fieldJavaType = 'String' > '\'' +</#if>
 </#list>
                 '}';
     }

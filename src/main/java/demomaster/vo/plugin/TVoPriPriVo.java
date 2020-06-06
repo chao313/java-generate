@@ -9,13 +9,14 @@ package demomaster.vo.plugin;
  * 表引擎      :InnoDB
  * 表版本      :10
  * 行格式      :Compact
- * 表创建      :2020-6-5
+ * 表创建      :2020-6-6
  * 字符集      :utf8_bin
  * 表注释      :
  */
 public class TVoPriPriVo {
 
     private String dbName;  // 库名 
+    private String dbTableName;  // 表名 
 
 
     public String getDbName() {
@@ -29,11 +30,23 @@ public class TVoPriPriVo {
         this.dbName = dbName;
 
     }
+    public String getDbTableName() {
+
+        return dbTableName;
+
+    }
+
+    public void setDbTableName(String dbTableName) {
+
+        this.dbTableName = dbTableName;
+
+    }
 
     @Override
     public String toString() {
         return "TVoPriPriVo{" +
                 ", dbName '" + dbName + '\'' +
+                ", dbTableName '" + dbTableName + '\'' +
                 '}';
     }
 

@@ -8,12 +8,14 @@ import demo.spring.boot.demospringboot.mybatis.service.TablesService;
 import demo.spring.boot.demospringboot.mybatis.vo.ColumnsVo;
 import demo.spring.boot.demospringboot.mybatis.vo.SchemataVo;
 import demo.spring.boot.demospringboot.mybatis.vo.TablesVo;
+import demo.spring.boot.demospringboot.util.FreeMarkUtil;
 import demo.spring.boot.demospringboot.util.AwareUtil;
 import demo.spring.boot.demospringboot.util.CamelUtils;
 import demo.spring.boot.demospringboot.util.TypeMap;
 import demo.spring.boot.demospringboot.util.TypeMapClass;
 import demomaster.service.*;
 import demomaster.vo.*;
+import freemarker.template.TemplateException;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
@@ -27,10 +29,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * 2018/4/6    Created by   juan
@@ -41,7 +40,7 @@ import java.util.Set;
 @Slf4j
 public class DbGenerateController {
 
-    private static final String FREE_MARK_PATH = "classpath:freemark/java/db";
+    private static final String FREE_MARK_PATH = "classpath:freemark/db/java/";
 
 
     @Autowired
@@ -100,41 +99,47 @@ public class DbGenerateController {
             @ApiParam(example = "docker2") @RequestParam(value = "dataBase") String dataBase) throws Exception {
         Response response = new Response();
         try {
+            /**根据表名来分类*/
+            Map<String, List<TFieldVo>> map = new HashMap<>();
+            Map<String, List<TFieldVo>> mapPri = new HashMap<>();
+            Map<String, List<TFieldVo>> mapNoPri = new HashMap<>();
+
             SchemataVo schemataQuery = new SchemataVo();
             schemataQuery.setSchemaName(dataBase);
             /**生成项目信息*/
             List<SchemataVo> schemataVos = schemataService.queryBase(schemataQuery);
-            schemataVos.forEach(schemataVo -> {
-                TProjectVo tProjectVo = initTProjectVo(schemataVo);
-                tProjectService.insert(tProjectVo);
-            });
+            TProjectVo tProjectVo = this.initTProjectVo(schemataVos.get(0));
+            tProjectService.insert(tProjectVo);
 
             /**生成 fields 信息*/
             ColumnsVo columnsVoQuery = new ColumnsVo();
             columnsVoQuery.setTableSchema(dataBase);
             List<ColumnsVo> columnsVos = columnsService.queryBase(columnsVoQuery);
-            List<TFieldVo> tFieldVos = initTFieldVos(columnsVos);
+            List<TFieldVo> tFieldVos = this.initTFieldVos(columnsVos);
             tFieldService.insert(tFieldVos);
+            /**根据表名来分类*/
+            map = this.toMapBYTableName(tFieldVos);
+            mapPri = this.toPriMapBYTableName(tFieldVos);
+            mapNoPri = this.toNoPriMapBYTableName(tFieldVos);
 
             TablesVo tablesVoQuery = new TablesVo();
             tablesVoQuery.setTableSchema(dataBase);
             List<TablesVo> tablesVos = tablesService.queryBase(tablesVoQuery);
 
-            /**生成 Controller 信息*/
-            List<TControllerVo> tControllerVos = this.initTControllerVos(tablesVos);
-            tControllerService.insert(tControllerVos);
-
 
             /**生成 vo 信息*/
             List<TVoVo> tVoVos = this.initTVoVo(tablesVos);
+            tVoVos = this.initFreeMarkTVoVo(tVoVos, map);//生成freemark
             tVoService.insert(tVoVos);
 
             /**生成 voPri 信息*/
             List<TVoPriVo> tVoPriVos = this.initTVoPriVo(tablesVos);
+            tVoPriVos = this.initFreeMarkTVoPriVo(tVoPriVos, mapPri);//生成freemark
             tVoPriService.insert(tVoPriVos);
 
             /**生成 voNoPri 信息*/
             List<TVoNoPriVo> tVoNoPriVos = this.initTVoNoPriVo(tablesVos);
+            tVoNoPriVos = this.initFreeMarkTVoNoPriVo(tVoNoPriVos, mapNoPri);//生成freemark
             tVoNoPriService.insert(tVoNoPriVos);
 
             /**生成 MultiTermVo 信息*/
@@ -145,17 +150,22 @@ public class DbGenerateController {
             List<TDaoVo> tDaoVos = this.initDaoVos(tablesVos);
             tDaoService.insert(tDaoVos);
 
-            /**生成 dao 信息*/
+            /**生成 Mapper 信息*/
+            List<TMapperVo> tMapperVos = this.initTMapperVos(tablesVos);
+            tMapperService.insert(tMapperVos);
+
+            /**生成 service 信息*/
             List<TServiceVo> tServiceVos = this.initServiceVos(tablesVos);
             tServiceService.insert(tServiceVos);
 
-            /**生成 dao 信息*/
+            /**生成 serviceImpl 信息*/
             List<TServiceImplVo> tServiceImplVos = this.initTServiceImplVos(tablesVos);
             tServiceImplService.insert(tServiceImplVos);
 
-            /**生成 dao 信息*/
-            List<TMapperVo> tMapperVos = this.initTMapperVos(tablesVos);
-            tMapperService.insert(tMapperVos);
+
+            /**生成 Controller 信息*/
+            List<TControllerVo> tControllerVos = this.initTControllerVos(tablesVos);
+            tControllerService.insert(tControllerVos);
 
             response.setCode(Code.System.OK);
             response.setContent(true);
@@ -203,6 +213,7 @@ public class DbGenerateController {
             vo.setFieldComment(columnsVo.getColumnComment());
             vo.setFieldIsPri(columnsVo.getColumnKey());
             vo.setFieldName(columnsVo.getColumnName());
+            vo.setFieldJavaName(CamelUtils.underline2Camel(columnsVo.getColumnName(), true));
             vo.setFieldType(columnsVo.getDataType());
             vo.setFieldJavaType(TypeMap.getTypeMap().get(columnsVo.getDataType()));
             rs.add(vo);
@@ -225,7 +236,7 @@ public class DbGenerateController {
             vo.setDbTableName(tablesVo.getTableName());
             vo.setDbTableComment(tablesVo.getTableComment());
             vo.setPackageName("demo.vo");
-            vo.setClassName(className);
+            vo.setClassName(CamelUtils.toUpperCaseFirstOne(className));
             vo.setFileName(className + ".java");
             vo.setFreemarkPath("Vo.ftl");
             /**处理 freemark 的内容*/
@@ -238,6 +249,23 @@ public class DbGenerateController {
             rs.add(vo);
         }
         return rs;
+    }
+
+    /**
+     * 初始化 vo 的 freeMark
+     *
+     * @return
+     */
+    public List<TVoVo> initFreeMarkTVoVo(List<TVoVo> tVoVos, Map<String, List<TFieldVo>> map) throws IOException, TemplateException {
+        for (TVoVo tVoVo : tVoVos) {
+            List<TFieldVo> tFieldVos = map.get(tVoVo.getDbTableName());
+            Map<String, Object> mapInFreeMark = new HashMap<>();
+            mapInFreeMark.put("vo", tVoVo);
+            mapInFreeMark.put("tFieldVos", tFieldVos);
+            StringBuffer freeMarkStr = FreeMarkUtil.generateXmlByTemplate(mapInFreeMark, tVoVo.getFreemarkContent());
+            tVoVo.setFreemarkValue(freeMarkStr.toString());
+        }
+        return tVoVos;
     }
 
     /**
@@ -255,7 +283,7 @@ public class DbGenerateController {
             vo.setDbTableName(tablesVo.getTableName());
             vo.setDbTableComment(tablesVo.getTableComment());
             vo.setPackageName("demo.vo");
-            vo.setClassName(className);
+            vo.setClassName(CamelUtils.toUpperCaseFirstOne(className));
             vo.setFileName(className + ".java");
             vo.setFreemarkPath("MultiTermVo.ftl");
             /**处理 freemark 的内容*/
@@ -285,7 +313,7 @@ public class DbGenerateController {
             vo.setDbTableName(tablesVo.getTableName());
             vo.setDbTableComment(tablesVo.getTableComment());
             vo.setPackageName("demo.vo");
-            vo.setClassName(className);
+            vo.setClassName(CamelUtils.toUpperCaseFirstOne(className));
             vo.setFileName(className + ".java");
             vo.setFreemarkPath("VoPri.ftl");
             /**处理 freemark 的内容*/
@@ -299,6 +327,24 @@ public class DbGenerateController {
         }
         return rs;
     }
+
+    /**
+     * 初始化 voPri 的 freeMark
+     *
+     * @return
+     */
+    public List<TVoPriVo> initFreeMarkTVoPriVo(List<TVoPriVo> tVoVos, Map<String, List<TFieldVo>> map) throws IOException, TemplateException {
+        for (TVoPriVo vo : tVoVos) {
+            List<TFieldVo> tFieldVos = map.get(vo.getDbTableName());
+            Map<String, Object> mapInFreeMark = new HashMap<>();
+            mapInFreeMark.put("vo", vo);
+            mapInFreeMark.put("tFieldVos", tFieldVos);
+            StringBuffer freeMarkStr = FreeMarkUtil.generateXmlByTemplate(mapInFreeMark, vo.getFreemarkContent());
+            vo.setFreemarkValue(freeMarkStr.toString());
+        }
+        return tVoVos;
+    }
+
 
     /**
      * 初始化 VoNoPri
@@ -315,7 +361,7 @@ public class DbGenerateController {
             vo.setDbTableName(tablesVo.getTableName());
             vo.setDbTableComment(tablesVo.getTableComment());
             vo.setPackageName("demo.vo");
-            vo.setClassName(className);
+            vo.setClassName(CamelUtils.toUpperCaseFirstOne(className));
             vo.setFileName(className + ".java");
             vo.setFreemarkPath("VoPri.ftl");
             /**处理 freemark 的内容*/
@@ -330,6 +376,22 @@ public class DbGenerateController {
         return rs;
     }
 
+    /**
+     * 初始化 voPri 的 freeMark
+     *
+     * @return
+     */
+    public List<TVoNoPriVo> initFreeMarkTVoNoPriVo(List<TVoNoPriVo> tVoVos, Map<String, List<TFieldVo>> map) throws IOException, TemplateException {
+        for (TVoNoPriVo vo : tVoVos) {
+            List<TFieldVo> tFieldVos = map.get(vo.getDbTableName());
+            Map<String, Object> mapInFreeMark = new HashMap<>();
+            mapInFreeMark.put("vo", vo);
+            mapInFreeMark.put("tFieldVos", tFieldVos);
+            StringBuffer freeMarkStr = FreeMarkUtil.generateXmlByTemplate(mapInFreeMark, vo.getFreemarkContent());
+            vo.setFreemarkValue(freeMarkStr.toString());
+        }
+        return tVoVos;
+    }
 
     /**
      * 初始化 DAO
@@ -346,7 +408,7 @@ public class DbGenerateController {
             vo.setDbTableName(tablesVo.getTableName());
             vo.setDbTableComment(tablesVo.getTableComment());
             vo.setPackageName("demo.dao");
-            vo.setClassName(className);
+            vo.setClassName(CamelUtils.toUpperCaseFirstOne(className));
             vo.setFileName(className + ".java");
             vo.setFreemarkPath("DAO.ftl");
             /**处理 freemark 的内容*/
@@ -376,7 +438,7 @@ public class DbGenerateController {
             vo.setDbTableName(tablesVo.getTableName());
             vo.setDbTableComment(tablesVo.getTableComment());
             vo.setPackageName("demo.service");
-            vo.setClassName(className);
+            vo.setClassName(CamelUtils.toUpperCaseFirstOne(className));
             vo.setFileName(className + ".java");
             vo.setFreemarkPath("Service.ftl");
             /**处理 freemark 的内容*/
@@ -406,7 +468,7 @@ public class DbGenerateController {
             vo.setDbTableName(tablesVo.getTableName());
             vo.setDbTableComment(tablesVo.getTableComment());
             vo.setPackageName("demo.service.impl");
-            vo.setClassName(className);
+            vo.setClassName(CamelUtils.toUpperCaseFirstOne(className));
             vo.setFileName(className + ".java");
             vo.setFreemarkPath("ServiceImpl.ftl");
             /**处理 freemark 的内容*/
@@ -436,7 +498,7 @@ public class DbGenerateController {
             vo.setDbTableName(tablesVo.getTableName());
             vo.setDbTableComment(tablesVo.getTableComment());
             vo.setPackageName("demo.service.controller");
-            vo.setClassName(className);
+            vo.setClassName(CamelUtils.toUpperCaseFirstOne(className));
             vo.setFileName(className + ".java");
             vo.setFreemarkPath("Controller.ftl");
             /**处理 freemark 的内容*/
@@ -496,19 +558,19 @@ public class DbGenerateController {
             if (isPri == Boolean.TRUE) {
                 if (columnsVo.getColumnKey().equalsIgnoreCase("pri")) {
                     /**只处理主键*/
-                    rs.add("import " + TypeMapClass.getTypeMap().get(columnsVo.getDataType()).getName());
+                    rs.add("import " + TypeMapClass.getTypeMap().get(columnsVo.getDataType()).getName() + ";");
                 }
             } else if (isPri == Boolean.FALSE) {
                 if (!columnsVo.getColumnKey().equalsIgnoreCase("pri")) {
-                    rs.add("import " + TypeMapClass.getTypeMap().get(columnsVo.getDataType()).getName());
+                    rs.add("import " + TypeMapClass.getTypeMap().get(columnsVo.getDataType()).getName() + ";");
                 }
             } else if (null == isPri) {
-                rs.add("import " + TypeMapClass.getTypeMap().get(columnsVo.getDataType()).getName());
+                rs.add("import " + TypeMapClass.getTypeMap().get(columnsVo.getDataType()).getName() + ";");
             }
 
         });
         if (isIncludeList == true) {
-            rs.add("import java.util.List");
+            rs.add("import java.util.List;");
         }
         return rs;
     }
@@ -528,5 +590,70 @@ public class DbGenerateController {
         });
         return result.toString();
     }
+
+    /**
+     * 根据表名来分类  (获取全部)
+     *
+     * @param tFieldVos
+     * @return
+     */
+    private Map<String, List<TFieldVo>> toMapBYTableName(List<TFieldVo> tFieldVos) {
+        Map<String, List<TFieldVo>> map = new HashMap<>();
+        tFieldVos.forEach(tFieldVo -> {
+            if (map.containsKey(tFieldVo.getDbTableName())) {
+                map.get(tFieldVo.getDbTableName()).add(tFieldVo);
+            } else {
+                List<TFieldVo> tmp = new ArrayList<>();
+                tmp.add(tFieldVo);
+                map.put(tFieldVo.getDbTableName(), tmp);
+            }
+        });
+        return map;
+    }
+
+    /**
+     * 根据表名来分类 (获取非主键)
+     *
+     * @param tFieldVos
+     * @return
+     */
+    private Map<String, List<TFieldVo>> toNoPriMapBYTableName(List<TFieldVo> tFieldVos) {
+        Map<String, List<TFieldVo>> map = new HashMap<>();
+        tFieldVos.forEach(tFieldVo -> {
+            if (!tFieldVo.getFieldIsPri().equalsIgnoreCase("pri")) {
+                if (map.containsKey(tFieldVo.getDbTableName())) {
+                    map.get(tFieldVo.getDbTableName()).add(tFieldVo);
+                } else {
+                    List<TFieldVo> tmp = new ArrayList<>();
+                    tmp.add(tFieldVo);
+                    map.put(tFieldVo.getDbTableName(), tmp);
+                }
+            }
+        });
+        return map;
+    }
+
+    /**
+     * 根据表名来分类 (获取主键)
+     *
+     * @param tFieldVos
+     * @return
+     */
+    private Map<String, List<TFieldVo>> toPriMapBYTableName(List<TFieldVo> tFieldVos) {
+        Map<String, List<TFieldVo>> map = new HashMap<>();
+        tFieldVos.forEach(tFieldVo -> {
+            if (tFieldVo.getFieldIsPri().equalsIgnoreCase("pri")) {
+                if (map.containsKey(tFieldVo.getDbTableName())) {
+                    map.get(tFieldVo.getDbTableName()).add(tFieldVo);
+                } else {
+                    List<TFieldVo> tmp = new ArrayList<>();
+                    tmp.add(tFieldVo);
+                    map.put(tFieldVo.getDbTableName(), tmp);
+                }
+            }
+        });
+        return map;
+    }
+
 
 }

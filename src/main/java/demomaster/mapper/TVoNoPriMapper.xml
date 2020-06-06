@@ -6,11 +6,13 @@
         <result column="db_name" property="dbName"/>
         <result column="db_table_name" property="dbTableName"/>
         <result column="db_table_comment" property="dbTableComment"/>
-        <result column="vo_package" property="voPackage"/>
-        <result column="vo_class_name" property="voClassName"/>
-        <result column="vo_file_name" property="voFileName"/>
-        <result column="vo_freemark_path" property="voFreemarkPath"/>
-        <result column="vo_imports" property="voImports"/>
+        <result column="package_name" property="packageName"/>
+        <result column="class_name" property="className"/>
+        <result column="file_name" property="fileName"/>
+        <result column="freemark_path" property="freemarkPath"/>
+        <result column="freemark_content" property="freemarkContent"/>
+        <result column="freemark_value" property="freemarkValue"/>
+        <result column="imports" property="imports"/>
     </resultMap>
 
     <insert id="insert"
@@ -19,20 +21,24 @@
         `db_name` ,
         `db_table_name` ,
         `db_table_comment` ,
-        `vo_package` ,
-        `vo_class_name` ,
-        `vo_file_name` ,
-        `vo_freemark_path` ,
-        `vo_imports` 
+        `package_name` ,
+        `class_name` ,
+        `file_name` ,
+        `freemark_path` ,
+        `freemark_content` ,
+        `freemark_value` ,
+        `imports` 
         )VALUE(
           #{dbName}  ,
           #{dbTableName}  ,
           #{dbTableComment}  ,
-          #{voPackage}  ,
-          #{voClassName}  ,
-          #{voFileName}  ,
-          #{voFreemarkPath}  ,
-          #{voImports}  
+          #{packageName}  ,
+          #{className}  ,
+          #{fileName}  ,
+          #{freemarkPath}  ,
+          #{freemarkContent}  ,
+          #{freemarkValue}  ,
+          #{imports}  
         )
     </insert>
 
@@ -42,22 +48,26 @@
         `db_name`,
         `db_table_name`,
         `db_table_comment`,
-        `vo_package`,
-        `vo_class_name`,
-        `vo_file_name`,
-        `vo_freemark_path`,
-        `vo_imports`
+        `package_name`,
+        `class_name`,
+        `file_name`,
+        `freemark_path`,
+        `freemark_content`,
+        `freemark_value`,
+        `imports`
         )VALUES
         <foreach collection="vos" item="item" separator=",">
             (
             #{item.dbName},
             #{item.dbTableName},
             #{item.dbTableComment},
-            #{item.voPackage},
-            #{item.voClassName},
-            #{item.voFileName},
-            #{item.voFreemarkPath},
-            #{item.voImports}
+            #{item.packageName},
+            #{item.className},
+            #{item.fileName},
+            #{item.freemarkPath},
+            #{item.freemarkContent},
+            #{item.freemarkValue},
+            #{item.imports}
             )
         </foreach>
     </insert>
@@ -69,11 +79,13 @@
         `db_name`,
         `db_table_name`,
         `db_table_comment`,
-        `vo_package`,
-        `vo_class_name`,
-        `vo_file_name`,
-        `vo_freemark_path`,
-        `vo_imports`
+        `package_name`,
+        `class_name`,
+        `file_name`,
+        `freemark_path`,
+        `freemark_content`,
+        `freemark_value`,
+        `imports`
         FROM `t_vo_no_pri`
         <where>
             1 = 1
@@ -86,20 +98,26 @@
             <if test="dbTableComment != null">
                 AND `db_table_comment` = #{dbTableComment}
             </if>
-            <if test="voPackage != null">
-                AND `vo_package` = #{voPackage}
+            <if test="packageName != null">
+                AND `package_name` = #{packageName}
             </if>
-            <if test="voClassName != null">
-                AND `vo_class_name` = #{voClassName}
+            <if test="className != null">
+                AND `class_name` = #{className}
             </if>
-            <if test="voFileName != null">
-                AND `vo_file_name` = #{voFileName}
+            <if test="fileName != null">
+                AND `file_name` = #{fileName}
             </if>
-            <if test="voFreemarkPath != null">
-                AND `vo_freemark_path` = #{voFreemarkPath}
+            <if test="freemarkPath != null">
+                AND `freemark_path` = #{freemarkPath}
             </if>
-            <if test="voImports != null">
-                AND `vo_imports` = #{voImports}
+            <if test="freemarkContent != null">
+                AND `freemark_content` = #{freemarkContent}
+            </if>
+            <if test="freemarkValue != null">
+                AND `freemark_value` = #{freemarkValue}
+            </if>
+            <if test="imports != null">
+                AND `imports` = #{imports}
             </if>
         </where>
     </select>
@@ -111,11 +129,13 @@
         `db_name`,
         `db_table_name`,
         `db_table_comment`,
-        `vo_package`,
-        `vo_class_name`,
-        `vo_file_name`,
-        `vo_freemark_path`,
-        `vo_imports`
+        `package_name`,
+        `class_name`,
+        `file_name`,
+        `freemark_path`,
+        `freemark_content`,
+        `freemark_value`,
+        `imports`
         FROM `t_vo_no_pri`
         <where>
             1 = 1
@@ -257,234 +277,326 @@
                       AND `db_table_comment` <![CDATA[ >= ]]>  #{{db_table_comment._lt}
                  </if>
             </if>
-            <if test="voPackage != null">
-                 <if test="voPackage._in != null">
-                     AND `vo_package` in
-                     <foreach collection="vo_package._in" item="item" separator="," open="(" close=")">
+            <if test="packageName != null">
+                 <if test="packageName._in != null">
+                     AND `package_name` in
+                     <foreach collection="package_name._in" item="item" separator="," open="(" close=")">
                          #{item}
                      </foreach>
                  </if>
-                 <if test="voPackage._notIn != null">
-                     AND `vo_package`  not in
-                     <foreach collection="vo_package._notIn" item="item" separator="," open="(" close=")">
+                 <if test="packageName._notIn != null">
+                     AND `package_name`  not in
+                     <foreach collection="package_name._notIn" item="item" separator="," open="(" close=")">
                          #{item}
                      </foreach>
                  </if>
-                 <if test="voPackage._like != null">
-                     <foreach collection="vo_package._like" item="item">
-                       AND `vo_package` like #{item}
+                 <if test="packageName._like != null">
+                     <foreach collection="package_name._like" item="item">
+                       AND `package_name` like #{item}
                      </foreach>
                  </if>
-                 <if test="voPackage._notLike != null">
-                     <foreach collection="vo_package._notLike" item="item">
-                       AND `vo_package` not like #{item}
+                 <if test="packageName._notLike != null">
+                     <foreach collection="package_name._notLike" item="item">
+                       AND `package_name` not like #{item}
                      </foreach>
                  </if>
-                 <if test="voPackage._regex != null">
-                     <foreach collection="vo_package._regex" item="item">
-                       AND `vo_package` REGEXP #{item}
+                 <if test="packageName._regex != null">
+                     <foreach collection="package_name._regex" item="item">
+                       AND `package_name` REGEXP #{item}
                      </foreach>
                  </if>
-                 <if test="voPackage._regex != null">
-                     <foreach collection="vo_package._regex" item="item">
-                       AND `vo_package` not REGEXP #{item}
+                 <if test="packageName._regex != null">
+                     <foreach collection="package_name._regex" item="item">
+                       AND `package_name` not REGEXP #{item}
                      </foreach>
                  </if>
-                 <if test="voPackage._lt != null">
-                      AND `vo_package` <![CDATA[ < ]]>  #{vo_package._lt}
+                 <if test="packageName._lt != null">
+                      AND `package_name` <![CDATA[ < ]]>  #{package_name._lt}
                  </if>
-                  <if test="voPackage._le != null">
-                      AND `vo_package` <![CDATA[ <= ]]>  #{{vo_package._lt}
+                  <if test="packageName._le != null">
+                      AND `package_name` <![CDATA[ <= ]]>  #{{package_name._lt}
                  </if>
-                  <if test="voPackage._gt != null">
-                      AND `vo_package` <![CDATA[ > ]]>  #{{vo_package._lt}
+                  <if test="packageName._gt != null">
+                      AND `package_name` <![CDATA[ > ]]>  #{{package_name._lt}
                  </if>
-                  <if test="voPackage._ge != null">
-                      AND `vo_package` <![CDATA[ >= ]]>  #{{vo_package._lt}
+                  <if test="packageName._ge != null">
+                      AND `package_name` <![CDATA[ >= ]]>  #{{package_name._lt}
                  </if>
             </if>
-            <if test="voClassName != null">
-                 <if test="voClassName._in != null">
-                     AND `vo_class_name` in
-                     <foreach collection="vo_class_name._in" item="item" separator="," open="(" close=")">
+            <if test="className != null">
+                 <if test="className._in != null">
+                     AND `class_name` in
+                     <foreach collection="class_name._in" item="item" separator="," open="(" close=")">
                          #{item}
                      </foreach>
                  </if>
-                 <if test="voClassName._notIn != null">
-                     AND `vo_class_name`  not in
-                     <foreach collection="vo_class_name._notIn" item="item" separator="," open="(" close=")">
+                 <if test="className._notIn != null">
+                     AND `class_name`  not in
+                     <foreach collection="class_name._notIn" item="item" separator="," open="(" close=")">
                          #{item}
                      </foreach>
                  </if>
-                 <if test="voClassName._like != null">
-                     <foreach collection="vo_class_name._like" item="item">
-                       AND `vo_class_name` like #{item}
+                 <if test="className._like != null">
+                     <foreach collection="class_name._like" item="item">
+                       AND `class_name` like #{item}
                      </foreach>
                  </if>
-                 <if test="voClassName._notLike != null">
-                     <foreach collection="vo_class_name._notLike" item="item">
-                       AND `vo_class_name` not like #{item}
+                 <if test="className._notLike != null">
+                     <foreach collection="class_name._notLike" item="item">
+                       AND `class_name` not like #{item}
                      </foreach>
                  </if>
-                 <if test="voClassName._regex != null">
-                     <foreach collection="vo_class_name._regex" item="item">
-                       AND `vo_class_name` REGEXP #{item}
+                 <if test="className._regex != null">
+                     <foreach collection="class_name._regex" item="item">
+                       AND `class_name` REGEXP #{item}
                      </foreach>
                  </if>
-                 <if test="voClassName._regex != null">
-                     <foreach collection="vo_class_name._regex" item="item">
-                       AND `vo_class_name` not REGEXP #{item}
+                 <if test="className._regex != null">
+                     <foreach collection="class_name._regex" item="item">
+                       AND `class_name` not REGEXP #{item}
                      </foreach>
                  </if>
-                 <if test="voClassName._lt != null">
-                      AND `vo_class_name` <![CDATA[ < ]]>  #{vo_class_name._lt}
+                 <if test="className._lt != null">
+                      AND `class_name` <![CDATA[ < ]]>  #{class_name._lt}
                  </if>
-                  <if test="voClassName._le != null">
-                      AND `vo_class_name` <![CDATA[ <= ]]>  #{{vo_class_name._lt}
+                  <if test="className._le != null">
+                      AND `class_name` <![CDATA[ <= ]]>  #{{class_name._lt}
                  </if>
-                  <if test="voClassName._gt != null">
-                      AND `vo_class_name` <![CDATA[ > ]]>  #{{vo_class_name._lt}
+                  <if test="className._gt != null">
+                      AND `class_name` <![CDATA[ > ]]>  #{{class_name._lt}
                  </if>
-                  <if test="voClassName._ge != null">
-                      AND `vo_class_name` <![CDATA[ >= ]]>  #{{vo_class_name._lt}
+                  <if test="className._ge != null">
+                      AND `class_name` <![CDATA[ >= ]]>  #{{class_name._lt}
                  </if>
             </if>
-            <if test="voFileName != null">
-                 <if test="voFileName._in != null">
-                     AND `vo_file_name` in
-                     <foreach collection="vo_file_name._in" item="item" separator="," open="(" close=")">
+            <if test="fileName != null">
+                 <if test="fileName._in != null">
+                     AND `file_name` in
+                     <foreach collection="file_name._in" item="item" separator="," open="(" close=")">
                          #{item}
                      </foreach>
                  </if>
-                 <if test="voFileName._notIn != null">
-                     AND `vo_file_name`  not in
-                     <foreach collection="vo_file_name._notIn" item="item" separator="," open="(" close=")">
+                 <if test="fileName._notIn != null">
+                     AND `file_name`  not in
+                     <foreach collection="file_name._notIn" item="item" separator="," open="(" close=")">
                          #{item}
                      </foreach>
                  </if>
-                 <if test="voFileName._like != null">
-                     <foreach collection="vo_file_name._like" item="item">
-                       AND `vo_file_name` like #{item}
+                 <if test="fileName._like != null">
+                     <foreach collection="file_name._like" item="item">
+                       AND `file_name` like #{item}
                      </foreach>
                  </if>
-                 <if test="voFileName._notLike != null">
-                     <foreach collection="vo_file_name._notLike" item="item">
-                       AND `vo_file_name` not like #{item}
+                 <if test="fileName._notLike != null">
+                     <foreach collection="file_name._notLike" item="item">
+                       AND `file_name` not like #{item}
                      </foreach>
                  </if>
-                 <if test="voFileName._regex != null">
-                     <foreach collection="vo_file_name._regex" item="item">
-                       AND `vo_file_name` REGEXP #{item}
+                 <if test="fileName._regex != null">
+                     <foreach collection="file_name._regex" item="item">
+                       AND `file_name` REGEXP #{item}
                      </foreach>
                  </if>
-                 <if test="voFileName._regex != null">
-                     <foreach collection="vo_file_name._regex" item="item">
-                       AND `vo_file_name` not REGEXP #{item}
+                 <if test="fileName._regex != null">
+                     <foreach collection="file_name._regex" item="item">
+                       AND `file_name` not REGEXP #{item}
                      </foreach>
                  </if>
-                 <if test="voFileName._lt != null">
-                      AND `vo_file_name` <![CDATA[ < ]]>  #{vo_file_name._lt}
+                 <if test="fileName._lt != null">
+                      AND `file_name` <![CDATA[ < ]]>  #{file_name._lt}
                  </if>
-                  <if test="voFileName._le != null">
-                      AND `vo_file_name` <![CDATA[ <= ]]>  #{{vo_file_name._lt}
+                  <if test="fileName._le != null">
+                      AND `file_name` <![CDATA[ <= ]]>  #{{file_name._lt}
                  </if>
-                  <if test="voFileName._gt != null">
-                      AND `vo_file_name` <![CDATA[ > ]]>  #{{vo_file_name._lt}
+                  <if test="fileName._gt != null">
+                      AND `file_name` <![CDATA[ > ]]>  #{{file_name._lt}
                  </if>
-                  <if test="voFileName._ge != null">
-                      AND `vo_file_name` <![CDATA[ >= ]]>  #{{vo_file_name._lt}
+                  <if test="fileName._ge != null">
+                      AND `file_name` <![CDATA[ >= ]]>  #{{file_name._lt}
                  </if>
             </if>
-            <if test="voFreemarkPath != null">
-                 <if test="voFreemarkPath._in != null">
-                     AND `vo_freemark_path` in
-                     <foreach collection="vo_freemark_path._in" item="item" separator="," open="(" close=")">
+            <if test="freemarkPath != null">
+                 <if test="freemarkPath._in != null">
+                     AND `freemark_path` in
+                     <foreach collection="freemark_path._in" item="item" separator="," open="(" close=")">
                          #{item}
                      </foreach>
                  </if>
-                 <if test="voFreemarkPath._notIn != null">
-                     AND `vo_freemark_path`  not in
-                     <foreach collection="vo_freemark_path._notIn" item="item" separator="," open="(" close=")">
+                 <if test="freemarkPath._notIn != null">
+                     AND `freemark_path`  not in
+                     <foreach collection="freemark_path._notIn" item="item" separator="," open="(" close=")">
                          #{item}
                      </foreach>
                  </if>
-                 <if test="voFreemarkPath._like != null">
-                     <foreach collection="vo_freemark_path._like" item="item">
-                       AND `vo_freemark_path` like #{item}
+                 <if test="freemarkPath._like != null">
+                     <foreach collection="freemark_path._like" item="item">
+                       AND `freemark_path` like #{item}
                      </foreach>
                  </if>
-                 <if test="voFreemarkPath._notLike != null">
-                     <foreach collection="vo_freemark_path._notLike" item="item">
-                       AND `vo_freemark_path` not like #{item}
+                 <if test="freemarkPath._notLike != null">
+                     <foreach collection="freemark_path._notLike" item="item">
+                       AND `freemark_path` not like #{item}
                      </foreach>
                  </if>
-                 <if test="voFreemarkPath._regex != null">
-                     <foreach collection="vo_freemark_path._regex" item="item">
-                       AND `vo_freemark_path` REGEXP #{item}
+                 <if test="freemarkPath._regex != null">
+                     <foreach collection="freemark_path._regex" item="item">
+                       AND `freemark_path` REGEXP #{item}
                      </foreach>
                  </if>
-                 <if test="voFreemarkPath._regex != null">
-                     <foreach collection="vo_freemark_path._regex" item="item">
-                       AND `vo_freemark_path` not REGEXP #{item}
+                 <if test="freemarkPath._regex != null">
+                     <foreach collection="freemark_path._regex" item="item">
+                       AND `freemark_path` not REGEXP #{item}
                      </foreach>
                  </if>
-                 <if test="voFreemarkPath._lt != null">
-                      AND `vo_freemark_path` <![CDATA[ < ]]>  #{vo_freemark_path._lt}
+                 <if test="freemarkPath._lt != null">
+                      AND `freemark_path` <![CDATA[ < ]]>  #{freemark_path._lt}
                  </if>
-                  <if test="voFreemarkPath._le != null">
-                      AND `vo_freemark_path` <![CDATA[ <= ]]>  #{{vo_freemark_path._lt}
+                  <if test="freemarkPath._le != null">
+                      AND `freemark_path` <![CDATA[ <= ]]>  #{{freemark_path._lt}
                  </if>
-                  <if test="voFreemarkPath._gt != null">
-                      AND `vo_freemark_path` <![CDATA[ > ]]>  #{{vo_freemark_path._lt}
+                  <if test="freemarkPath._gt != null">
+                      AND `freemark_path` <![CDATA[ > ]]>  #{{freemark_path._lt}
                  </if>
-                  <if test="voFreemarkPath._ge != null">
-                      AND `vo_freemark_path` <![CDATA[ >= ]]>  #{{vo_freemark_path._lt}
+                  <if test="freemarkPath._ge != null">
+                      AND `freemark_path` <![CDATA[ >= ]]>  #{{freemark_path._lt}
                  </if>
             </if>
-            <if test="voImports != null">
-                 <if test="voImports._in != null">
-                     AND `vo_imports` in
-                     <foreach collection="vo_imports._in" item="item" separator="," open="(" close=")">
+            <if test="freemarkContent != null">
+                 <if test="freemarkContent._in != null">
+                     AND `freemark_content` in
+                     <foreach collection="freemark_content._in" item="item" separator="," open="(" close=")">
                          #{item}
                      </foreach>
                  </if>
-                 <if test="voImports._notIn != null">
-                     AND `vo_imports`  not in
-                     <foreach collection="vo_imports._notIn" item="item" separator="," open="(" close=")">
+                 <if test="freemarkContent._notIn != null">
+                     AND `freemark_content`  not in
+                     <foreach collection="freemark_content._notIn" item="item" separator="," open="(" close=")">
                          #{item}
                      </foreach>
                  </if>
-                 <if test="voImports._like != null">
-                     <foreach collection="vo_imports._like" item="item">
-                       AND `vo_imports` like #{item}
+                 <if test="freemarkContent._like != null">
+                     <foreach collection="freemark_content._like" item="item">
+                       AND `freemark_content` like #{item}
                      </foreach>
                  </if>
-                 <if test="voImports._notLike != null">
-                     <foreach collection="vo_imports._notLike" item="item">
-                       AND `vo_imports` not like #{item}
+                 <if test="freemarkContent._notLike != null">
+                     <foreach collection="freemark_content._notLike" item="item">
+                       AND `freemark_content` not like #{item}
                      </foreach>
                  </if>
-                 <if test="voImports._regex != null">
-                     <foreach collection="vo_imports._regex" item="item">
-                       AND `vo_imports` REGEXP #{item}
+                 <if test="freemarkContent._regex != null">
+                     <foreach collection="freemark_content._regex" item="item">
+                       AND `freemark_content` REGEXP #{item}
                      </foreach>
                  </if>
-                 <if test="voImports._regex != null">
-                     <foreach collection="vo_imports._regex" item="item">
-                       AND `vo_imports` not REGEXP #{item}
+                 <if test="freemarkContent._regex != null">
+                     <foreach collection="freemark_content._regex" item="item">
+                       AND `freemark_content` not REGEXP #{item}
                      </foreach>
                  </if>
-                 <if test="voImports._lt != null">
-                      AND `vo_imports` <![CDATA[ < ]]>  #{vo_imports._lt}
+                 <if test="freemarkContent._lt != null">
+                      AND `freemark_content` <![CDATA[ < ]]>  #{freemark_content._lt}
                  </if>
-                  <if test="voImports._le != null">
-                      AND `vo_imports` <![CDATA[ <= ]]>  #{{vo_imports._lt}
+                  <if test="freemarkContent._le != null">
+                      AND `freemark_content` <![CDATA[ <= ]]>  #{{freemark_content._lt}
                  </if>
-                  <if test="voImports._gt != null">
-                      AND `vo_imports` <![CDATA[ > ]]>  #{{vo_imports._lt}
+                  <if test="freemarkContent._gt != null">
+                      AND `freemark_content` <![CDATA[ > ]]>  #{{freemark_content._lt}
                  </if>
-                  <if test="voImports._ge != null">
-                      AND `vo_imports` <![CDATA[ >= ]]>  #{{vo_imports._lt}
+                  <if test="freemarkContent._ge != null">
+                      AND `freemark_content` <![CDATA[ >= ]]>  #{{freemark_content._lt}
+                 </if>
+            </if>
+            <if test="freemarkValue != null">
+                 <if test="freemarkValue._in != null">
+                     AND `freemark_value` in
+                     <foreach collection="freemark_value._in" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="freemarkValue._notIn != null">
+                     AND `freemark_value`  not in
+                     <foreach collection="freemark_value._notIn" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="freemarkValue._like != null">
+                     <foreach collection="freemark_value._like" item="item">
+                       AND `freemark_value` like #{item}
+                     </foreach>
+                 </if>
+                 <if test="freemarkValue._notLike != null">
+                     <foreach collection="freemark_value._notLike" item="item">
+                       AND `freemark_value` not like #{item}
+                     </foreach>
+                 </if>
+                 <if test="freemarkValue._regex != null">
+                     <foreach collection="freemark_value._regex" item="item">
+                       AND `freemark_value` REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="freemarkValue._regex != null">
+                     <foreach collection="freemark_value._regex" item="item">
+                       AND `freemark_value` not REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="freemarkValue._lt != null">
+                      AND `freemark_value` <![CDATA[ < ]]>  #{freemark_value._lt}
+                 </if>
+                  <if test="freemarkValue._le != null">
+                      AND `freemark_value` <![CDATA[ <= ]]>  #{{freemark_value._lt}
+                 </if>
+                  <if test="freemarkValue._gt != null">
+                      AND `freemark_value` <![CDATA[ > ]]>  #{{freemark_value._lt}
+                 </if>
+                  <if test="freemarkValue._ge != null">
+                      AND `freemark_value` <![CDATA[ >= ]]>  #{{freemark_value._lt}
+                 </if>
+            </if>
+            <if test="imports != null">
+                 <if test="imports._in != null">
+                     AND `imports` in
+                     <foreach collection="imports._in" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="imports._notIn != null">
+                     AND `imports`  not in
+                     <foreach collection="imports._notIn" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="imports._like != null">
+                     <foreach collection="imports._like" item="item">
+                       AND `imports` like #{item}
+                     </foreach>
+                 </if>
+                 <if test="imports._notLike != null">
+                     <foreach collection="imports._notLike" item="item">
+                       AND `imports` not like #{item}
+                     </foreach>
+                 </if>
+                 <if test="imports._regex != null">
+                     <foreach collection="imports._regex" item="item">
+                       AND `imports` REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="imports._regex != null">
+                     <foreach collection="imports._regex" item="item">
+                       AND `imports` not REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="imports._lt != null">
+                      AND `imports` <![CDATA[ < ]]>  #{imports._lt}
+                 </if>
+                  <if test="imports._le != null">
+                      AND `imports` <![CDATA[ <= ]]>  #{{imports._lt}
+                 </if>
+                  <if test="imports._gt != null">
+                      AND `imports` <![CDATA[ > ]]>  #{{imports._lt}
+                 </if>
+                  <if test="imports._ge != null">
+                      AND `imports` <![CDATA[ >= ]]>  #{{imports._lt}
                  </if>
             </if>
         </where>
@@ -503,20 +615,26 @@
             <if test="source.dbTableComment != null">
                 `db_table_comment` = #{source.dbTableComment},
             </if>
-            <if test="source.voPackage != null">
-                `vo_package` = #{source.voPackage},
+            <if test="source.packageName != null">
+                `package_name` = #{source.packageName},
             </if>
-            <if test="source.voClassName != null">
-                `vo_class_name` = #{source.voClassName},
+            <if test="source.className != null">
+                `class_name` = #{source.className},
             </if>
-            <if test="source.voFileName != null">
-                `vo_file_name` = #{source.voFileName},
+            <if test="source.fileName != null">
+                `file_name` = #{source.fileName},
             </if>
-            <if test="source.voFreemarkPath != null">
-                `vo_freemark_path` = #{source.voFreemarkPath},
+            <if test="source.freemarkPath != null">
+                `freemark_path` = #{source.freemarkPath},
             </if>
-            <if test="source.voImports != null">
-                `vo_imports` = #{source.voImports}
+            <if test="source.freemarkContent != null">
+                `freemark_content` = #{source.freemarkContent},
+            </if>
+            <if test="source.freemarkValue != null">
+                `freemark_value` = #{source.freemarkValue},
+            </if>
+            <if test="source.imports != null">
+                `imports` = #{source.imports}
             </if>
         </set>
         <where>
@@ -530,20 +648,26 @@
             <if test="target.dbTableComment != null">
                 AND `db_table_comment` = #{target.dbTableComment}
             </if>
-            <if test="target.voPackage != null">
-                AND `vo_package` = #{target.voPackage}
+            <if test="target.packageName != null">
+                AND `package_name` = #{target.packageName}
             </if>
-            <if test="target.voClassName != null">
-                AND `vo_class_name` = #{target.voClassName}
+            <if test="target.className != null">
+                AND `class_name` = #{target.className}
             </if>
-            <if test="target.voFileName != null">
-                AND `vo_file_name` = #{target.voFileName}
+            <if test="target.fileName != null">
+                AND `file_name` = #{target.fileName}
             </if>
-            <if test="target.voFreemarkPath != null">
-                AND `vo_freemark_path` = #{target.voFreemarkPath}
+            <if test="target.freemarkPath != null">
+                AND `freemark_path` = #{target.freemarkPath}
             </if>
-            <if test="target.voImports != null">
-                AND `vo_imports` = #{target.voImports}
+            <if test="target.freemarkContent != null">
+                AND `freemark_content` = #{target.freemarkContent}
+            </if>
+            <if test="target.freemarkValue != null">
+                AND `freemark_value` = #{target.freemarkValue}
+            </if>
+            <if test="target.imports != null">
+                AND `imports` = #{target.imports}
             </if>
         </where>
     </update>
@@ -555,11 +679,13 @@
             `db_name` = #{source.dbName},
             `db_table_name` = #{source.dbTableName},
             `db_table_comment` = #{source.dbTableComment},
-            `vo_package` = #{source.voPackage},
-            `vo_class_name` = #{source.voClassName},
-            `vo_file_name` = #{source.voFileName},
-            `vo_freemark_path` = #{source.voFreemarkPath},
-            `vo_imports` = #{source.voImports}
+            `package_name` = #{source.packageName},
+            `class_name` = #{source.className},
+            `file_name` = #{source.fileName},
+            `freemark_path` = #{source.freemarkPath},
+            `freemark_content` = #{source.freemarkContent},
+            `freemark_value` = #{source.freemarkValue},
+            `imports` = #{source.imports}
         </set>
         <where>
             1 =1
@@ -572,20 +698,26 @@
             <if test="target.dbTableComment != null">
                 AND `db_table_comment` = #{target.dbTableComment}
             </if>
-            <if test="target.voPackage != null">
-                AND `vo_package` = #{target.voPackage}
+            <if test="target.packageName != null">
+                AND `package_name` = #{target.packageName}
             </if>
-            <if test="target.voClassName != null">
-                AND `vo_class_name` = #{target.voClassName}
+            <if test="target.className != null">
+                AND `class_name` = #{target.className}
             </if>
-            <if test="target.voFileName != null">
-                AND `vo_file_name` = #{target.voFileName}
+            <if test="target.fileName != null">
+                AND `file_name` = #{target.fileName}
             </if>
-            <if test="target.voFreemarkPath != null">
-                AND `vo_freemark_path` = #{target.voFreemarkPath}
+            <if test="target.freemarkPath != null">
+                AND `freemark_path` = #{target.freemarkPath}
             </if>
-            <if test="target.voImports != null">
-                AND `vo_imports` = #{target.voImports}
+            <if test="target.freemarkContent != null">
+                AND `freemark_content` = #{target.freemarkContent}
+            </if>
+            <if test="target.freemarkValue != null">
+                AND `freemark_value` = #{target.freemarkValue}
+            </if>
+            <if test="target.imports != null">
+                AND `imports` = #{target.imports}
             </if>
         </where>
     </update>
@@ -604,20 +736,26 @@
             <if test="dbTableComment != null">
                 AND `db_table_comment` = #{dbTableComment}
             </if>
-            <if test="voPackage != null">
-                AND `vo_package` = #{voPackage}
+            <if test="packageName != null">
+                AND `package_name` = #{packageName}
             </if>
-            <if test="voClassName != null">
-                AND `vo_class_name` = #{voClassName}
+            <if test="className != null">
+                AND `class_name` = #{className}
             </if>
-            <if test="voFileName != null">
-                AND `vo_file_name` = #{voFileName}
+            <if test="fileName != null">
+                AND `file_name` = #{fileName}
             </if>
-            <if test="voFreemarkPath != null">
-                AND `vo_freemark_path` = #{voFreemarkPath}
+            <if test="freemarkPath != null">
+                AND `freemark_path` = #{freemarkPath}
             </if>
-            <if test="voImports != null">
-                AND `vo_imports` = #{voImports}
+            <if test="freemarkContent != null">
+                AND `freemark_content` = #{freemarkContent}
+            </if>
+            <if test="freemarkValue != null">
+                AND `freemark_value` = #{freemarkValue}
+            </if>
+            <if test="imports != null">
+                AND `imports` = #{imports}
             </if>
         </where>
     </delete>
@@ -629,15 +767,18 @@
         `db_name`,
         `db_table_name`,
         `db_table_comment`,
-        `vo_package`,
-        `vo_class_name`,
-        `vo_file_name`,
-        `vo_freemark_path`,
-        `vo_imports`
+        `package_name`,
+        `class_name`,
+        `file_name`,
+        `freemark_path`,
+        `freemark_content`,
+        `freemark_value`,
+        `imports`
         FROM `t_vo_no_pri`
         <where>
             1 =1
             AND `db_name` = #{dbName}
+            AND `db_table_name` = #{dbTableName}
         </where>
     </select>
 
@@ -646,6 +787,7 @@
         <where>
             1 = 1
                AND `db_name` = #{dbName}
+               AND `db_table_name` = #{dbTableName}
         </where>
     </delete>
 
@@ -653,31 +795,35 @@
             parameterType="demomaster.vo.TVoNoPriVo">
         UPDATE `t_vo_no_pri`
         <set>
-               <if test="source.dbTableName != null">
-                   `db_table_name` = #{source.dbTableName},
-               </if>
                <if test="source.dbTableComment != null">
                    `db_table_comment` = #{source.dbTableComment},
                </if>
-               <if test="source.voPackage != null">
-                   `vo_package` = #{source.voPackage},
+               <if test="source.packageName != null">
+                   `package_name` = #{source.packageName},
                </if>
-               <if test="source.voClassName != null">
-                   `vo_class_name` = #{source.voClassName},
+               <if test="source.className != null">
+                   `class_name` = #{source.className},
                </if>
-               <if test="source.voFileName != null">
-                   `vo_file_name` = #{source.voFileName},
+               <if test="source.fileName != null">
+                   `file_name` = #{source.fileName},
                </if>
-               <if test="source.voFreemarkPath != null">
-                   `vo_freemark_path` = #{source.voFreemarkPath},
+               <if test="source.freemarkPath != null">
+                   `freemark_path` = #{source.freemarkPath},
                </if>
-               <if test="source.voImports != null">
-                   `vo_imports` = #{source.voImports}
+               <if test="source.freemarkContent != null">
+                   `freemark_content` = #{source.freemarkContent},
+               </if>
+               <if test="source.freemarkValue != null">
+                   `freemark_value` = #{source.freemarkValue},
+               </if>
+               <if test="source.imports != null">
+                   `imports` = #{source.imports}
                </if>
         </set>
         <where>
             1 =1
                AND `db_name` = #{target.dbName}
+               AND `db_table_name` = #{target.dbTableName}
         </where>
     </update>
 

@@ -9,7 +9,7 @@ package demomaster.vo;
  * 表引擎      :InnoDB
  * 表版本      :10
  * 行格式      :Compact
- * 表创建      :2020-6-5
+ * 表创建      :2020-6-6
  * 字符集      :utf8_bin
  * 表注释      :
  */
@@ -18,6 +18,7 @@ public class TFieldVo {
     private String dbName;  // 库名 
     private String dbTableName;  // 表名 
     private String fieldName;  // 字段名称 
+    private String fieldJavaName;  // 字段java名称 
     private String fieldType;  // 数据类型 
     private String fieldJavaType;  // 对应的java类型 
     private String fieldComment;  // 注释 
@@ -65,6 +66,18 @@ public class TFieldVo {
     public void setFieldName(String fieldName) {
 
         this.fieldName = fieldName;
+
+    }
+
+    public String getFieldJavaName() {
+
+        return fieldJavaName;
+
+    }
+
+    public void setFieldJavaName(String fieldJavaName) {
+
+        this.fieldJavaName = fieldJavaName;
 
     }
 
@@ -219,6 +232,7 @@ public class TFieldVo {
                 ", dbName '" + dbName + '\'' +
                 ", dbTableName '" + dbTableName + '\'' +
                 ", fieldName '" + fieldName + '\'' +
+                ", fieldJavaName '" + fieldJavaName + '\'' +
                 ", fieldType '" + fieldType + '\'' +
                 ", fieldJavaType '" + fieldJavaType + '\'' +
                 ", fieldComment '" + fieldComment + '\'' +

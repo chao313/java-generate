@@ -15,7 +15,7 @@ import demomaster.vo.TProjectMultiTermVo;
  * 表引擎      :InnoDB
  * 表版本      :10
  * 行格式      :Compact
- * 表创建      :2020-6-5
+ * 表创建      :2020-6-6
  * 字符集      :utf8_bin
  * 表注释      :
  */
@@ -82,7 +82,7 @@ public interface TProjectService {
      * @param dbName
      * 
      */
-    boolean updateByPrimaryKey(TProjectNoPriVo source, TProjectPriVo target);
+    boolean updateByPrimaryKey(TProjectNoPriVo source,TProjectPriVo target);
 
 
 

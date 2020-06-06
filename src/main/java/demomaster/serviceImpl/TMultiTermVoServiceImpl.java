@@ -5,36 +5,36 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
-import demomaster.vo.TMulltiTermVoVo;
-import demomaster.dao.TMulltiTermVoDAO;
-import demomaster.service.TMulltiTermVoService;
-import demomaster.vo.plugin.TMulltiTermVoPriVo;
-import demomaster.vo.plugin.TMulltiTermVoNoPriVo;
-import demomaster.vo.TMulltiTermVoMultiTermVo;
+import demomaster.vo.TMultiTermVoVo;
+import demomaster.dao.TMultiTermVoDAO;
+import demomaster.service.TMultiTermVoService;
+import demomaster.vo.plugin.TMultiTermVoPriVo;
+import demomaster.vo.plugin.TMultiTermVoNoPriVo;
+import demomaster.vo.TMultiTermVoMultiTermVo;
 
 
 
 /**
- * 表名称      :t_mullti_term_vo
+ * 表名称      :t_multi_term_vo
  * 表类型      :BASE TABLE
  * 表引擎      :InnoDB
  * 表版本      :10
  * 行格式      :Compact
- * 表创建      :2020-6-5
+ * 表创建      :2020-6-6
  * 字符集      :utf8_bin
  * 表注释      :
  */
 @Service
-public class TMulltiTermVoServiceImpl implements TMulltiTermVoService {
+public class TMultiTermVoServiceImpl implements TMultiTermVoService {
 
     @Autowired
-    private TMulltiTermVoDAO dao;
+    private TMultiTermVoDAO dao;
 
     /**
      * insert
      */
     @Override
-    public boolean insert(TMulltiTermVoVo vo) {
+    public boolean insert(TMultiTermVoVo vo) {
 
         return dao.insert(vo) > 0 ? true : false;
 
@@ -44,7 +44,7 @@ public class TMulltiTermVoServiceImpl implements TMulltiTermVoService {
      * insert vos 批量插入
      */
     @Override
-    public boolean insert(List<TMulltiTermVoVo> vos) {
+    public boolean insert(List<TMultiTermVoVo> vos) {
 
         return dao.inserts(vos) > 0 ? true : false;
 
@@ -54,7 +54,7 @@ public class TMulltiTermVoServiceImpl implements TMulltiTermVoService {
      * 查询base
      */
     @Override
-    public List<TMulltiTermVoVo> queryBase(TMulltiTermVoVo query) {
+    public List<TMultiTermVoVo> queryBase(TMultiTermVoVo query) {
 
         return dao.queryBase(query);
 
@@ -64,7 +64,7 @@ public class TMulltiTermVoServiceImpl implements TMulltiTermVoService {
      * 查询base 多维条件
      */
     @Override
-    public List<TMulltiTermVoVo> queryMultiTerm(TMulltiTermVoMultiTermVo query) {
+    public List<TMultiTermVoVo> queryMultiTerm(TMultiTermVoMultiTermVo query) {
 
         return dao.queryMultiTerm(query);
 
@@ -74,7 +74,7 @@ public class TMulltiTermVoServiceImpl implements TMulltiTermVoService {
      * update base (exclude value is null or "")
      */
     @Override
-    public boolean updateBase(TMulltiTermVoVo source, TMulltiTermVoVo target) {
+    public boolean updateBase(TMultiTermVoVo source, TMultiTermVoVo target) {
 
         return dao.updateBase(source, target) > 0 ? true : false;
 
@@ -84,7 +84,7 @@ public class TMulltiTermVoServiceImpl implements TMulltiTermVoService {
      * update base (include value is null or "")
      */
     @Override
-    public boolean updateBaseIncludeNull(TMulltiTermVoVo source, TMulltiTermVoVo target) {
+    public boolean updateBaseIncludeNull(TMultiTermVoVo source, TMultiTermVoVo target) {
 
         return dao.updateBaseIncludeNull(source, target) > 0 ? true : false;
 
@@ -94,7 +94,7 @@ public class TMulltiTermVoServiceImpl implements TMulltiTermVoService {
      * 删除base
      */
     @Override
-    public boolean deleteBase(TMulltiTermVoVo vo) {
+    public boolean deleteBase(TMultiTermVoVo vo) {
 
         return dao.deleteBase(vo) > 0 ? true : false;
 
@@ -108,7 +108,7 @@ public class TMulltiTermVoServiceImpl implements TMulltiTermVoService {
      * dbTableName  表名
      */
     @Override
-    public TMulltiTermVoVo queryByPrimaryKey(String dbName, String dbTableName) {
+    public TMultiTermVoVo queryByPrimaryKey(String dbName, String dbTableName) {
 
         return dao.queryByPrimaryKey(dbName, dbTableName);
 
@@ -140,7 +140,7 @@ public class TMulltiTermVoServiceImpl implements TMulltiTermVoService {
      * 
      */
     @Override
-    public boolean updateByPrimaryKey(TMulltiTermVoNoPriVo source,TMulltiTermVoPriVo target){
+    public boolean updateByPrimaryKey(TMultiTermVoNoPriVo source,TMultiTermVoPriVo target){
 
         return dao.updateByPrimaryKey(source,target) > 0 ? true : false;
 

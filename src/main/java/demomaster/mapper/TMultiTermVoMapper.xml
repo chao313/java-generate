@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="demomaster.dao.TMulltiTermVoDAO">
+<mapper namespace="demomaster.dao.TMultiTermVoDAO">
 
-    <resultMap id="resultMap" type="demomaster.vo.TMulltiTermVoVo">
+    <resultMap id="resultMap" type="demomaster.vo.TMultiTermVoVo">
         <result column="db_name" property="dbName"/>
         <result column="db_table_name" property="dbTableName"/>
         <result column="db_table_comment" property="dbTableComment"/>
@@ -11,12 +11,13 @@
         <result column="file_name" property="fileName"/>
         <result column="freemark_path" property="freemarkPath"/>
         <result column="freemark_content" property="freemarkContent"/>
+        <result column="freemark_value" property="freemarkValue"/>
         <result column="imports" property="imports"/>
     </resultMap>
 
     <insert id="insert"
-            parameterType="demomaster.vo.TMulltiTermVoVo">
-        INSERT INTO `t_mullti_term_vo`(
+            parameterType="demomaster.vo.TMultiTermVoVo">
+        INSERT INTO `t_multi_term_vo`(
         `db_name` ,
         `db_table_name` ,
         `db_table_comment` ,
@@ -25,6 +26,7 @@
         `file_name` ,
         `freemark_path` ,
         `freemark_content` ,
+        `freemark_value` ,
         `imports` 
         )VALUE(
           #{dbName}  ,
@@ -35,13 +37,14 @@
           #{fileName}  ,
           #{freemarkPath}  ,
           #{freemarkContent}  ,
+          #{freemarkValue}  ,
           #{imports}  
         )
     </insert>
 
     <insert id="inserts"
             parameterType="java.util.List">
-        INSERT INTO `t_mullti_term_vo`(
+        INSERT INTO `t_multi_term_vo`(
         `db_name`,
         `db_table_name`,
         `db_table_comment`,
@@ -50,6 +53,7 @@
         `file_name`,
         `freemark_path`,
         `freemark_content`,
+        `freemark_value`,
         `imports`
         )VALUES
         <foreach collection="vos" item="item" separator=",">
@@ -62,14 +66,15 @@
             #{item.fileName},
             #{item.freemarkPath},
             #{item.freemarkContent},
+            #{item.freemarkValue},
             #{item.imports}
             )
         </foreach>
     </insert>
 
     <select id="queryBase" resultMap="resultMap"
-            resultType="demomaster.vo.TMulltiTermVoVo"
-            parameterType="demomaster.vo.TMulltiTermVoVo">
+            resultType="demomaster.vo.TMultiTermVoVo"
+            parameterType="demomaster.vo.TMultiTermVoVo">
         SELECT
         `db_name`,
         `db_table_name`,
@@ -79,8 +84,9 @@
         `file_name`,
         `freemark_path`,
         `freemark_content`,
+        `freemark_value`,
         `imports`
-        FROM `t_mullti_term_vo`
+        FROM `t_multi_term_vo`
         <where>
             1 = 1
             <if test="dbName != null">
@@ -107,6 +113,9 @@
             <if test="freemarkContent != null">
                 AND `freemark_content` = #{freemarkContent}
             </if>
+            <if test="freemarkValue != null">
+                AND `freemark_value` = #{freemarkValue}
+            </if>
             <if test="imports != null">
                 AND `imports` = #{imports}
             </if>
@@ -114,8 +123,8 @@
     </select>
 
      <select id="queryMultiTerm" resultMap="resultMap"
-             resultType="demomaster.vo.TMulltiTermVoVo"
-             parameterType="demomaster.vo.TMulltiTermVoMultiTermVo">
+             resultType="demomaster.vo.TMultiTermVoVo"
+             parameterType="demomaster.vo.TMultiTermVoMultiTermVo">
         SELECT
         `db_name`,
         `db_table_name`,
@@ -125,8 +134,9 @@
         `file_name`,
         `freemark_path`,
         `freemark_content`,
+        `freemark_value`,
         `imports`
-        FROM `t_mullti_term_vo`
+        FROM `t_multi_term_vo`
         <where>
             1 = 1
             <if test="dbName != null">
@@ -497,6 +507,52 @@
                       AND `freemark_content` <![CDATA[ >= ]]>  #{{freemark_content._lt}
                  </if>
             </if>
+            <if test="freemarkValue != null">
+                 <if test="freemarkValue._in != null">
+                     AND `freemark_value` in
+                     <foreach collection="freemark_value._in" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="freemarkValue._notIn != null">
+                     AND `freemark_value`  not in
+                     <foreach collection="freemark_value._notIn" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="freemarkValue._like != null">
+                     <foreach collection="freemark_value._like" item="item">
+                       AND `freemark_value` like #{item}
+                     </foreach>
+                 </if>
+                 <if test="freemarkValue._notLike != null">
+                     <foreach collection="freemark_value._notLike" item="item">
+                       AND `freemark_value` not like #{item}
+                     </foreach>
+                 </if>
+                 <if test="freemarkValue._regex != null">
+                     <foreach collection="freemark_value._regex" item="item">
+                       AND `freemark_value` REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="freemarkValue._regex != null">
+                     <foreach collection="freemark_value._regex" item="item">
+                       AND `freemark_value` not REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="freemarkValue._lt != null">
+                      AND `freemark_value` <![CDATA[ < ]]>  #{freemark_value._lt}
+                 </if>
+                  <if test="freemarkValue._le != null">
+                      AND `freemark_value` <![CDATA[ <= ]]>  #{{freemark_value._lt}
+                 </if>
+                  <if test="freemarkValue._gt != null">
+                      AND `freemark_value` <![CDATA[ > ]]>  #{{freemark_value._lt}
+                 </if>
+                  <if test="freemarkValue._ge != null">
+                      AND `freemark_value` <![CDATA[ >= ]]>  #{{freemark_value._lt}
+                 </if>
+            </if>
             <if test="imports != null">
                  <if test="imports._in != null">
                      AND `imports` in
@@ -547,8 +603,8 @@
         </select>
 
     <update id="updateBase"
-            parameterType="demomaster.vo.TMulltiTermVoVo">
-        UPDATE `t_mullti_term_vo`
+            parameterType="demomaster.vo.TMultiTermVoVo">
+        UPDATE `t_multi_term_vo`
         <set>
             <if test="source.dbName != null">
                 `db_name` = #{source.dbName},
@@ -573,6 +629,9 @@
             </if>
             <if test="source.freemarkContent != null">
                 `freemark_content` = #{source.freemarkContent},
+            </if>
+            <if test="source.freemarkValue != null">
+                `freemark_value` = #{source.freemarkValue},
             </if>
             <if test="source.imports != null">
                 `imports` = #{source.imports}
@@ -604,6 +663,9 @@
             <if test="target.freemarkContent != null">
                 AND `freemark_content` = #{target.freemarkContent}
             </if>
+            <if test="target.freemarkValue != null">
+                AND `freemark_value` = #{target.freemarkValue}
+            </if>
             <if test="target.imports != null">
                 AND `imports` = #{target.imports}
             </if>
@@ -611,8 +673,8 @@
     </update>
 
     <update id="updateBaseIncludeNull"
-            parameterType="demomaster.vo.TMulltiTermVoVo">
-        UPDATE `t_mullti_term_vo`
+            parameterType="demomaster.vo.TMultiTermVoVo">
+        UPDATE `t_multi_term_vo`
         <set>
             `db_name` = #{source.dbName},
             `db_table_name` = #{source.dbTableName},
@@ -622,6 +684,7 @@
             `file_name` = #{source.fileName},
             `freemark_path` = #{source.freemarkPath},
             `freemark_content` = #{source.freemarkContent},
+            `freemark_value` = #{source.freemarkValue},
             `imports` = #{source.imports}
         </set>
         <where>
@@ -650,6 +713,9 @@
             <if test="target.freemarkContent != null">
                 AND `freemark_content` = #{target.freemarkContent}
             </if>
+            <if test="target.freemarkValue != null">
+                AND `freemark_value` = #{target.freemarkValue}
+            </if>
             <if test="target.imports != null">
                 AND `imports` = #{target.imports}
             </if>
@@ -657,8 +723,8 @@
     </update>
 
     <delete id="deleteBase"
-            parameterType="demomaster.vo.TMulltiTermVoVo">
-        DELETE FROM `t_mullti_term_vo`
+            parameterType="demomaster.vo.TMultiTermVoVo">
+        DELETE FROM `t_multi_term_vo`
         <where>
             1 =1
             <if test="dbName != null">
@@ -685,6 +751,9 @@
             <if test="freemarkContent != null">
                 AND `freemark_content` = #{freemarkContent}
             </if>
+            <if test="freemarkValue != null">
+                AND `freemark_value` = #{freemarkValue}
+            </if>
             <if test="imports != null">
                 AND `imports` = #{imports}
             </if>
@@ -693,7 +762,7 @@
 
 
     <select id="queryByPrimaryKey" resultMap="resultMap"
-            resultType="demomaster.vo.TMulltiTermVoVo">
+            resultType="demomaster.vo.TMultiTermVoVo">
         SELECT
         `db_name`,
         `db_table_name`,
@@ -703,8 +772,9 @@
         `file_name`,
         `freemark_path`,
         `freemark_content`,
+        `freemark_value`,
         `imports`
-        FROM `t_mullti_term_vo`
+        FROM `t_multi_term_vo`
         <where>
             1 =1
             AND `db_name` = #{dbName}
@@ -713,7 +783,7 @@
     </select>
 
     <delete id="deleteByPrimaryKey">
-        DELETE FROM `t_mullti_term_vo`
+        DELETE FROM `t_multi_term_vo`
         <where>
             1 = 1
                AND `db_name` = #{dbName}
@@ -722,8 +792,8 @@
     </delete>
 
     <update id="updateByPrimaryKey"
-            parameterType="demomaster.vo.TMulltiTermVoVo">
-        UPDATE `t_mullti_term_vo`
+            parameterType="demomaster.vo.TMultiTermVoVo">
+        UPDATE `t_multi_term_vo`
         <set>
                <if test="source.dbTableComment != null">
                    `db_table_comment` = #{source.dbTableComment},
@@ -742,6 +812,9 @@
                </if>
                <if test="source.freemarkContent != null">
                    `freemark_content` = #{source.freemarkContent},
+               </if>
+               <if test="source.freemarkValue != null">
+                   `freemark_value` = #{source.freemarkValue},
                </if>
                <if test="source.imports != null">
                    `imports` = #{source.imports}

@@ -17,7 +17,7 @@ import org.apache.ibatis.annotations.Param;
  * 表引擎      :InnoDB
  * 表版本      :10
  * 行格式      :Compact
- * 表创建      :2020-6-5
+ * 表创建      :2020-6-6
  * 字符集      :utf8_bin
  * 表注释      :
  */
@@ -69,7 +69,7 @@ public interface TDaoDAO {
      * @param dbTableName
      * 
      */
-    TDaoVo queryByPrimaryKey(@Param(value = "dbName") String dbName, @Param(value = "dbTableName") String dbTableName);
+    TDaoVo queryByPrimaryKey(@Param(value = "dbName") String dbName,@Param(value = "dbTableName") String dbTableName);
 
     /**
      * 根据PrimaryKey删除
@@ -80,7 +80,7 @@ public interface TDaoDAO {
      * @param dbTableName
      * 
      */
-    int deleteByPrimaryKey(@Param(value = "dbName") String dbName, @Param(value = "dbTableName") String dbTableName);
+    int deleteByPrimaryKey(@Param(value = "dbName") String dbName,@Param(value = "dbTableName") String dbTableName);
 
     /**
      * 根据PrimaryKey更新，会根据主键去更新其他的值(空值不覆盖有值)
@@ -91,6 +91,6 @@ public interface TDaoDAO {
      * @param dbTableName
      * 
      */
-    int updateByPrimaryKey(@Param(value = "source") TDaoNoPriVo source, @Param(value = "target") TDaoPriVo target);
+    int updateByPrimaryKey(@Param(value = "source") TDaoNoPriVo source,@Param(value = "target") TDaoPriVo target);
 
 }

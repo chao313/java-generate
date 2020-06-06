@@ -3,60 +3,60 @@ package demomaster.service;
 
 import java.util.List;
 
-import demomaster.vo.TMulltiTermVoVo;
-import demomaster.vo.plugin.TMulltiTermVoPriVo;
-import demomaster.vo.plugin.TMulltiTermVoNoPriVo;
-import demomaster.vo.TMulltiTermVoMultiTermVo;
+import demomaster.vo.TMultiTermVoVo;
+import demomaster.vo.plugin.TMultiTermVoPriVo;
+import demomaster.vo.plugin.TMultiTermVoNoPriVo;
+import demomaster.vo.TMultiTermVoMultiTermVo;
 
 
 /**
- * 表名称      :t_mullti_term_vo
+ * 表名称      :t_multi_term_vo
  * 表类型      :BASE TABLE
  * 表引擎      :InnoDB
  * 表版本      :10
  * 行格式      :Compact
- * 表创建      :2020-6-5
+ * 表创建      :2020-6-6
  * 字符集      :utf8_bin
  * 表注释      :
  */
-public interface TMulltiTermVoService {
+public interface TMultiTermVoService {
 
     /**
      * insert
      */
-    boolean insert(TMulltiTermVoVo vo);
+    boolean insert(TMultiTermVoVo vo);
 
 
     /**
      * insert vos 批量插入
      */
-    boolean insert(List<TMulltiTermVoVo> vos);
+    boolean insert(List<TMultiTermVoVo> vos);
 
 
     /**
      * 查询base
      */
-    List<TMulltiTermVoVo> queryBase(TMulltiTermVoVo query);
+    List<TMultiTermVoVo> queryBase(TMultiTermVoVo query);
 
     /**
      * 查询base 多维条件
      */
-    List<TMulltiTermVoVo> queryMultiTerm(TMulltiTermVoMultiTermVo query);
+    List<TMultiTermVoVo> queryMultiTerm(TMultiTermVoMultiTermVo query);
 
     /**
      * update base (exclude value is null or "")
      */
-    boolean updateBase(TMulltiTermVoVo source, TMulltiTermVoVo target);
+    boolean updateBase(TMultiTermVoVo source, TMultiTermVoVo target);
 
     /**
      * update base (include value is null or "")
      */
-    boolean updateBaseIncludeNull(TMulltiTermVoVo source, TMulltiTermVoVo target);
+    boolean updateBaseIncludeNull(TMultiTermVoVo source, TMultiTermVoVo target);
 
     /**
      * 删除base
      */
-    boolean deleteBase(TMulltiTermVoVo vo);
+    boolean deleteBase(TMultiTermVoVo vo);
 
 
     /**
@@ -65,7 +65,7 @@ public interface TMulltiTermVoService {
      * dbName : 库名<p>
      * dbTableName : 表名
      */
-     TMulltiTermVoVo queryByPrimaryKey(String dbName, String dbTableName);
+     TMultiTermVoVo queryByPrimaryKey(String dbName,String dbTableName);
 
     /**
      * 根据PrimaryKey删除
@@ -76,7 +76,7 @@ public interface TMulltiTermVoService {
      * @param dbTableName
      * 
      */
-    boolean deleteByPrimaryKey(String dbName, String dbTableName);
+    boolean deleteByPrimaryKey(String dbName,String dbTableName);
 
     /**
      * 根据PrimaryKey更新，会根据主键去更新其他的值(空值不覆盖有值) -> 主键不更新
@@ -87,7 +87,7 @@ public interface TMulltiTermVoService {
      * @param dbTableName
      * 
      */
-    boolean updateByPrimaryKey(TMulltiTermVoNoPriVo source, TMulltiTermVoPriVo target);
+    boolean updateByPrimaryKey(TMultiTermVoNoPriVo source,TMultiTermVoPriVo target);
 
 
 

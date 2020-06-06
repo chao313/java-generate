@@ -1,6 +1,6 @@
 package demo.spring.boot.demospringboot.parse.mysql.parse.vo.mysql;
 
-import demo.spring.boot.demospringboot.parse.mysql.parse.util.FreemarkUtil;
+import demo.spring.boot.demospringboot.util.FreeMarkUtil;
 import demo.spring.boot.demospringboot.parse.mysql.parse.vo.mysql.ftl.java.AllJavaFtl;
 import demo.spring.boot.demospringboot.parse.mysql.parse.vo.mysql.ftl.FtlJavaInterface;
 import freemarker.template.TemplateException;
@@ -47,7 +47,7 @@ public abstract class GenerateJavaUtil<FtlVo extends FtlJavaInterface> {
         map.put("ftlVo", ftlVo);
         map.put("allJavaFtl", this.getAllJavaFtl());//存放所有的ftlVo ， 方便后面使用
         File templateDirFile = ResourceUtils.getFile(ftlVo.getFreeMarkDirPathInResources());//文件夹从实现者中提取
-        StringBuffer freeMarkStr = FreemarkUtil.generateXmlByTemplate(map, templateDirFile, ftlVo.getFreeMarkFtlPath());
+        StringBuffer freeMarkStr = FreeMarkUtil.generateXmlByTemplate(map, templateDirFile, ftlVo.getFreeMarkFtlPath());
         ftlVo.setFreeMarkStr(freeMarkStr.toString());
         return ftlVo;
     }

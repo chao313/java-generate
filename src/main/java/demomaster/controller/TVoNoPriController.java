@@ -265,6 +265,7 @@ public class TVoNoPriController {
      * 因为是主键 -> 查询返回的是一条记录
      *
      * @param dbName
+     * @param dbTableName
      * 
      * @return 成功和失败都返回Response，具体的结果在response的
      * code   :状态码
@@ -272,11 +273,12 @@ public class TVoNoPriController {
      */
     @GetMapping(value = "/queryByPrimaryKey")
     public Response queryByPrimaryKey(
-            @RequestParam String dbName
+            @RequestParam String dbName, 
+            @RequestParam String dbTableName
     ) {
         Response response = new Response();
         try {
-            TVoNoPriVo result = service.queryByPrimaryKey(dbName);
+            TVoNoPriVo result = service.queryByPrimaryKey(dbName, dbTableName);
             response.setCode(Code.System.OK);
             response.setContent(result);
             log.info("success result -> {} ", result);
@@ -295,6 +297,7 @@ public class TVoNoPriController {
      * 因为是主键 -> 删除的是一条记录
      *
      * @param dbName
+     * @param dbTableName
      * 
      * @return 成功和失败都返回Response，具体的结果在response的
      * code   :状态码
@@ -302,11 +305,12 @@ public class TVoNoPriController {
      */
     @GetMapping(value = "/deleteByPrimaryKey")
     public Response deleteByPrimaryKey(
-           @RequestParam String dbName
+           @RequestParam String dbName, 
+           @RequestParam String dbTableName
      ) {
         Response response = new Response();
         try {
-            Boolean result = service.deleteByPrimaryKey(dbName);
+            Boolean result = service.deleteByPrimaryKey(dbName, dbTableName);
             response.setCode(Code.System.OK);
             response.setContent(result);
             log.info("success result -> {} ", result);
@@ -325,6 +329,7 @@ public class TVoNoPriController {
      * @param update.source 只包含非主键的字段
      * @param update.target 只包含主键的字段
      * @param dbName
+     * @param dbTableName
      * 
      * @return 成功和失败都返回Response，具体的结果在response的
      * code   :状态码

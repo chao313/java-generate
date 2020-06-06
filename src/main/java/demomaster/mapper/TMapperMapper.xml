@@ -10,6 +10,7 @@
         <result column="file_name" property="fileName"/>
         <result column="freemark_path" property="freemarkPath"/>
         <result column="freemark_content" property="freemarkContent"/>
+        <result column="freemark_value" property="freemarkValue"/>
     </resultMap>
 
     <insert id="insert"
@@ -21,7 +22,8 @@
         `dir_name` ,
         `file_name` ,
         `freemark_path` ,
-        `freemark_content` 
+        `freemark_content` ,
+        `freemark_value` 
         )VALUE(
           #{dbName}  ,
           #{dbTableName}  ,
@@ -29,7 +31,8 @@
           #{dirName}  ,
           #{fileName}  ,
           #{freemarkPath}  ,
-          #{freemarkContent}  
+          #{freemarkContent}  ,
+          #{freemarkValue}  
         )
     </insert>
 
@@ -42,7 +45,8 @@
         `dir_name`,
         `file_name`,
         `freemark_path`,
-        `freemark_content`
+        `freemark_content`,
+        `freemark_value`
         )VALUES
         <foreach collection="vos" item="item" separator=",">
             (
@@ -52,7 +56,8 @@
             #{item.dirName},
             #{item.fileName},
             #{item.freemarkPath},
-            #{item.freemarkContent}
+            #{item.freemarkContent},
+            #{item.freemarkValue}
             )
         </foreach>
     </insert>
@@ -67,7 +72,8 @@
         `dir_name`,
         `file_name`,
         `freemark_path`,
-        `freemark_content`
+        `freemark_content`,
+        `freemark_value`
         FROM `t_mapper`
         <where>
             1 = 1
@@ -92,6 +98,9 @@
             <if test="freemarkContent != null">
                 AND `freemark_content` = #{freemarkContent}
             </if>
+            <if test="freemarkValue != null">
+                AND `freemark_value` = #{freemarkValue}
+            </if>
         </where>
     </select>
 
@@ -105,7 +114,8 @@
         `dir_name`,
         `file_name`,
         `freemark_path`,
-        `freemark_content`
+        `freemark_content`,
+        `freemark_value`
         FROM `t_mapper`
         <where>
             1 = 1
@@ -431,6 +441,52 @@
                       AND `freemark_content` <![CDATA[ >= ]]>  #{{freemark_content._lt}
                  </if>
             </if>
+            <if test="freemarkValue != null">
+                 <if test="freemarkValue._in != null">
+                     AND `freemark_value` in
+                     <foreach collection="freemark_value._in" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="freemarkValue._notIn != null">
+                     AND `freemark_value`  not in
+                     <foreach collection="freemark_value._notIn" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="freemarkValue._like != null">
+                     <foreach collection="freemark_value._like" item="item">
+                       AND `freemark_value` like #{item}
+                     </foreach>
+                 </if>
+                 <if test="freemarkValue._notLike != null">
+                     <foreach collection="freemark_value._notLike" item="item">
+                       AND `freemark_value` not like #{item}
+                     </foreach>
+                 </if>
+                 <if test="freemarkValue._regex != null">
+                     <foreach collection="freemark_value._regex" item="item">
+                       AND `freemark_value` REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="freemarkValue._regex != null">
+                     <foreach collection="freemark_value._regex" item="item">
+                       AND `freemark_value` not REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="freemarkValue._lt != null">
+                      AND `freemark_value` <![CDATA[ < ]]>  #{freemark_value._lt}
+                 </if>
+                  <if test="freemarkValue._le != null">
+                      AND `freemark_value` <![CDATA[ <= ]]>  #{{freemark_value._lt}
+                 </if>
+                  <if test="freemarkValue._gt != null">
+                      AND `freemark_value` <![CDATA[ > ]]>  #{{freemark_value._lt}
+                 </if>
+                  <if test="freemarkValue._ge != null">
+                      AND `freemark_value` <![CDATA[ >= ]]>  #{{freemark_value._lt}
+                 </if>
+            </if>
         </where>
         </select>
 
@@ -457,7 +513,10 @@
                 `freemark_path` = #{source.freemarkPath},
             </if>
             <if test="source.freemarkContent != null">
-                `freemark_content` = #{source.freemarkContent}
+                `freemark_content` = #{source.freemarkContent},
+            </if>
+            <if test="source.freemarkValue != null">
+                `freemark_value` = #{source.freemarkValue}
             </if>
         </set>
         <where>
@@ -482,6 +541,9 @@
             </if>
             <if test="target.freemarkContent != null">
                 AND `freemark_content` = #{target.freemarkContent}
+            </if>
+            <if test="target.freemarkValue != null">
+                AND `freemark_value` = #{target.freemarkValue}
             </if>
         </where>
     </update>
@@ -496,7 +558,8 @@
             `dir_name` = #{source.dirName},
             `file_name` = #{source.fileName},
             `freemark_path` = #{source.freemarkPath},
-            `freemark_content` = #{source.freemarkContent}
+            `freemark_content` = #{source.freemarkContent},
+            `freemark_value` = #{source.freemarkValue}
         </set>
         <where>
             1 =1
@@ -520,6 +583,9 @@
             </if>
             <if test="target.freemarkContent != null">
                 AND `freemark_content` = #{target.freemarkContent}
+            </if>
+            <if test="target.freemarkValue != null">
+                AND `freemark_value` = #{target.freemarkValue}
             </if>
         </where>
     </update>
@@ -550,6 +616,9 @@
             <if test="freemarkContent != null">
                 AND `freemark_content` = #{freemarkContent}
             </if>
+            <if test="freemarkValue != null">
+                AND `freemark_value` = #{freemarkValue}
+            </if>
         </where>
     </delete>
 
@@ -563,7 +632,8 @@
         `dir_name`,
         `file_name`,
         `freemark_path`,
-        `freemark_content`
+        `freemark_content`,
+        `freemark_value`
         FROM `t_mapper`
         <where>
             1 =1
@@ -598,7 +668,10 @@
                    `freemark_path` = #{source.freemarkPath},
                </if>
                <if test="source.freemarkContent != null">
-                   `freemark_content` = #{source.freemarkContent}
+                   `freemark_content` = #{source.freemarkContent},
+               </if>
+               <if test="source.freemarkValue != null">
+                   `freemark_value` = #{source.freemarkValue}
                </if>
         </set>
         <where>

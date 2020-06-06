@@ -8,7 +8,7 @@ import demo.spring.boot.demospringboot.framework.MultiTerm;
  * 表引擎      :InnoDB
  * 表版本      :10
  * 行格式      :Compact
- * 表创建      :2020-6-5
+ * 表创建      :2020-6-6
  * 字符集      :utf8_bin
  * 表注释      :
  */
@@ -17,11 +17,13 @@ public class TVoNoPriMultiTermVo {
     private MultiTerm<String> dbName;  // 库名
     private MultiTerm<String> dbTableName;  // 表名
     private MultiTerm<String> dbTableComment;  // 表注释
-    private MultiTerm<String> voPackage;  // 包名
-    private MultiTerm<String> voClassName;  // 类名
-    private MultiTerm<String> voFileName;  // 文件名
-    private MultiTerm<String> voFreemarkPath;  // freemark路径
-    private MultiTerm<String> voImports;  // vo 需要注入的类型 ,逗号分隔
+    private MultiTerm<String> packageName;  // 包名
+    private MultiTerm<String> className;  // 类名
+    private MultiTerm<String> fileName;  // 文件名
+    private MultiTerm<String> freemarkPath;  // freemark路径
+    private MultiTerm<String> freemarkContent;  // freemark内容
+    private MultiTerm<String> freemarkValue;  // freemark生成结果
+    private MultiTerm<String> imports;  // vo 需要注入的类型 ,逗号分隔
 
 
     public MultiTerm<String> getDbName() {
@@ -57,59 +59,81 @@ public class TVoNoPriMultiTermVo {
         this.dbTableComment = dbTableComment;
 
     }
-    public MultiTerm<String> getVoPackage() {
+    public MultiTerm<String> getPackageName() {
 
-        return voPackage;
-
-    }
-
-    public void setVoPackage(MultiTerm<String> voPackage) {
-
-        this.voPackage = voPackage;
-
-    }
-    public MultiTerm<String> getVoClassName() {
-
-        return voClassName;
+        return packageName;
 
     }
 
-    public void setVoClassName(MultiTerm<String> voClassName) {
+    public void setPackageName(MultiTerm<String> packageName) {
 
-        this.voClassName = voClassName;
-
-    }
-    public MultiTerm<String> getVoFileName() {
-
-        return voFileName;
+        this.packageName = packageName;
 
     }
+    public MultiTerm<String> getClassName() {
 
-    public void setVoFileName(MultiTerm<String> voFileName) {
-
-        this.voFileName = voFileName;
-
-    }
-    public MultiTerm<String> getVoFreemarkPath() {
-
-        return voFreemarkPath;
+        return className;
 
     }
 
-    public void setVoFreemarkPath(MultiTerm<String> voFreemarkPath) {
+    public void setClassName(MultiTerm<String> className) {
 
-        this.voFreemarkPath = voFreemarkPath;
-
-    }
-    public MultiTerm<String> getVoImports() {
-
-        return voImports;
+        this.className = className;
 
     }
+    public MultiTerm<String> getFileName() {
 
-    public void setVoImports(MultiTerm<String> voImports) {
+        return fileName;
 
-        this.voImports = voImports;
+    }
+
+    public void setFileName(MultiTerm<String> fileName) {
+
+        this.fileName = fileName;
+
+    }
+    public MultiTerm<String> getFreemarkPath() {
+
+        return freemarkPath;
+
+    }
+
+    public void setFreemarkPath(MultiTerm<String> freemarkPath) {
+
+        this.freemarkPath = freemarkPath;
+
+    }
+    public MultiTerm<String> getFreemarkContent() {
+
+        return freemarkContent;
+
+    }
+
+    public void setFreemarkContent(MultiTerm<String> freemarkContent) {
+
+        this.freemarkContent = freemarkContent;
+
+    }
+    public MultiTerm<String> getFreemarkValue() {
+
+        return freemarkValue;
+
+    }
+
+    public void setFreemarkValue(MultiTerm<String> freemarkValue) {
+
+        this.freemarkValue = freemarkValue;
+
+    }
+    public MultiTerm<String> getImports() {
+
+        return imports;
+
+    }
+
+    public void setImports(MultiTerm<String> imports) {
+
+        this.imports = imports;
 
     }
 
@@ -119,11 +143,13 @@ public class TVoNoPriMultiTermVo {
                 ", dbName '" + dbName + '\'' +
                 ", dbTableName '" + dbTableName + '\'' +
                 ", dbTableComment '" + dbTableComment + '\'' +
-                ", voPackage '" + voPackage + '\'' +
-                ", voClassName '" + voClassName + '\'' +
-                ", voFileName '" + voFileName + '\'' +
-                ", voFreemarkPath '" + voFreemarkPath + '\'' +
-                ", voImports '" + voImports + '\'' +
+                ", packageName '" + packageName + '\'' +
+                ", className '" + className + '\'' +
+                ", fileName '" + fileName + '\'' +
+                ", freemarkPath '" + freemarkPath + '\'' +
+                ", freemarkContent '" + freemarkContent + '\'' +
+                ", freemarkValue '" + freemarkValue + '\'' +
+                ", imports '" + imports + '\'' +
                 '}';
     }
 

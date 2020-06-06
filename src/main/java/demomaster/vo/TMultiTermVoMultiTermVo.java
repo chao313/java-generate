@@ -3,16 +3,16 @@ package demomaster.vo;
 import demo.spring.boot.demospringboot.framework.MultiTerm;
 
 /**
- * 表名称      :t_mullti_term_vo
+ * 表名称      :t_multi_term_vo
  * 表类型      :BASE TABLE
  * 表引擎      :InnoDB
  * 表版本      :10
  * 行格式      :Compact
- * 表创建      :2020-6-5
+ * 表创建      :2020-6-6
  * 字符集      :utf8_bin
  * 表注释      :
  */
-public class TMulltiTermVoMultiTermVo {
+public class TMultiTermVoMultiTermVo {
 
     private MultiTerm<String> dbName;  // 库名
     private MultiTerm<String> dbTableName;  // 表名
@@ -22,6 +22,7 @@ public class TMulltiTermVoMultiTermVo {
     private MultiTerm<String> fileName;  // 文件名
     private MultiTerm<String> freemarkPath;  // freemark路径
     private MultiTerm<String> freemarkContent;  // freemark内容
+    private MultiTerm<String> freemarkValue;  // freemark生成结果
     private MultiTerm<String> imports;  // 需要注入的类型 ,逗号分隔
 
 
@@ -113,6 +114,17 @@ public class TMulltiTermVoMultiTermVo {
         this.freemarkContent = freemarkContent;
 
     }
+    public MultiTerm<String> getFreemarkValue() {
+
+        return freemarkValue;
+
+    }
+
+    public void setFreemarkValue(MultiTerm<String> freemarkValue) {
+
+        this.freemarkValue = freemarkValue;
+
+    }
     public MultiTerm<String> getImports() {
 
         return imports;
@@ -127,7 +139,7 @@ public class TMulltiTermVoMultiTermVo {
 
     @Override
     public String toString() {
-        return "TMulltiTermVoMultiTermVo{" +
+        return "TMultiTermVoMultiTermVo{" +
                 ", dbName '" + dbName + '\'' +
                 ", dbTableName '" + dbTableName + '\'' +
                 ", dbTableComment '" + dbTableComment + '\'' +
@@ -136,6 +148,7 @@ public class TMulltiTermVoMultiTermVo {
                 ", fileName '" + fileName + '\'' +
                 ", freemarkPath '" + freemarkPath + '\'' +
                 ", freemarkContent '" + freemarkContent + '\'' +
+                ", freemarkValue '" + freemarkValue + '\'' +
                 ", imports '" + imports + '\'' +
                 '}';
     }

@@ -20,7 +20,7 @@ import demomaster.vo.TVoNoPriMultiTermVo;
  * 表引擎      :InnoDB
  * 表版本      :10
  * 行格式      :Compact
- * 表创建      :2020-6-5
+ * 表创建      :2020-6-6
  * 字符集      :utf8_bin
  * 表注释      :
  */
@@ -104,34 +104,39 @@ public class TVoNoPriServiceImpl implements TVoNoPriService {
     /**
      * 根据PrimaryKey查询
      * <p>
-     * dbName  库名
+     * dbName  库名<p>
+     * dbTableName  表名
      */
     @Override
-    public TVoNoPriVo queryByPrimaryKey(String dbName) {
+    public TVoNoPriVo queryByPrimaryKey(String dbName, String dbTableName) {
 
-        return dao.queryByPrimaryKey(dbName);
+        return dao.queryByPrimaryKey(dbName, dbTableName);
 
     }
 
     /**
      * 根据PrimaryKey删除
      * <p>
-     * dbName : 库名
+     * dbName : 库名<p>
+     * dbTableName : 表名
      * @param dbName
+     * @param dbTableName
      * 
      */
     @Override
-    public boolean deleteByPrimaryKey(String dbName) {
+    public boolean deleteByPrimaryKey(String dbName, String dbTableName) {
 
-        return dao.deleteByPrimaryKey(dbName) > 0 ? true : false;
+        return dao.deleteByPrimaryKey(dbName, dbTableName) > 0 ? true : false;
 
     }
 
     /**
      * 根据PrimaryKey更新，会根据主键去更新其他的值(空值不覆盖有值)
      * <p>
-     * dbName : 库名
+     * dbName : 库名<p>
+     * dbTableName : 表名
      * @param dbName
+     * @param dbTableName
      * 
      */
     @Override

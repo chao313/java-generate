@@ -8,7 +8,7 @@ import demo.spring.boot.demospringboot.framework.MultiTerm;
  * 表引擎      :InnoDB
  * 表版本      :10
  * 行格式      :Compact
- * 表创建      :2020-6-5
+ * 表创建      :2020-6-6
  * 字符集      :utf8_bin
  * 表注释      :
  */
@@ -17,6 +17,7 @@ public class TFieldMultiTermVo {
     private MultiTerm<String> dbName;  // 库名
     private MultiTerm<String> dbTableName;  // 表名
     private MultiTerm<String> fieldName;  // 字段名称
+    private MultiTerm<String> fieldJavaName;  // 字段java名称
     private MultiTerm<String> fieldType;  // 数据类型
     private MultiTerm<String> fieldJavaType;  // 对应的java类型
     private MultiTerm<String> fieldComment;  // 注释
@@ -62,6 +63,17 @@ public class TFieldMultiTermVo {
     public void setFieldName(MultiTerm<String> fieldName) {
 
         this.fieldName = fieldName;
+
+    }
+    public MultiTerm<String> getFieldJavaName() {
+
+        return fieldJavaName;
+
+    }
+
+    public void setFieldJavaName(MultiTerm<String> fieldJavaName) {
+
+        this.fieldJavaName = fieldJavaName;
 
     }
     public MultiTerm<String> getFieldType() {
@@ -203,6 +215,7 @@ public class TFieldMultiTermVo {
                 ", dbName '" + dbName + '\'' +
                 ", dbTableName '" + dbTableName + '\'' +
                 ", fieldName '" + fieldName + '\'' +
+                ", fieldJavaName '" + fieldJavaName + '\'' +
                 ", fieldType '" + fieldType + '\'' +
                 ", fieldJavaType '" + fieldJavaType + '\'' +
                 ", fieldComment '" + fieldComment + '\'' +

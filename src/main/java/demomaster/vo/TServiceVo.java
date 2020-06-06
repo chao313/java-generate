@@ -9,7 +9,7 @@ package demomaster.vo;
  * 表引擎      :InnoDB
  * 表版本      :10
  * 行格式      :Compact
- * 表创建      :2020-6-5
+ * 表创建      :2020-6-6
  * 字符集      :utf8_bin
  * 表注释      :
  */
@@ -23,6 +23,7 @@ public class TServiceVo {
     private String fileName;  // 文件名 
     private String freemarkPath;  // freemark路径 
     private String freemarkContent;  // freemark内容 
+    private String freemarkValue;  // freemark生成结果 
     private String imports;  // vo 需要注入的类型 ,逗号分隔 
 
 
@@ -122,6 +123,18 @@ public class TServiceVo {
 
     }
 
+    public String getFreemarkValue() {
+
+        return freemarkValue;
+
+    }
+
+    public void setFreemarkValue(String freemarkValue) {
+
+        this.freemarkValue = freemarkValue;
+
+    }
+
     public String getImports() {
 
         return imports;
@@ -146,6 +159,7 @@ public class TServiceVo {
                 ", fileName '" + fileName + '\'' +
                 ", freemarkPath '" + freemarkPath + '\'' +
                 ", freemarkContent '" + freemarkContent + '\'' +
+                ", freemarkValue '" + freemarkValue + '\'' +
                 ", imports '" + imports + '\'' +
                 '}';
     }

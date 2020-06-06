@@ -3,16 +3,16 @@ package demomaster.dao;
 
 import java.util.List;
 
-import demomaster.vo.TServiceVo;
-import demomaster.vo.plugin.TServicePriVo;
-import demomaster.vo.plugin.TServiceNoPriVo;
-import demomaster.vo.TServiceMultiTermVo;
+import demomaster.vo.TMultiTermVoVo;
+import demomaster.vo.plugin.TMultiTermVoPriVo;
+import demomaster.vo.plugin.TMultiTermVoNoPriVo;
+import demomaster.vo.TMultiTermVoMultiTermVo;
 
 
 import org.apache.ibatis.annotations.Param;
 
 /**
- * 表名称      :t_service
+ * 表名称      :t_multi_term_vo
  * 表类型      :BASE TABLE
  * 表引擎      :InnoDB
  * 表版本      :10
@@ -21,43 +21,43 @@ import org.apache.ibatis.annotations.Param;
  * 字符集      :utf8_bin
  * 表注释      :
  */
-public interface TServiceDAO {
+public interface TMultiTermVoDAO {
 
     /**
      * insert
      */
-    int insert(TServiceVo vo);
+    int insert(TMultiTermVoVo vo);
 
     /**
      * insert vos 批量插入
      */
-    int inserts(@Param(value = "vos") List<TServiceVo> vos);
+    int inserts(@Param(value = "vos") List<TMultiTermVoVo> vos);
 
     /**
      * 查询base
      */
-    List<TServiceVo> queryBase(TServiceVo query);
+    List<TMultiTermVoVo> queryBase(TMultiTermVoVo query);
 
     /**
      * 查询base 多维条件
      */
-    List<TServiceVo> queryMultiTerm(TServiceMultiTermVo query);
+    List<TMultiTermVoVo> queryMultiTerm(TMultiTermVoMultiTermVo query);
 
     /**
      * update base (exclude value is null or "")
      */
-    int updateBase(@Param(value = "source") TServiceVo source, @Param(value = "target") TServiceVo target);
+    int updateBase(@Param(value = "source") TMultiTermVoVo source, @Param(value = "target") TMultiTermVoVo target);
 
 
     /**
      * update base (include value is null or "")
      */
-    int updateBaseIncludeNull(@Param(value = "source") TServiceVo source, @Param(value = "target") TServiceVo target);
+    int updateBaseIncludeNull(@Param(value = "source") TMultiTermVoVo source, @Param(value = "target") TMultiTermVoVo target);
 
     /**
      * 删除base
      */
-    int deleteBase(TServiceVo vo);
+    int deleteBase(TMultiTermVoVo vo);
 
 
     /**
@@ -69,7 +69,7 @@ public interface TServiceDAO {
      * @param dbTableName
      * 
      */
-    TServiceVo queryByPrimaryKey(@Param(value = "dbName") String dbName,@Param(value = "dbTableName") String dbTableName);
+    TMultiTermVoVo queryByPrimaryKey(@Param(value = "dbName") String dbName,@Param(value = "dbTableName") String dbTableName);
 
     /**
      * 根据PrimaryKey删除
@@ -91,6 +91,6 @@ public interface TServiceDAO {
      * @param dbTableName
      * 
      */
-    int updateByPrimaryKey(@Param(value = "source") TServiceNoPriVo source,@Param(value = "target") TServicePriVo target);
+    int updateByPrimaryKey(@Param(value = "source") TMultiTermVoNoPriVo source,@Param(value = "target") TMultiTermVoPriVo target);
 
 }

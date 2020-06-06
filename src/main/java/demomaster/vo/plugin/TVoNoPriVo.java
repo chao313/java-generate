@@ -9,18 +9,20 @@ package demomaster.vo.plugin;
  * 表引擎      :InnoDB
  * 表版本      :10
  * 行格式      :Compact
- * 表创建      :2020-6-5
+ * 表创建      :2020-6-6
  * 字符集      :utf8_bin
  * 表注释      :
  */
 public class TVoNoPriVo {
 
     private String dbTableComment;  // 表注释 
-    private String voPackage;  // 包名 
-    private String voClassName;  // 类名 
-    private String voFileName;  // 文件名 
-    private String voFreemarkPath;  // freemark路径 
-    private String voImports;  // vo 需要注入的类型 ,逗号分隔 
+    private String packageName;  // 包名 
+    private String className;  // 类名 
+    private String fileName;  // 文件名 
+    private String freemarkPath;  // freemark路径 
+    private String freemarkContent;  // freemark内容 
+    private String freemarkValue;  // freemark生成结果 
+    private String imports;  // vo 需要注入的类型 ,逗号分隔 
 
 
     public String getDbTableComment() {
@@ -34,59 +36,81 @@ public class TVoNoPriVo {
         this.dbTableComment = dbTableComment;
 
     }
-    public String getVoPackage() {
+    public String getPackageName() {
 
-        return voPackage;
-
-    }
-
-    public void setVoPackage(String voPackage) {
-
-        this.voPackage = voPackage;
-
-    }
-    public String getVoClassName() {
-
-        return voClassName;
+        return packageName;
 
     }
 
-    public void setVoClassName(String voClassName) {
+    public void setPackageName(String packageName) {
 
-        this.voClassName = voClassName;
-
-    }
-    public String getVoFileName() {
-
-        return voFileName;
+        this.packageName = packageName;
 
     }
+    public String getClassName() {
 
-    public void setVoFileName(String voFileName) {
-
-        this.voFileName = voFileName;
-
-    }
-    public String getVoFreemarkPath() {
-
-        return voFreemarkPath;
+        return className;
 
     }
 
-    public void setVoFreemarkPath(String voFreemarkPath) {
+    public void setClassName(String className) {
 
-        this.voFreemarkPath = voFreemarkPath;
-
-    }
-    public String getVoImports() {
-
-        return voImports;
+        this.className = className;
 
     }
+    public String getFileName() {
 
-    public void setVoImports(String voImports) {
+        return fileName;
 
-        this.voImports = voImports;
+    }
+
+    public void setFileName(String fileName) {
+
+        this.fileName = fileName;
+
+    }
+    public String getFreemarkPath() {
+
+        return freemarkPath;
+
+    }
+
+    public void setFreemarkPath(String freemarkPath) {
+
+        this.freemarkPath = freemarkPath;
+
+    }
+    public String getFreemarkContent() {
+
+        return freemarkContent;
+
+    }
+
+    public void setFreemarkContent(String freemarkContent) {
+
+        this.freemarkContent = freemarkContent;
+
+    }
+    public String getFreemarkValue() {
+
+        return freemarkValue;
+
+    }
+
+    public void setFreemarkValue(String freemarkValue) {
+
+        this.freemarkValue = freemarkValue;
+
+    }
+    public String getImports() {
+
+        return imports;
+
+    }
+
+    public void setImports(String imports) {
+
+        this.imports = imports;
 
     }
 
@@ -94,11 +118,13 @@ public class TVoNoPriVo {
     public String toString() {
         return "TVoNoPriVo{" +
                 ", dbTableComment '" + dbTableComment + '\'' +
-                ", voPackage '" + voPackage + '\'' +
-                ", voClassName '" + voClassName + '\'' +
-                ", voFileName '" + voFileName + '\'' +
-                ", voFreemarkPath '" + voFreemarkPath + '\'' +
-                ", voImports '" + voImports + '\'' +
+                ", packageName '" + packageName + '\'' +
+                ", className '" + className + '\'' +
+                ", fileName '" + fileName + '\'' +
+                ", freemarkPath '" + freemarkPath + '\'' +
+                ", freemarkContent '" + freemarkContent + '\'' +
+                ", freemarkValue '" + freemarkValue + '\'' +
+                ", imports '" + imports + '\'' +
                 '}';
     }
 

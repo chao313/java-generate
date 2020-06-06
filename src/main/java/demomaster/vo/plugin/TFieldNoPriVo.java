@@ -9,12 +9,13 @@ package demomaster.vo.plugin;
  * 表引擎      :InnoDB
  * 表版本      :10
  * 行格式      :Compact
- * 表创建      :2020-6-5
+ * 表创建      :2020-6-6
  * 字符集      :utf8_bin
  * 表注释      :
  */
 public class TFieldNoPriVo {
 
+    private String fieldJavaName;  // 字段java名称 
     private String fieldType;  // 数据类型 
     private String fieldJavaType;  // 对应的java类型 
     private String fieldComment;  // 注释 
@@ -29,6 +30,17 @@ public class TFieldNoPriVo {
     private String fieldIsAutoIncrement;  // 是否自动递增(递增的默认不参与插入) 
 
 
+    public String getFieldJavaName() {
+
+        return fieldJavaName;
+
+    }
+
+    public void setFieldJavaName(String fieldJavaName) {
+
+        this.fieldJavaName = fieldJavaName;
+
+    }
     public String getFieldType() {
 
         return fieldType;
@@ -165,6 +177,7 @@ public class TFieldNoPriVo {
     @Override
     public String toString() {
         return "TFieldNoPriVo{" +
+                ", fieldJavaName '" + fieldJavaName + '\'' +
                 ", fieldType '" + fieldType + '\'' +
                 ", fieldJavaType '" + fieldJavaType + '\'' +
                 ", fieldComment '" + fieldComment + '\'' +

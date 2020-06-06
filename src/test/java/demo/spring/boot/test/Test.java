@@ -190,16 +190,16 @@ public class Test {
 //        Map<String, Object> map = mysql HashMap<>();
 //        map.put("javaTable", javaTable);
 //        File templateDirFile = ResourceUtils.getFile("classpath:freemark");
-//        StringBuffer voStr = FreemarkUtil.generateXmlByTemplate(map, templateDirFile, "Vo.ftl");
+//        StringBuffer voStr = FreeMarkUtil.generateXmlByTemplate(map, templateDirFile, "Vo.ftl");
 //        //log.info("{}", voStr.toString());
 //
-//        StringBuffer daoStr = FreemarkUtil.generateXmlByTemplate(map, templateDirFile, "DAO.ftl");
+//        StringBuffer daoStr = FreeMarkUtil.generateXmlByTemplate(map, templateDirFile, "DAO.ftl");
 //        //log.info("{}", daoStr.toString());
 //
-//        StringBuffer serviceStr = FreemarkUtil.generateXmlByTemplate(map, templateDirFile, "Service.ftl");
+//        StringBuffer serviceStr = FreeMarkUtil.generateXmlByTemplate(map, templateDirFile, "Service.ftl");
 //        //log.info("{}", serviceStr.toString());
 //
-//        StringBuffer serviceImplStr = FreemarkUtil.generateXmlByTemplate(map, templateDirFile, "ServiceImpl.ftl");
+//        StringBuffer serviceImplStr = FreeMarkUtil.generateXmlByTemplate(map, templateDirFile, "ServiceImpl.ftl");
 //        //log.info("{}", serviceImplStr.toString());
 //
 //        List<MysqlAndJavaField> mysqlAndJavaFields = mysql ArrayList<>();
@@ -220,7 +220,7 @@ public class Test {
 //        map.put("mysqlTable", mysqlTable);
 //        map.put("mysqlAndJavaFields", mysqlAndJavaFields);
 //        map.put("mysqlAndJavaKeys", mysqlAndJavaKeys);
-//        StringBuffer mapperStr = FreemarkUtil.generateXmlByTemplate(map, templateDirFile, "MapperAssociation.ftl");
+//        StringBuffer mapperStr = FreeMarkUtil.generateXmlByTemplate(map, templateDirFile, "MapperAssociation.ftl");
 //        log.info("{}", mapperStr.toString());
 //
 //

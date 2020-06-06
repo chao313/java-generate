@@ -17,7 +17,7 @@ import org.apache.ibatis.annotations.Param;
  * 表引擎      :InnoDB
  * 表版本      :10
  * 行格式      :Compact
- * 表创建      :2020-6-5
+ * 表创建      :2020-6-6
  * 字符集      :utf8_bin
  * 表注释      :
  */
@@ -85,6 +85,6 @@ public interface TProjectDAO {
      * @param dbName
      * 
      */
-    int updateByPrimaryKey(@Param(value = "source") TProjectNoPriVo source, @Param(value = "target") TProjectPriVo target);
+    int updateByPrimaryKey(@Param(value = "source") TProjectNoPriVo source,@Param(value = "target") TProjectPriVo target);
 
 }

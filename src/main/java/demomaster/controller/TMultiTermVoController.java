@@ -9,23 +9,23 @@ import demo.spring.boot.demospringboot.framework.Code;
 import demo.spring.boot.demospringboot.framework.Response;
 import demo.spring.boot.demospringboot.framework.RequestUpdate;
 import org.apache.commons.lang3.StringUtils;
-import demomaster.vo.TVoPriVo;
-import demomaster.service.TVoPriService;
-import demomaster.vo.plugin.TVoPriNoPriVo;
-import demomaster.vo.plugin.TVoPriPriVo;
-import demomaster.vo.TVoPriMultiTermVo;
+import demomaster.vo.TMultiTermVoVo;
+import demomaster.service.TMultiTermVoService;
+import demomaster.vo.plugin.TMultiTermVoNoPriVo;
+import demomaster.vo.plugin.TMultiTermVoPriVo;
+import demomaster.vo.TMultiTermVoMultiTermVo;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(value = "/TVoPriController")
+@RequestMapping(value = "/TMultiTermVoController")
 @Slf4j
-public class TVoPriController {
+public class TMultiTermVoController {
 
     @Autowired
-    private TVoPriService service;
+    private TMultiTermVoService service;
 
     /**
      * 插入一条记录: 请求体是json
@@ -36,7 +36,7 @@ public class TVoPriController {
      * content:具体返回值
      */
     @PostMapping(value = "/insert")
-    public Response insert(@RequestBody TVoPriVo vo) {
+    public Response insert(@RequestBody TMultiTermVoVo vo) {
        Response response = new Response();
         try {
             Boolean result = service.insert(vo);
@@ -61,7 +61,7 @@ public class TVoPriController {
      * content:具体返回值
      */
     @PostMapping(value = "/inserts")
-    public Response insert(@RequestBody List<TVoPriVo> vos) {
+    public Response insert(@RequestBody List<TMultiTermVoVo> vos) {
         Response response = new Response();
         try {
             Boolean result = service.insert(vos);
@@ -87,10 +87,10 @@ public class TVoPriController {
      * content:具体返回值
      */
     @PostMapping(value = "/queryBase")
-    public Response queryBase(@RequestBody TVoPriVo query) {
+    public Response queryBase(@RequestBody TMultiTermVoVo query) {
         Response response = new Response();
         try {
-            List<TVoPriVo> result = service.queryBase(query);
+            List<TMultiTermVoVo> result = service.queryBase(query);
             response.setCode(Code.System.OK);
             response.setContent(result);
             log.info("success result -> {} ", result);
@@ -115,7 +115,7 @@ public class TVoPriController {
       * content:具体返回值
       */
     @PostMapping(value = "/queryBasePageHelper")
-    public Response queryBasePageHelper(@RequestBody TVoPriVo query,
+    public Response queryBasePageHelper(@RequestBody TMultiTermVoVo query,
                                         @RequestParam(value = "pageNum",defaultValue = "1",required = false) Integer pageNum,
                                         @RequestParam(value = "pageSize",defaultValue = "10",required = false) Integer pageSize,
                                         @RequestParam(value = "order", required = false) String order) {
@@ -125,7 +125,7 @@ public class TVoPriController {
              if (StringUtils.isNotBlank(order)) {
                  PageHelper.orderBy(order);
              }
-             List<TVoPriVo> result = service.queryBase(query);
+             List<TMultiTermVoVo> result = service.queryBase(query);
              PageInfo pageInfo = new PageInfo(result);
              response.setCode(Code.System.OK);
              response.setContent(pageInfo);
@@ -151,7 +151,7 @@ public class TVoPriController {
       * content:具体返回值
       */
     @PostMapping(value = "/queryMultiTermPageHelper")
-    public Response queryMultiTermPageHelper(@RequestBody TVoPriMultiTermVo query,
+    public Response queryMultiTermPageHelper(@RequestBody TMultiTermVoMultiTermVo query,
                                              @RequestParam(value = "pageNum", defaultValue = "1", required = false) Integer pageNum,
                                              @RequestParam(value = "pageSize", defaultValue = "10", required = false) Integer pageSize,
                                              @RequestParam(value = "order", required = false) String order) {
@@ -161,7 +161,7 @@ public class TVoPriController {
              if (StringUtils.isNotBlank(order)) {
                  PageHelper.orderBy(order);
              }
-             List<TVoPriVo> result = service.queryMultiTerm(query);
+             List<TMultiTermVoVo> result = service.queryMultiTerm(query);
              PageInfo pageInfo = new PageInfo(result);
              response.setCode(Code.System.OK);
              response.setContent(pageInfo);
@@ -188,7 +188,7 @@ public class TVoPriController {
      * content:具体返回值
      */
     @PostMapping(value = "/updateBase")
-    public Response updateBase(@RequestBody RequestUpdate<TVoPriVo,TVoPriVo> update) {
+    public Response updateBase(@RequestBody RequestUpdate<TMultiTermVoVo,TMultiTermVoVo> update) {
         Response response = new Response();
         try {
             Boolean result = service.updateBase(update.getSource(), update.getTarget());
@@ -216,7 +216,7 @@ public class TVoPriController {
      * content:具体返回值
      */
     @PostMapping(value = "/updateBaseIncludeNull")
-    public Response updateBaseIncludeNull(@RequestBody RequestUpdate<TVoPriVo,TVoPriVo> update) {
+    public Response updateBaseIncludeNull(@RequestBody RequestUpdate<TMultiTermVoVo,TMultiTermVoVo> update) {
         Response response = new Response();
         try {
             Boolean result = service.updateBaseIncludeNull(update.getSource(), update.getTarget());
@@ -242,7 +242,7 @@ public class TVoPriController {
      * content:具体返回值
      */
     @PostMapping(value = "/deleteBase")
-    public Response deleteBase(@RequestBody TVoPriVo vo) {
+    public Response deleteBase(@RequestBody TMultiTermVoVo vo) {
         Response response = new Response();
         try {
             Boolean result = service.deleteBase(vo);
@@ -278,7 +278,7 @@ public class TVoPriController {
     ) {
         Response response = new Response();
         try {
-            TVoPriVo result = service.queryByPrimaryKey(dbName, dbTableName);
+            TMultiTermVoVo result = service.queryByPrimaryKey(dbName, dbTableName);
             response.setCode(Code.System.OK);
             response.setContent(result);
             log.info("success result -> {} ", result);
@@ -336,7 +336,7 @@ public class TVoPriController {
      * content:具体返回值
      */
     @PostMapping(value = "/updateByPrimaryKey")
-    public Response updateByPrimaryKey(@RequestBody RequestUpdate<TVoPriNoPriVo,TVoPriPriVo> update) {
+    public Response updateByPrimaryKey(@RequestBody RequestUpdate<TMultiTermVoNoPriVo,TMultiTermVoPriVo> update) {
         Response response = new Response();
         try {
             Boolean result = service.updateByPrimaryKey(update.getSource(), update.getTarget());
